@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e2ed8a5f9a9243d3935e85fae83455ba" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PriemApplication" Width="1.5" PointX="10" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.Country" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.Person" Width="1.5" PointX="7.125" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonAddInfo" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonChangeStudyFormReason" Width="1.5" PointX="3" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonContacts" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonCurrentEducation" Width="1.5" PointX="3" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonDisorderInfo" Width="1.5" PointX="3" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonEducationDocument" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonHighEducationInfo" Width="1.5" PointX="3" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonSchoolInfo" Width="1.5" PointX="3" PointY="42" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonScienceWork" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonSportQualification" Width="1.5" PointX="3" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PersonVisaInfo" Width="1.5" PointX="3" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.Qualification" Width="1.5" PointX="0.75" PointY="36.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.SPO_SchoolExitClass" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.SportQualification" Width="1.5" PointX="0.75" PointY="45" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.StudyBasis" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.StudyForm" Width="1.5" PointX="0.75" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.User" Width="1.5" PointX="3" PointY="50.375" IsExpanded="true" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonContacts_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonEducationDocument_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonAddInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonChangeStudyFormReason" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonContacts" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonCurrentEducation" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonDisorderInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonEducationDocument" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonHighEducationInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonSchoolInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonSportQualification" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PersonVisaInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_User" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonHighEducationInfo_Qualification" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonHighEducationInfo_Qualification1" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonHighEducationInfo_StudyForm" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonSportQualification_SportQualification" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_User_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.Semester" Width="1.5" PointX="10.775873528223427" PointY="23.004457797391552" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonCurrentEducation_Semester" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.PassportType" Width="1.5" PointX="3.1809129040599391" PointY="9.8489366070595281" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_PassportType" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonAddInfo_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonChangeStudyFormReason_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonContacts_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonCurrentEducation_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonDisorderInfo_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonEducationDocument_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonHighEducationInfo_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonSchoolInfo_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonScienceWork_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonSportQualification_Person" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_PersonVisaInfo_Person" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.C_Entry" Width="1.5" PointX="5.9576351204689759" PointY="25.203863259965491" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Application_Entry" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Entry_Semester" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
