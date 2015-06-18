@@ -12,13 +12,21 @@ namespace PriemForeignInspector
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonDisorderInfo
+    public partial class SP_Faculty_
     {
-        public System.Guid PersonId { get; set; }
-        public string YearOfDisorder { get; set; }
-        public string EducationProgramName { get; set; }
-        public bool IsForIGA { get; set; }
+        public SP_Faculty_()
+        {
+            this.C_Entry = new HashSet<C_Entry>();
+        }
     
-        public virtual Person Person { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string NameEng { get; set; }
+        public string Acronym { get; set; }
+        public string RodName { get; set; }
+        public string DatName { get; set; }
+        public string VinName { get; set; }
+    
+        public virtual ICollection<C_Entry> C_Entry { get; set; }
     }
 }

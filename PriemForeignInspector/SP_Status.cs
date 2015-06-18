@@ -26,6 +26,9 @@ namespace PriemForeignInspector
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
         public bool IsEnabledForEntry { get; set; }
+        public bool IsClosed { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<SP_StudyPlan> SP_StudyPlan { get; set; }
     }

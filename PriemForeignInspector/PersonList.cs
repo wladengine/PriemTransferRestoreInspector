@@ -141,7 +141,7 @@ namespace PriemForeignInspector
         private void LoadLicensePrograms()
         {
             string query = @"SELECT DISTINCT LicenseProgramId AS Id, LicenseProgramCode + ' ' + LicenseProgramName + (case when studylevelid=17 then ' (маг)' else '' end) AS Name 
-FROM qEntry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
+FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
             if (StudyLevelId.HasValue)
                 query += " AND StudyLevelId=@StudyLevelId ";
             if (SemesterId.HasValue)
@@ -169,7 +169,7 @@ FROM qEntry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
         }
         private void LoadObrazPrograms()
         {
-            string query = "SELECT DISTINCT ObrazProgramId AS Id, ObrazProgramCrypt + ' ' + ObrazProgramName AS Name FROM qEntry WHERE LicenseProgramId=@Id AND CampaignYear=@CampaignYear";
+            string query = "SELECT DISTINCT ObrazProgramId AS Id, ObrazProgramCrypt + ' ' + ObrazProgramName AS Name FROM Entry WHERE LicenseProgramId=@Id AND CampaignYear=@CampaignYear";
             if (StudyLevelId.HasValue)
                 query += " AND StudyLevelId=@StudyLevelId ";
             if (SemesterId.HasValue)
@@ -207,39 +207,39 @@ FROM qEntry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
                             ISNULL(IsDisabled, 0) AS DisabledPerson, 
                             ( select min(Application.DateOfStart) from Application where PersonId = extPersonAll.Id )as 'Дата подачи',
                             CASE WHEN EXISTS(SELECT Id FROM [Application] AS App WHERE App.IsApprovedByComission=1 AND App.PersonId=extPersonAll.Id) THEN 1 ELSE 0 END AS Appr 
-                            FROM extPersonAll INNER JOIN [Application] ON [Application].PersonId = extPersonAll.Id 
-                            INNER JOIN [qEntry] ON [qEntry].Id = [Application].EntryId 
+                            FROM extPerson AS extPersonAll INNER JOIN [Application] ON [Application].PersonId = extPersonAll.Id 
+                            INNER JOIN [Entry] ON [Entry].Id = [Application].EntryId 
                             INNER JOIN PersonEducationDocument on PersonEducationDocument.PersonId = extPersonAll.Id
                             INNER JOIN AbiturientType on AbiturientType.AppSecondTypeId = Application.SecondTypeId 
-                            WHERE 1=1 AND qEntry.SemesterId > 1 and Application.IsCommited = 1 ";
+                            WHERE 1=1 AND Entry.SemesterId > 1 and Application.IsCommited = 1 ";
             
             Dictionary<string, object> dic = new Dictionary<string, object>();
             if (SemesterId.HasValue)
             {
-                query += " AND qEntry.SemesterId=@SemesterId ";
+                query += " AND Entry.SemesterId=@SemesterId ";
                 dic.AddVal("@SemesterId", SemesterId);
             }
             if (StudyLevelId.HasValue)
             {
-                query += " AND qEntry.StudyLevelId=@StudyLevelId ";
+                query += " AND Entry.StudyLevelId=@StudyLevelId ";
                 dic.AddVal("@StudyLevelId", StudyLevelId);
             }
             if (chbOnlyLastCampaign.Checked)
-                query += " AND Application.DateOfStart >= qEntry.DateOfStart ";//AND qEntry.IsUsedForPriem=1 ";
+                query += " AND Application.DateOfStart >= Entry.DateOfStart ";//AND Entry.IsUsedForPriem=1 ";
 
             if (chbFaculty.Checked && FacultyId.HasValue)
             {
-                query += " AND qEntry.FacultyId=@FacId";
+                query += " AND Entry.FacultyId=@FacId";
                 dic.Add("@FacId", FacultyId);
             }
             if (chbLicenseProgram.Checked && LicenseProgramId.HasValue)
             {
-                query += " AND qEntry.LicenseProgramId=@LPId";
+                query += " AND Entry.LicenseProgramId=@LPId";
                 dic.Add("@LPId", LicenseProgramId);
             }
             if (chbObrazProgram.Checked && ObrazProgramId.HasValue)
             {
-                query += " AND qEntry.ObrazProgramId=@OPId";
+                query += " AND Entry.ObrazProgramId=@OPId";
                 dic.Add("@OPId", ObrazProgramId);
             }
             if (chbShowHidedProfiles.Checked)

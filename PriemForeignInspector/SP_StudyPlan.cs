@@ -20,12 +20,12 @@ namespace PriemForeignInspector
         }
     
         public System.Guid Id { get; set; }
-        public Nullable<int> PlanYearId { get; set; }
+        public int PlanYearId { get; set; }
         public Nullable<int> PlanNum { get; set; }
         public Nullable<System.DateTime> PlanDate { get; set; }
-        public Nullable<int> ObrazProgramId { get; set; }
+        public int ObrazProgramId { get; set; }
         public Nullable<int> EducationPeriodId { get; set; }
-        public Nullable<int> StudyFormId { get; set; }
+        public int StudyFormId { get; set; }
         public string ProfileGroupName { get; set; }
         public string ProfileGroupNameEng { get; set; }
         public Nullable<decimal> Price { get; set; }
@@ -45,7 +45,7 @@ namespace PriemForeignInspector
         public Nullable<System.DateTime> DateDiplomaIssue { get; set; }
         public Nullable<int> WorkHours { get; set; }
         public Nullable<double> Credits { get; set; }
-        public Nullable<int> StatusId { get; set; }
+        public int StatusId { get; set; }
         public bool RusAsForeign { get; set; }
         public bool IsSeparateProfileEntry { get; set; }
         public bool IsExpress { get; set; }
@@ -65,6 +65,13 @@ namespace PriemForeignInspector
         public string PersonSecondName { get; set; }
         public int PlanStartBaseScheduleId { get; set; }
         public int IntId { get; set; }
+        public bool HasKontByProfiles { get; set; }
+        public bool IsUseEng { get; set; }
+        public bool IsUseForPrint { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public System.DateTime DateUpdate { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual SP_EducationPeriod SP_EducationPeriod { get; set; }
         public virtual SP_ObrazProgram SP_ObrazProgram { get; set; }

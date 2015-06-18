@@ -129,14 +129,13 @@ namespace PriemForeignInspector
             {
                 Person p = context.Person.Where(x => x.Id == _PersonId).FirstOrDefault();
 
-
                 Surname = p.Surname;
                 personName = p.Name;
                 SecondName = p.SecondName;
                 FIO = Surname + " " + personName + " " + SecondName;
                 BirthDate = p.BirthDate ?? DateTime.Now;
                 BirthPlace = p.BirthPlace;
-                Sex = p.Sex ?? false;
+                Sex = p.Sex;
                 NationalityId = p.NationalityId ?? Util.CountryRussiaId;
 
                 PassportSeries = p.PassportSeries;
@@ -148,7 +147,7 @@ namespace PriemForeignInspector
                 SNILS = p.SNILS;
                 //------------------------------------------------------
 
-                var PersonEducationDocument = p.PersonEducationDocument;
+                var PersonEducationDocument = p.PersonEducationDocument.First();
                 if (PersonEducationDocument == null)
                     PersonEducationDocument = new PriemForeignInspector.PersonEducationDocument();
 
@@ -173,7 +172,7 @@ namespace PriemForeignInspector
                 Email = p.User.Email;
                 Mobiles = PersonContacts.Mobiles;
 
-                CountryId = PersonContacts.CountryId ?? Util.CountryRussiaId;
+                CountryId = PersonContacts.CountryId;
                 RegionId = PersonContacts.RegionId ?? 1;
 
                 Code = PersonContacts.Code;
@@ -202,11 +201,11 @@ namespace PriemForeignInspector
                 CurrentEducationName = PersonEducationDocument.SchoolName;
                 CurrentEducationTypeId = PersonEducationDocument.SchoolTypeId;
 
-                IsEqual = PersonEducationDocument.IsEqual ?? false;
+                IsEqual = PersonEducationDocument.IsEqual;
                 EqualityDocumentNumber = PersonEducationDocument.EqualDocumentNumber;
-                CountryEducId = PersonEducationDocument.CountryEducId ?? Util.CountryRussiaId;
-                HasAccreditation = PersonCurrentEducation.HasAccreditation ?? false;
-                HasScholarship = PersonCurrentEducation.HasScholarship ?? false;
+                CountryEducId = PersonEducationDocument.CountryEducId;
+                HasAccreditation = PersonCurrentEducation.HasAccreditation;
+                HasScholarship = PersonCurrentEducation.HasScholarship;
 
                 CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
                 CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
@@ -331,14 +330,14 @@ namespace PriemForeignInspector
                     return;
                 }
 
-                var PersonEducationDocument = Person.PersonEducationDocument;
+                var PersonEducationDocument = Person.PersonEducationDocument.FirstOrDefault();
                 if (PersonEducationDocument == null)
                 {
                     MessageBox.Show("Ошибка при получении данных PersonEducationDocument");
                     return;
                 }
 
-                var PersonHighEducationInfo = Person.PersonHighEducationInfo;
+                var PersonHighEducationInfo = Person.PersonEducationDocument.First().PersonHighEducationInfo;
                 if (PersonHighEducationInfo == null)
                 {
                     MessageBox.Show("Ошибка при получении данных PersonHighEducationInfo");
@@ -388,23 +387,22 @@ namespace PriemForeignInspector
                 PersonContacts.KorpusReal = KorpusReal;
                 PersonContacts.FlatReal = FlatReal; 
 
-
                 PersonContacts.Phone = Phone;
                 PersonContacts.Mobiles = Mobiles;
-                PersonContacts.CountryId = CountryId;
+                PersonContacts.CountryId = CountryId ?? Util.CountryRussiaId;
                 PersonContacts.RegionId = RegionId;
 
                 PersonCurrentEducation.AccreditationDate = AccreditationDate;
                 PersonCurrentEducation.AccreditationNumber = AccreditationNumber;
                 PersonCurrentEducation.EducName = CurrentEducationName;
-                PersonCurrentEducation.EducTypeId = CurrentEducationTypeId;
+                PersonCurrentEducation.EducTypeId = CurrentEducationTypeId ?? 4;
                 PersonCurrentEducation.HasAccreditation = HasAccreditation;
                 PersonCurrentEducation.HasScholarship = HasScholarship;
-                PersonCurrentEducation.SemesterId = CurrentEducationSemesterId;
-                PersonCurrentEducation.StudyLevelId = CurrentEducationStudyLevelId;
+                PersonCurrentEducation.SemesterId = CurrentEducationSemesterId ?? 3;
+                PersonCurrentEducation.StudyLevelId = CurrentEducationStudyLevelId ?? 16;
 
                 PersonEducationDocument.SchoolExitYear = ExitYear.HasValue ? ExitYear.Value.ToString() : null;
-                PersonHighEducationInfo.ExitYear = ExitYear;
+                PersonHighEducationInfo.ExitYear = ExitYear ?? (DateTime.Now.Year - 1);
 
                 PersonAddInfo.AddInfo = AddInfo;
                 PersonAddInfo.Parents = Parents;

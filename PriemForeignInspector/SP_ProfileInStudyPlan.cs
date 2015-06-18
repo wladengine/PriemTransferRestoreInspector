@@ -18,6 +18,8 @@ namespace PriemForeignInspector
         public System.Guid StudyPlanId { get; set; }
         public int ProfileId { get; set; }
         public int IntId { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual SP_Profile SP_Profile { get; set; }
         public virtual SP_StudyPlan SP_StudyPlan { get; set; }

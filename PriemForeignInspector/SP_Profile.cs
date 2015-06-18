@@ -16,7 +16,7 @@ namespace PriemForeignInspector
     {
         public SP_Profile()
         {
-            this.SP_ProfileInStudyPlan = new HashSet<SP_ProfileInStudyPlan>();
+            this.C_Entry = new HashSet<C_Entry>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace PriemForeignInspector
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
     
-        public virtual ICollection<SP_ProfileInStudyPlan> SP_ProfileInStudyPlan { get; set; }
+        public virtual ICollection<C_Entry> C_Entry { get; set; }
     }
 }

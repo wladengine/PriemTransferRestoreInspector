@@ -86,7 +86,7 @@ namespace PriemForeignInspector
                 FIO = Surname + " " + personName + " " + SecondName;
                 BirthDate = p.BirthDate ?? DateTime.Now;
                 BirthPlace = p.BirthPlace;
-                Sex = p.Sex ?? false;
+                Sex = p.Sex;
                 NationalityId = p.NationalityId ?? Util.CountryRussiaId;
 
                 PassportSeries = p.PassportSeries;
@@ -116,7 +116,7 @@ namespace PriemForeignInspector
                 Email = p.User.Email;
                 Mobiles = PersonContacts.Mobiles;
 
-                CountryId = PersonContacts.CountryId ?? Util.CountryRussiaId;
+                CountryId = PersonContacts.CountryId;
                 RegionId = PersonContacts.RegionId ?? 1;
 
                 CodeKLADR = PersonContacts.KladrCode;
@@ -281,7 +281,7 @@ namespace PriemForeignInspector
 
                 PersonContacts.Phone = Phone;
                 PersonContacts.Mobiles = Mobiles;
-                PersonContacts.CountryId = CountryId;
+                PersonContacts.CountryId = CountryId ?? Util.CountryRussiaId;
                 PersonContacts.RegionId = RegionId;
 
                 PersonContacts.KladrCode = CodeKLADR;

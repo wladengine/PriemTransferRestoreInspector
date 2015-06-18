@@ -16,13 +16,13 @@ namespace PriemForeignInspector
     {
         public System.Guid Id { get; set; }
         public string StudyPlanNumber { get; set; }
-        public Nullable<int> PlanYearId { get; set; }
+        public int PlanYearId { get; set; }
         public string PlanYear { get; set; }
         public Nullable<int> PlanNum { get; set; }
         public Nullable<System.DateTime> PlanDate { get; set; }
-        public Nullable<int> ObrazProgramId { get; set; }
+        public int ObrazProgramId { get; set; }
         public Nullable<int> EducationPeriodId { get; set; }
-        public Nullable<int> StudyFormId { get; set; }
+        public int StudyFormId { get; set; }
         public string ProfileGroupName { get; set; }
         public string ProfileGroupNameEng { get; set; }
         public Nullable<decimal> Price { get; set; }
@@ -41,7 +41,7 @@ namespace PriemForeignInspector
         public Nullable<System.DateTime> DateDiplomaIssue { get; set; }
         public Nullable<int> WorkHours { get; set; }
         public Nullable<double> Credits { get; set; }
-        public Nullable<int> StatusId { get; set; }
+        public int StatusId { get; set; }
         public string ObrazProgramName { get; set; }
         public string ObrazProgramNumber { get; set; }
         public Nullable<int> LicenseProgramId { get; set; }
@@ -104,5 +104,13 @@ namespace PriemForeignInspector
         public string PersonSecondName { get; set; }
         public int IntId { get; set; }
         public Nullable<int> ObrazProgramInYearIntId { get; set; }
+        public bool HasKontByProfiles { get; set; }
+        public string FacultyAcronymEng { get; set; }
+        public string StudyFormAcronym { get; set; }
+        public Nullable<bool> IsClosed { get; set; }
+        public Nullable<int> StudyPlanYearIntValue { get; set; }
+        public string PlanStartDate { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public System.DateTime DateUpdate { get; set; }
     }
 }

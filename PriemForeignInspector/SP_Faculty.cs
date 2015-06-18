@@ -33,6 +33,11 @@ namespace PriemForeignInspector
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
         public bool IsArchive { get; set; }
+        public bool IsCommonUniversity { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public Nullable<int> DeputyChiefUOPId { get; set; }
+        public Nullable<int> DeputyChiefUUId { get; set; }
     
         public virtual ICollection<SP_ObrazProgram> SP_ObrazProgram { get; set; }
     }

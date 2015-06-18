@@ -207,7 +207,7 @@ namespace PriemForeignInspector
                 FIO = Surname + " " + personName + " " + SecondName;
                 BirthDate = p.BirthDate ?? DateTime.Now;
                 BirthPlace = p.BirthPlace;
-                Sex = p.Sex ?? false;
+                Sex = p.Sex;
                 NationalityId = p.NationalityId ?? Util.CountryRussiaId;
 
                 PassportSeries = p.PassportSeries;
@@ -222,12 +222,10 @@ namespace PriemForeignInspector
                 var PersonCurrentEducation = p.PersonCurrentEducation;
                 if (PersonCurrentEducation == null)
                     PersonCurrentEducation = new PersonCurrentEducation();
-                
-                
-                
-                StudyLevelId = PersonCurrentEducation.StudyLevelId.Value;
+
+                StudyLevelId = PersonCurrentEducation.StudyLevelId;
                 FillComboSemester();
-                SemesterId = PersonCurrentEducation.SemesterId.Value;
+                SemesterId = PersonCurrentEducation.SemesterId;
                 FillComboStudyForm();
                 if (PersonCurrentEducation.StudyFormId.HasValue)
                     StudyFormId = PersonCurrentEducation.StudyFormId.Value;
@@ -235,8 +233,8 @@ namespace PriemForeignInspector
                 if (PersonCurrentEducation.StudyBasisId.HasValue)
                     StudyBasisId = PersonCurrentEducation.StudyBasisId.Value;
                 FillComboLicenseProgram();
-                if (PersonCurrentEducation.LicenseProgramId.HasValue)
-                    LicenseProgramId = PersonCurrentEducation.LicenseProgramId.Value;
+                if (PersonCurrentEducation.LicenseProgramId != 0)
+                    LicenseProgramId = PersonCurrentEducation.LicenseProgramId;
                 FillComboObrazProgram();
                 if (PersonCurrentEducation.ObrazProgramId.HasValue)
                     ObrazProgramId = PersonCurrentEducation.ObrazProgramId.Value;
@@ -251,7 +249,7 @@ namespace PriemForeignInspector
                 Mobiles = PersonContacts.Mobiles;
                 Email = p.User.Email;
 
-                CountryId = PersonContacts.CountryId ?? Util.CountryRussiaId;
+                CountryId = PersonContacts.CountryId;
                 RegionId = PersonContacts.RegionId ?? 1;
 
                 Code = PersonContacts.Code;
@@ -445,12 +443,12 @@ namespace PriemForeignInspector
 
                 PersonContacts.Phone = Phone;
                 PersonContacts.Mobiles = Mobiles;
-                PersonContacts.CountryId = CountryId;
+                PersonContacts.CountryId = CountryId ?? Util.CountryRussiaId;
                 PersonContacts.RegionId = RegionId;
 
-                PersonCurrentEducation.SemesterId = SemesterId;
-                PersonCurrentEducation.StudyLevelId = StudyLevelId;
-                PersonCurrentEducation.LicenseProgramId = LicenseProgramId;
+                PersonCurrentEducation.SemesterId = SemesterId ?? 3;
+                PersonCurrentEducation.StudyLevelId = StudyLevelId ?? 16;
+                PersonCurrentEducation.LicenseProgramId = LicenseProgramId ?? 0;
                 PersonCurrentEducation.ObrazProgramId = ObrazProgramId;
                 PersonCurrentEducation.ProfileName = ProfileName;
 

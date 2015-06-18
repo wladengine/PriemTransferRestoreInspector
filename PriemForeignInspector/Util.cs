@@ -21,11 +21,11 @@ namespace PriemForeignInspector
 
         static Util()
         {
-            string connStr = "Data Source=SRVPRIEM1;Initial Catalog=OnlinePriem2012;Integrated Security=True;Connect Timeout=300";
+            string connStr = "Data Source=SRVPRIEM1;Initial Catalog=OnlinePriem2015;Integrated Security=True;Connect Timeout=300";
             //"Data Source=81.89.183.103;Initial Catalog=OnlinePriem2012;Integrated Security=False;User ID=OnlinePriem2012Inspector;Password=372639BE-888B-4FF4-8D17-0E86B364566C;Connect Timeout=300";
             BDC = new BDClass(connStr);
             TemplateFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\PriemForeignInspector_TempFiles\";
-            CampaignYear = 2014;
+            CampaignYear = 2015;
             CountryRussiaId = 193;
 
             try
@@ -289,13 +289,13 @@ namespace PriemForeignInspector
                             {
                                 x.PersonId,
                                 x.Barcode,
-                                Faculty = x.C_Entry.FacultyName,
-                                Profession = x.C_Entry.LicenseProgramName,
-                                ProfessionCode = x.C_Entry.LicenseProgramCode,
-                                ObrazProgram = x.C_Entry.ObrazProgramName,
-                                Specialization = x.C_Entry.ProfileName,
+                                Faculty = x.C_Entry.SP_Faculty.Name,
+                                Profession = x.C_Entry.SP_LicenseProgram.Name,
+                                ProfessionCode = x.C_Entry.SP_LicenseProgram.Code,
+                                ObrazProgram = x.C_Entry.SP_ObrazProgram.Name,
+                                Specialization = x.C_Entry.SP_Profile.Name,
                                 x.C_Entry.StudyFormId,
-                                x.C_Entry.StudyFormName,
+                                x.C_Entry.StudyForm.Name,
                                 x.C_Entry.StudyBasisId,
                                 EntryType = (x.C_Entry.StudyLevelId == 17 ? 2 : 1),
                                 x.C_Entry.StudyLevelId,
@@ -320,7 +320,7 @@ namespace PriemForeignInspector
                                   x.PersonAddInfo.HostelAbit,
                                   x.BirthDate,
                                   BirthPlace = x.BirthPlace ?? "",
-                                  Sex = x.Sex ?? false,
+                                  Sex = x.Sex,
                                   Nationality = x.Nationality.Name,
                                   Country = x.PersonContacts.Country.Name,
                                   PassportType = x.PassportType.Name,
@@ -331,21 +331,18 @@ namespace PriemForeignInspector
                                   Address = x.PersonContacts.ForeignAddressInfo,
                                   x.PersonContacts.Phone,
                                   x.PersonContacts.Mobiles,
-                                  x.PersonEducationDocument.SchoolExitYear,
-                                  x.PersonEducationDocument.SchoolName,
+                                  x.PersonEducationDocument.First().SchoolExitYear,
+                                  x.PersonEducationDocument.First().SchoolName,
                                   Language = Language,
                                   AddInfo = x.PersonAddInfo.AddInfo,
                                   Parents = x.PersonAddInfo.Parents,
-                                  x.PersonEducationDocument.IsEqual,
-                                  x.PersonEducationDocument.EqualDocumentNumber,
-                                  CountryEduc = x.PersonEducationDocument.CountryEduc != null ? x.PersonEducationDocument.CountryEduc.Name : "",
-                                  Qualification = x.PersonHighEducationInfo.Qualification != null ? x.PersonHighEducationInfo.Qualification.Name : "",
-                                  x.PersonEducationDocument.SchoolTypeId,
-                                  EducationDocumentSeries = x.PersonEducationDocument.Series,
-                                  EducationDocumentNumber = x.PersonEducationDocument.Number,
-                                  x.PersonEducationDocument.AttestatRegion,
-                                  x.PersonEducationDocument.AttestatSeries,
-                                  x.PersonEducationDocument.AttestatNumber
+                                  x.PersonEducationDocument.First().IsEqual,
+                                  x.PersonEducationDocument.First().EqualDocumentNumber,
+                                  CountryEduc = x.PersonEducationDocument.First().CountryEduc != null ? x.PersonEducationDocument.First().CountryEduc.Name : "",
+                                  Qualification = x.PersonEducationDocument.First().PersonHighEducationInfo.Qualification != null ? x.PersonEducationDocument.First().PersonHighEducationInfo.Qualification.Name : "",
+                                  x.PersonEducationDocument.First().SchoolTypeId,
+                                  EducationDocumentSeries = x.PersonEducationDocument.First().Series,
+                                  EducationDocumentNumber = x.PersonEducationDocument.First().Number,
                               }).FirstOrDefault();
 
 
@@ -432,15 +429,13 @@ namespace PriemForeignInspector
                 //acrFlds.SetField("Original", "0");
                 //acrFlds.SetField("Copy", "0");
 
-                acrFlds.SetField("Attestat", person.SchoolTypeId == 1 ?
-                    person.AttestatRegion + " " + person.AttestatSeries + " " + person.AttestatNumber :
-                    person.EducationDocumentSeries + " " + person.EducationDocumentNumber);
+                acrFlds.SetField("Attestat", person.EducationDocumentSeries + " " + person.EducationDocumentNumber);
 
                 acrFlds.SetField("Language", person.Language ?? "");
                 acrFlds.SetField("CountryEduc", person.CountryEduc ?? "");
                 acrFlds.SetField("Extra", person.AddInfo ?? "");
 
-                if (person.IsEqual ?? false)
+                if (person.IsEqual)
                 {
                     acrFlds.SetField("HasEqual", "1");
                     acrFlds.SetField("EqualityDocument", person.EqualDocumentNumber);

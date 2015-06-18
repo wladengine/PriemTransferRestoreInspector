@@ -24,10 +24,13 @@ namespace PriemForeignInspector
         public string Name { get; set; }
         public string NameEng { get; set; }
         public string Acronym { get; set; }
-        public Nullable<int> IntValue { get; set; }
+        public int IntValue { get; set; }
         public bool IsIntercalaryYear { get; set; }
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
+        public string FullName { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<SP_ObrazProgramInYear> SP_ObrazProgramInYear { get; set; }
         public virtual ICollection<SP_StudyPlan> SP_StudyPlan { get; set; }

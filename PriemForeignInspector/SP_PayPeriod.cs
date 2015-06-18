@@ -25,6 +25,8 @@ namespace PriemForeignInspector
         public string Acronym { get; set; }
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<SP_StudyPlan> SP_StudyPlan { get; set; }
     }

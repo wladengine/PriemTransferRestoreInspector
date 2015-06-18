@@ -29,6 +29,11 @@ namespace PriemForeignInspector
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
         public int IntId { get; set; }
+        public bool IsUseEng { get; set; }
+        public bool IsUseForPrint { get; set; }
+        public string Author { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public System.DateTime DateUpdate { get; set; }
     
         public virtual SP_ObrazProgram SP_ObrazProgram { get; set; }
         public virtual SP_Year SP_Year { get; set; }

@@ -16,28 +16,19 @@ namespace PriemForeignInspector
     {
         public SP_StudyLevel()
         {
+            this.C_Entry = new HashSet<C_Entry>();
+            this.PersonCurrentEducation = new HashSet<PersonCurrentEducation>();
             this.SP_LicenseProgram = new HashSet<SP_LicenseProgram>();
         }
     
         public int Id { get; set; }
+        public int StudyLevelGroupId { get; set; }
         public string Name { get; set; }
-        public string NameEng { get; set; }
         public string Acronym { get; set; }
-        public string Crypt { get; set; }
-        public string FurtherStudy { get; set; }
-        public string FurtherStudyEng { get; set; }
-        public string LevelGroup { get; set; }
-        public Nullable<int> StudyLevelGroupId { get; set; }
-        public Nullable<int> EducationPermitId { get; set; }
-        public Nullable<int> EducationDocumentId { get; set; }
-        public bool HasTwoLicenseProgram { get; set; }
-        public Nullable<int> StudyPlanPrintFormTypeId { get; set; }
-        public bool IsOpen { get; set; }
-        public string Holder { get; set; }
+        public string NameEng { get; set; }
     
-        public virtual SP_EducationDocument SP_EducationDocument { get; set; }
-        public virtual SP_EducationPermit SP_EducationPermit { get; set; }
+        public virtual ICollection<C_Entry> C_Entry { get; set; }
+        public virtual ICollection<PersonCurrentEducation> PersonCurrentEducation { get; set; }
         public virtual ICollection<SP_LicenseProgram> SP_LicenseProgram { get; set; }
-        public virtual SP_StudyLevelGroup SP_StudyLevelGroup { get; set; }
     }
 }
