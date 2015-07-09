@@ -26,7 +26,7 @@ namespace PriemForeignInspector
         public int StudyBasisId { get; set; }
         public int StudyFormId { get; set; }
         public int StudyLevelId { get; set; }
-        public System.Guid ProfileId { get; set; }
+        public int ProfileId { get; set; }
         public bool IsSecond { get; set; }
         public bool IsReduced { get; set; }
         public bool IsParallel { get; set; }

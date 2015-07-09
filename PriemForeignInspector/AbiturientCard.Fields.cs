@@ -45,20 +45,15 @@ namespace PriemForeignInspector
                 //cbObrazProgram.Id(value);
             }
         }
-        public Guid? Profile
+        public int? ProfileId
         {
             get
             {
-                Guid val = Guid.Empty;
-                if (!Guid.TryParse(ComboServ.GetComboId(cbProfile), out val) || val == Guid.Empty)
-                    return null;
-                else
-                    return val;
+                return ComboServ.GetComboIdInt(cbProfile);
             }
             set
             {
                 ComboServ.SetComboId(cbProfile, value.ToString());
-                //cbProfile.Id(value);
             }
         }
         public int? Faculty

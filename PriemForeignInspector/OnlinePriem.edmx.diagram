@@ -44,7 +44,7 @@
         <AssociationConnector Association="OnlinePriem2012Model.FK_PersonEducationDocument_Country" />
         <AssociationConnector Association="OnlinePriem2012Model.FK_PersonEducationDocument_Person" />
         <AssociationConnector Association="OnlinePriem2012Model.FK_PersonHighEducationInfo_PersonEducationDocument" />
-        <EntityTypeShape EntityType="OnlinePriem2012Model.C_Entry" Width="1.5" PointX="15.5" PointY="11.375" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.C_Entry" Width="1.5" PointX="23.25" PointY="2.25" />
         <AssociationConnector Association="OnlinePriem2012Model.FK__Entry_Semester" />
         <AssociationConnector Association="OnlinePriem2012Model.FK__Entry_StudyBasis" />
         <AssociationConnector Association="OnlinePriem2012Model.FK__Entry_StudyForm" />

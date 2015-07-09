@@ -24,6 +24,7 @@ namespace PriemForeignInspector
         public bool IsPrinted { get; set; }
         public bool IsImported { get; set; }
         public Nullable<System.DateTime> DateReviewDocs { get; set; }
+        public bool IsVisible { get; set; }
     
         public virtual ICollection<PersonChangeStudyFormReason> PersonChangeStudyFormReason { get; set; }
     }

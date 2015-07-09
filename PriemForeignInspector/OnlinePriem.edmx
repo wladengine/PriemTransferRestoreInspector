@@ -77,6 +77,7 @@
           <Property Name="IsPrinted" Type="bit" Nullable="false" />
           <Property Name="IsImported" Type="bit" Nullable="false" />
           <Property Name="DateReviewDocs" Type="datetime" />
+          <Property Name="IsVisible" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationCommitVersion">
           <Key>
@@ -1868,6 +1869,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Type="Boolean" Name="IsImported" Nullable="false" />
           <Property Type="DateTime" Name="DateReviewDocs" Precision="3" />
           <NavigationProperty Name="PersonChangeStudyFormReason" Relationship="OnlinePriem2012Model.FK_PersonChangeStudyFormReason_ApplicationCommit" FromRole="ApplicationCommit" ToRole="PersonChangeStudyFormReason" />
+          <Property Name="IsVisible" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationCommitVersion">
           <Key>
@@ -1951,7 +1953,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Type="Int32" Name="StudyBasisId" Nullable="false" />
           <Property Type="Int32" Name="StudyFormId" Nullable="false" />
           <Property Type="Int32" Name="StudyLevelId" Nullable="false" />
-          <Property Type="Guid" Name="ProfileId" Nullable="false" />
+          <Property Type="Int32" Name="ProfileId" Nullable="false" />
           <Property Type="Boolean" Name="IsSecond" Nullable="false" />
           <Property Type="Boolean" Name="IsReduced" Nullable="false" />
           <Property Type="Boolean" Name="IsParallel" Nullable="false" />
@@ -3014,6 +3016,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <EntitySetMapping Name="ApplicationCommit">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.ApplicationCommit">
               <MappingFragment StoreEntitySet="ApplicationCommit">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
                 <ScalarProperty Name="DateReviewDocs" ColumnName="DateReviewDocs" />
                 <ScalarProperty Name="IsImported" ColumnName="IsImported" />
                 <ScalarProperty Name="IsPrinted" ColumnName="IsPrinted" />

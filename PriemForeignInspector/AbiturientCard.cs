@@ -164,7 +164,7 @@ namespace PriemForeignInspector
             dic.Add("@CampaignYear", Util.CampaignYear);
             DataTable tbl = Util.BDC.GetDataTable(query, dic);
             var bind = (from DataRow rw in tbl.Rows
-                        select new KeyValuePair<string, string>(rw.Field<Guid?>("Id").ToString(), rw.Field<string>("Name"))).ToList();
+                        select new KeyValuePair<string, string>(rw.Field<int?>("Id").ToString(), rw.Field<string>("Name"))).ToList();
             //cbProfile.AddItems(bind);
             ComboServ.FillCombo(cbProfile, bind, false, false);
         }
@@ -268,10 +268,10 @@ INNER JOIN Person ON Person.Id = [Application].PersonId
             LicenseProgram = r.Field<int>("LicenseProgramId");
             ObrazProgram = r.Field<int>("ObrazProgramId");
 
-            Guid? temp = r.Field<Guid?>("ProfileId");
+            int? temp = r.Field<int?>("ProfileId");
             if (temp != null)
             {
-                Profile = r.Field<Guid?>("ProfileId"); 
+                ProfileId = r.Field<int?>("ProfileId"); 
             }
             else
             {
@@ -653,10 +653,10 @@ WHERE PersonId=@PersonId AND (IsApproved IS NULL OR IsApproved = 'False') ";
             dic.Add("@StudyLevelId", StudyLevel);
             dic.Add("@SemesterId", SemesterId);
             dic.Add("@CampaignYear", Util.CampaignYear);
-            if (Profile != null)
+            if (ProfileId != null)
             {
                 query += " AND ProfileId=@ProfileId";
-                dic.Add("@ProfileId", Profile);
+                dic.Add("@ProfileId", ProfileId);
             }
             Guid? EntryId = (Guid?)Util.BDC.GetValue(query, dic);
 
