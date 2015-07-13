@@ -50,7 +50,7 @@ namespace PriemForeignInspector
                 query = "SELECT FileName FROM AllFiles WHERE Id=@Id";
                 string fname = Util.BDC.GetValue(query, new Dictionary<string, object>() { { "@Id", _FileId } }).ToString();
 
-                query = "INSERT INTO ForeignPersonHistory (PersonId, Action, NewValue, Time, Owner) VALUES (@PersonId, @Action, @NewValue, @Time, @Owner)";
+                query = "INSERT INTO PersonHistory (PersonId, Action, NewValue, Time, Owner) VALUES (@PersonId, @Action, @NewValue, @Time, @Owner)";
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("@PersonId", pid.Value);
                 dic.Add("@Action", "Файл не одобрен");

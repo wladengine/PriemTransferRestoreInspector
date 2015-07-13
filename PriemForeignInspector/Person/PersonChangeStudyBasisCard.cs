@@ -286,17 +286,19 @@ namespace PriemForeignInspector
             }
             CheckBtnDisable();
 
-            string query = @"SELECT [Application].Id, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled,IsApprovedByComission,
-            case when ((select top 1 Application.SecondTypeId from Application where PersonId = @Id and IsCommited = 1)=2) 
-				then
-					(case 
-						when ((Select CountryEducId from PersonEducationDocument where PersonId=@Id )=193)
-						then (select [AbiturientType].[Description] from AbiturientType where Id = 3) 
-						else (select [AbiturientType].[Description] from AbiturientType where Id = 4) 
-						end ) 
-					else 
-					(Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
+            int ContryEduc = (int)Util.BDC.GetValue(@"Select top 1 CountryEducId from PersonEducationDocument where 
+								PersonId=@Id and SchoolTypeId = 4  order by Id", new Dictionary<string, object>() { { "@Id", _PersonId } });
+
+
+            string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
+            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
+            IsApprovedByComission,
+            case when (Application.SecondTypeId =2) 
+				then (
+					" + (ContryEduc == 193 ?
+                      @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
+                     @"select [AbiturientType].[Description] from AbiturientType where Id = 4 ") +
+                @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
             FROM [Application] 
             INNER JOIN Entry ON Entry.Id = [Application].EntryId 
             WHERE PersonId=@Id  and IsCommited = 1

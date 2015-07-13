@@ -462,11 +462,6 @@ namespace PriemForeignInspector
 
         public bool IsDisabled { get; set; }
 
-        public int? CurrentEducationTypeId
-        {
-            get { return (int?)cbCurrentEducationType.Id(); }
-            set { cbCurrentEducationType.Id(value ?? 1); }
-        }
         public int? CurrentEducationStudyLevelId
         {
             get { return (int?)cbCurrentEducationStudyLevel.Id(); }
@@ -477,11 +472,12 @@ namespace PriemForeignInspector
             get { return (int?)cbCurrentEducationSemester.Id(); }
             set { cbCurrentEducationSemester.Id(value ?? 1); }
         }
-        public string CurrentEducationName
+        public int? CurrentLicenseProgramId
         {
-            get { return tbCurrentEducationName.Text.Trim(); }
-            set { tbCurrentEducationName.Text = value; }
+            get { return (int?)cbLicenseProgram.Id(); }
+            set { cbLicenseProgram.Id(value ?? 1); }
         }
+        
         public string AccreditationNumber
         {
             get { return tbAccreditationNumber.Text.Trim(); }
@@ -538,6 +534,11 @@ namespace PriemForeignInspector
                 chbHostelEducNo.Checked = !value;
             }
         }
+        public int? RegionEduc
+        {
+            get { return (int?)cbRegionEduc.Id(); }
+            set { cbRegionEduc.Id(value); }
+        }
 
         public string Parents
         {
@@ -549,5 +550,31 @@ namespace PriemForeignInspector
             get { return tbAddInfo.Text.Trim(); }
             set { tbAddInfo.Text = value; }
         }
+        private int CurrEducationId { get; set; }
+        public int? EntryYear
+        {
+            get
+            {
+                int ret;
+                if (!int.TryParse(tbEntryYear.Text, out ret))
+                    return null;
+                return ret;
+            }
+            set
+            {
+                tbEntryYear.Text = value.HasValue ? value.Value.ToString() : "";
+            }
+        }
+        public int? StudyFormId
+        {
+            get { return (int?)cbStudyForm.Id(); }
+            set { cbStudyForm.Id(value); }
+        }
+        public int? StudyBasisId
+        {
+            get { return (int?)cbStudyBasis.Id(); }
+            set { cbStudyBasis.Id(value); }
+        }
+
     }
 }

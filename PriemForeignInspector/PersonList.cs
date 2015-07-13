@@ -192,10 +192,10 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
             string query = @"SELECT DISTINCT 
                             extPersonAll.Id as PersonId, 
                             Application.SecondTypeId as AbiturientTypeId, 
-                            case when ((select top 1 Application.SecondTypeId from Application where PersonId = extPersonAll.Id and IsCommited = 1)=2) 
+                            case when (Application.SecondTypeId=2) 
 								then
 									(case 
-										when ((Select TOP 1 CountryEducId from PersonEducationDocument where PersonId=extPersonAll.Id)=193)
+										when ((Select TOP 1 CountryEducId from PersonEducationDocument where PersonId=extPersonAll.Id and SchoolTypeId = 4  order by Id)=193)
 										then (select [AbiturientType].[Description] from AbiturientType where Id = 3) 
 										else (select [AbiturientType].[Description] from AbiturientType where Id = 4) 
 										end ) 

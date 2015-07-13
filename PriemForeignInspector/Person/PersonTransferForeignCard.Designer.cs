@@ -77,20 +77,13 @@
             this.chbIsEqual = new System.Windows.Forms.CheckBox();
             this.tbEqualityDocumentNumber = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
-            this.chbHostelEducNo = new System.Windows.Forms.CheckBox();
-            this.chbHostelEducYes = new System.Windows.Forms.CheckBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
             this.chbHasScholarship = new System.Windows.Forms.CheckBox();
             this.cbCountryEduc = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
             this.cbCurrentEducationSemester = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.cbCurrentEducationStudyLevel = new System.Windows.Forms.ComboBox();
-            this.tbCurrentEducationName = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.cbCurrentEducationType = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
@@ -155,6 +148,21 @@
             this.tbMaritalStatus = new System.Windows.Forms.TextBox();
             this.label38 = new System.Windows.Forms.Label();
             this.lblFIO = new System.Windows.Forms.Label();
+            this.chbHostelEducNo = new System.Windows.Forms.CheckBox();
+            this.chbHostelEducYes = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.cbLicenseProgram = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbStudyBasis = new System.Windows.Forms.ComboBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.cbStudyForm = new System.Windows.Forms.ComboBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.dgvEducation = new System.Windows.Forms.DataGridView();
+            this.btnEducationSave = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.tbEntryYear = new System.Windows.Forms.TextBox();
+            this.cbRegionEduc = new System.Windows.Forms.ComboBox();
+            this.label55 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -169,11 +177,12 @@
             this.tpApps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApps)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEducation)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHistory
             // 
-            this.btnHistory.Location = new System.Drawing.Point(347, 520);
+            this.btnHistory.Location = new System.Drawing.Point(360, 599);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(75, 23);
             this.btnHistory.TabIndex = 7;
@@ -183,7 +192,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 520);
+            this.btnSave.Location = new System.Drawing.Point(25, 599);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(81, 23);
             this.btnSave.TabIndex = 6;
@@ -193,7 +202,7 @@
             // 
             // btnDisable
             // 
-            this.btnDisable.Location = new System.Drawing.Point(162, 520);
+            this.btnDisable.Location = new System.Drawing.Point(175, 599);
             this.btnDisable.Name = "btnDisable";
             this.btnDisable.Size = new System.Drawing.Size(119, 23);
             this.btnDisable.TabIndex = 5;
@@ -211,7 +220,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 36);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(476, 478);
+            this.tabControl1.Size = new System.Drawing.Size(476, 557);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage1
@@ -541,37 +550,35 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.dgvEducation);
             this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(468, 452);
+            this.tabPage2.Size = new System.Drawing.Size(468, 531);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Образование";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cbLicenseProgram);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.cbStudyBasis);
+            this.groupBox4.Controls.Add(this.label51);
+            this.groupBox4.Controls.Add(this.cbStudyForm);
+            this.groupBox4.Controls.Add(this.label54);
             this.groupBox4.Controls.Add(this.groupBox7);
             this.groupBox4.Controls.Add(this.groupBox6);
-            this.groupBox4.Controls.Add(this.chbHostelEducNo);
-            this.groupBox4.Controls.Add(this.chbHostelEducYes);
-            this.groupBox4.Controls.Add(this.label27);
-            this.groupBox4.Controls.Add(this.label52);
             this.groupBox4.Controls.Add(this.chbHasScholarship);
-            this.groupBox4.Controls.Add(this.cbCountryEduc);
             this.groupBox4.Controls.Add(this.label30);
             this.groupBox4.Controls.Add(this.cbCurrentEducationSemester);
             this.groupBox4.Controls.Add(this.label28);
             this.groupBox4.Controls.Add(this.cbCurrentEducationStudyLevel);
-            this.groupBox4.Controls.Add(this.tbCurrentEducationName);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.label29);
-            this.groupBox4.Controls.Add(this.cbCurrentEducationType);
-            this.groupBox4.Location = new System.Drawing.Point(6, 119);
+            this.groupBox4.Location = new System.Drawing.Point(6, 269);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(456, 327);
+            this.groupBox4.Size = new System.Drawing.Size(456, 256);
             this.groupBox4.TabIndex = 35;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Текущее место обучения";
@@ -583,9 +590,9 @@
             this.groupBox7.Controls.Add(this.label11);
             this.groupBox7.Controls.Add(this.dtpAccreditationDate);
             this.groupBox7.Controls.Add(this.label14);
-            this.groupBox7.Location = new System.Drawing.Point(11, 230);
+            this.groupBox7.Location = new System.Drawing.Point(9, 178);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(431, 71);
+            this.groupBox7.Size = new System.Drawing.Size(439, 71);
             this.groupBox7.TabIndex = 130;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Гос. аккредитация";
@@ -593,6 +600,7 @@
             // chbHasAccreditation
             // 
             this.chbHasAccreditation.AutoSize = true;
+            this.chbHasAccreditation.Enabled = false;
             this.chbHasAccreditation.Location = new System.Drawing.Point(6, 19);
             this.chbHasAccreditation.Name = "chbHasAccreditation";
             this.chbHasAccreditation.Size = new System.Drawing.Size(158, 17);
@@ -640,9 +648,9 @@
             this.groupBox6.Controls.Add(this.chbIsEqual);
             this.groupBox6.Controls.Add(this.tbEqualityDocumentNumber);
             this.groupBox6.Controls.Add(this.label36);
-            this.groupBox6.Location = new System.Drawing.Point(11, 181);
+            this.groupBox6.Location = new System.Drawing.Point(9, 125);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(431, 47);
+            this.groupBox6.Size = new System.Drawing.Size(439, 47);
             this.groupBox6.TabIndex = 129;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Свидетельство эквивалентности";
@@ -650,6 +658,7 @@
             // chbIsEqual
             // 
             this.chbIsEqual.AutoSize = true;
+            this.chbIsEqual.Enabled = false;
             this.chbIsEqual.Location = new System.Drawing.Point(6, 18);
             this.chbIsEqual.Name = "chbIsEqual";
             this.chbIsEqual.Size = new System.Drawing.Size(160, 17);
@@ -674,52 +683,20 @@
             this.label36.TabIndex = 39;
             this.label36.Text = "№ св-ва";
             // 
-            // chbHostelEducNo
-            // 
-            this.chbHostelEducNo.AutoSize = true;
-            this.chbHostelEducNo.Location = new System.Drawing.Point(397, 303);
-            this.chbHostelEducNo.Name = "chbHostelEducNo";
-            this.chbHostelEducNo.Size = new System.Drawing.Size(45, 17);
-            this.chbHostelEducNo.TabIndex = 127;
-            this.chbHostelEducNo.Text = "Нет";
-            this.chbHostelEducNo.UseVisualStyleBackColor = true;
-            this.chbHostelEducNo.CheckedChanged += new System.EventHandler(this.chbHostelEducNo_CheckedChanged);
-            // 
-            // chbHostelEducYes
-            // 
-            this.chbHostelEducYes.AutoSize = true;
-            this.chbHostelEducYes.Location = new System.Drawing.Point(349, 303);
-            this.chbHostelEducYes.Name = "chbHostelEducYes";
-            this.chbHostelEducYes.Size = new System.Drawing.Size(41, 17);
-            this.chbHostelEducYes.TabIndex = 126;
-            this.chbHostelEducYes.Text = "Да";
-            this.chbHostelEducYes.UseVisualStyleBackColor = true;
-            this.chbHostelEducYes.CheckedChanged += new System.EventHandler(this.chbHostelEducYes_CheckedChanged);
-            // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(44, 22);
+            this.label27.Location = new System.Drawing.Point(15, 50);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(43, 13);
             this.label27.TabIndex = 33;
             this.label27.Text = "Страна";
             // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(98, 304);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(245, 13);
-            this.label52.TabIndex = 128;
-            this.label52.Text = "Предоставлять общежитие на время обучения";
-            // 
             // chbHasScholarship
             // 
-            this.chbHasScholarship.AutoSize = true;
-            this.chbHasScholarship.Location = new System.Drawing.Point(281, 140);
+            this.chbHasScholarship.Location = new System.Drawing.Point(345, 49);
             this.chbHasScholarship.Name = "chbHasScholarship";
-            this.chbHasScholarship.Size = new System.Drawing.Size(161, 17);
+            this.chbHasScholarship.Size = new System.Drawing.Size(103, 43);
             this.chbHasScholarship.TabIndex = 41;
             this.chbHasScholarship.Text = "Получает акад. стипендию";
             this.chbHasScholarship.UseVisualStyleBackColor = true;
@@ -729,7 +706,7 @@
             this.cbCountryEduc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCountryEduc.Enabled = false;
             this.cbCountryEduc.FormattingEnabled = true;
-            this.cbCountryEduc.Location = new System.Drawing.Point(93, 22);
+            this.cbCountryEduc.Location = new System.Drawing.Point(64, 47);
             this.cbCountryEduc.Name = "cbCountryEduc";
             this.cbCountryEduc.Size = new System.Drawing.Size(179, 21);
             this.cbCountryEduc.TabIndex = 32;
@@ -737,7 +714,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(56, 157);
+            this.label30.Location = new System.Drawing.Point(265, 22);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(51, 13);
             this.label30.TabIndex = 40;
@@ -746,16 +723,18 @@
             // cbCurrentEducationSemester
             // 
             this.cbCurrentEducationSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCurrentEducationSemester.Enabled = false;
             this.cbCurrentEducationSemester.FormattingEnabled = true;
-            this.cbCurrentEducationSemester.Location = new System.Drawing.Point(113, 154);
+            this.cbCurrentEducationSemester.Location = new System.Drawing.Point(322, 19);
             this.cbCurrentEducationSemester.Name = "cbCurrentEducationSemester";
-            this.cbCurrentEducationSemester.Size = new System.Drawing.Size(159, 21);
+            this.cbCurrentEducationSemester.Size = new System.Drawing.Size(126, 21);
             this.cbCurrentEducationSemester.TabIndex = 39;
+            this.cbCurrentEducationSemester.SelectedIndexChanged += new System.EventHandler(this.cbCurrentEducationSemester_SelectedIndexChanged);
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(8, 130);
+            this.label28.Location = new System.Drawing.Point(6, 22);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(100, 13);
             this.label28.TabIndex = 38;
@@ -764,50 +743,21 @@
             // cbCurrentEducationStudyLevel
             // 
             this.cbCurrentEducationStudyLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCurrentEducationStudyLevel.Enabled = false;
             this.cbCurrentEducationStudyLevel.FormattingEnabled = true;
-            this.cbCurrentEducationStudyLevel.Location = new System.Drawing.Point(114, 127);
+            this.cbCurrentEducationStudyLevel.Location = new System.Drawing.Point(108, 19);
             this.cbCurrentEducationStudyLevel.Name = "cbCurrentEducationStudyLevel";
-            this.cbCurrentEducationStudyLevel.Size = new System.Drawing.Size(158, 21);
+            this.cbCurrentEducationStudyLevel.Size = new System.Drawing.Size(151, 21);
             this.cbCurrentEducationStudyLevel.TabIndex = 37;
-            // 
-            // tbCurrentEducationName
-            // 
-            this.tbCurrentEducationName.Enabled = false;
-            this.tbCurrentEducationName.Location = new System.Drawing.Point(93, 82);
-            this.tbCurrentEducationName.Multiline = true;
-            this.tbCurrentEducationName.Name = "tbCurrentEducationName";
-            this.tbCurrentEducationName.Size = new System.Drawing.Size(349, 39);
-            this.tbCurrentEducationName.TabIndex = 3;
-            // 
-            // label13
-            // 
-            this.label13.Location = new System.Drawing.Point(8, 82);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 29);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "Название обр. учреждения";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(42, 55);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(45, 13);
-            this.label29.TabIndex = 31;
-            this.label29.Text = "Тип ОУ";
-            // 
-            // cbCurrentEducationType
-            // 
-            this.cbCurrentEducationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCurrentEducationType.FormattingEnabled = true;
-            this.cbCurrentEducationType.Location = new System.Drawing.Point(93, 55);
-            this.cbCurrentEducationType.Name = "cbCurrentEducationType";
-            this.cbCurrentEducationType.Size = new System.Drawing.Size(179, 21);
-            this.cbCurrentEducationType.TabIndex = 30;
+            this.cbCurrentEducationStudyLevel.SelectedIndexChanged += new System.EventHandler(this.cbCurrentEducationStudyLevel_SelectedIndexChanged);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbRegionEduc);
+            this.groupBox3.Controls.Add(this.label55);
+            this.groupBox3.Controls.Add(this.btnEducationSave);
+            this.groupBox3.Controls.Add(this.label29);
+            this.groupBox3.Controls.Add(this.tbEntryYear);
             this.groupBox3.Controls.Add(this.tbNumber);
             this.groupBox3.Controls.Add(this.label35);
             this.groupBox3.Controls.Add(this.tbSeries);
@@ -816,11 +766,14 @@
             this.groupBox3.Controls.Add(this.Yfbvtyjdfybt);
             this.groupBox3.Controls.Add(this.label34);
             this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.label27);
             this.groupBox3.Controls.Add(this.tbExitYear);
             this.groupBox3.Controls.Add(this.cbSchoolType);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Controls.Add(this.cbCountryEduc);
+            this.groupBox3.Enabled = false;
+            this.groupBox3.Location = new System.Drawing.Point(9, 78);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(456, 107);
+            this.groupBox3.Size = new System.Drawing.Size(456, 185);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Документ об образовании";
@@ -828,7 +781,7 @@
             // tbNumber
             // 
             this.tbNumber.Enabled = false;
-            this.tbNumber.Location = new System.Drawing.Point(335, 73);
+            this.tbNumber.Location = new System.Drawing.Point(343, 149);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(107, 20);
             this.tbNumber.TabIndex = 37;
@@ -836,7 +789,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(288, 76);
+            this.label35.Location = new System.Drawing.Point(296, 152);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(41, 13);
             this.label35.TabIndex = 36;
@@ -845,7 +798,7 @@
             // tbSeries
             // 
             this.tbSeries.Enabled = false;
-            this.tbSeries.Location = new System.Drawing.Point(189, 73);
+            this.tbSeries.Location = new System.Drawing.Point(197, 149);
             this.tbSeries.Name = "tbSeries";
             this.tbSeries.Size = new System.Drawing.Size(95, 20);
             this.tbSeries.TabIndex = 35;
@@ -853,7 +806,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(145, 76);
+            this.label33.Location = new System.Drawing.Point(153, 152);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(38, 13);
             this.label33.TabIndex = 34;
@@ -862,14 +815,15 @@
             // tbEducationName
             // 
             this.tbEducationName.Enabled = false;
-            this.tbEducationName.Location = new System.Drawing.Point(93, 47);
+            this.tbEducationName.Location = new System.Drawing.Point(101, 107);
+            this.tbEducationName.Multiline = true;
             this.tbEducationName.Name = "tbEducationName";
-            this.tbEducationName.Size = new System.Drawing.Size(349, 20);
+            this.tbEducationName.Size = new System.Drawing.Size(355, 36);
             this.tbEducationName.TabIndex = 3;
             // 
             // Yfbvtyjdfybt
             // 
-            this.Yfbvtyjdfybt.Location = new System.Drawing.Point(4, 42);
+            this.Yfbvtyjdfybt.Location = new System.Drawing.Point(14, 107);
             this.Yfbvtyjdfybt.Name = "Yfbvtyjdfybt";
             this.Yfbvtyjdfybt.Size = new System.Drawing.Size(83, 29);
             this.Yfbvtyjdfybt.TabIndex = 2;
@@ -879,16 +833,16 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(6, 77);
+            this.label34.Location = new System.Drawing.Point(250, 67);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(81, 13);
+            this.label34.Size = new System.Drawing.Size(130, 13);
             this.label34.TabIndex = 21;
-            this.label34.Text = "Год окончания";
+            this.label34.Text = "Год окончания обучения";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(42, 19);
+            this.label12.Location = new System.Drawing.Point(13, 20);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(45, 13);
             this.label12.TabIndex = 31;
@@ -897,22 +851,26 @@
             // tbExitYear
             // 
             this.tbExitYear.Enabled = false;
-            this.tbExitYear.Location = new System.Drawing.Point(93, 73);
+            this.tbExitYear.Location = new System.Drawing.Point(386, 67);
             this.tbExitYear.Name = "tbExitYear";
-            this.tbExitYear.Size = new System.Drawing.Size(47, 20);
+            this.tbExitYear.Size = new System.Drawing.Size(59, 20);
             this.tbExitYear.TabIndex = 29;
             // 
             // cbSchoolType
             // 
             this.cbSchoolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSchoolType.Enabled = false;
             this.cbSchoolType.FormattingEnabled = true;
-            this.cbSchoolType.Location = new System.Drawing.Point(93, 19);
+            this.cbSchoolType.Location = new System.Drawing.Point(64, 20);
             this.cbSchoolType.Name = "cbSchoolType";
             this.cbSchoolType.Size = new System.Drawing.Size(179, 21);
             this.cbSchoolType.TabIndex = 30;
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.chbHostelEducNo);
+            this.tabPage5.Controls.Add(this.chbHostelEducYes);
+            this.tabPage5.Controls.Add(this.label52);
             this.tabPage5.Controls.Add(this.tbMobiles);
             this.tabPage5.Controls.Add(this.label48);
             this.tabPage5.Controls.Add(this.groupBox5);
@@ -964,7 +922,7 @@
             this.groupBox5.Controls.Add(this.label46);
             this.groupBox5.Controls.Add(this.tbCodeReal);
             this.groupBox5.Controls.Add(this.label47);
-            this.groupBox5.Location = new System.Drawing.Point(17, 304);
+            this.groupBox5.Location = new System.Drawing.Point(17, 284);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(429, 145);
             this.groupBox5.TabIndex = 30;
@@ -1129,7 +1087,7 @@
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Location = new System.Drawing.Point(17, 153);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(429, 145);
+            this.groupBox2.Size = new System.Drawing.Size(429, 132);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Адрес регистрации (прописки)";
@@ -1137,7 +1095,7 @@
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(215, 16);
+            this.label53.Location = new System.Drawing.Point(215, 10);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(67, 13);
             this.label53.TabIndex = 119;
@@ -1145,7 +1103,7 @@
             // 
             // tbCodeKladr
             // 
-            this.tbCodeKladr.Location = new System.Drawing.Point(218, 32);
+            this.tbCodeKladr.Location = new System.Drawing.Point(218, 26);
             this.tbCodeKladr.MaxLength = 50;
             this.tbCodeKladr.Name = "tbCodeKladr";
             this.tbCodeKladr.ReadOnly = true;
@@ -1155,7 +1113,7 @@
             // tbFlat
             // 
             this.tbFlat.Enabled = false;
-            this.tbFlat.Location = new System.Drawing.Point(335, 119);
+            this.tbFlat.Location = new System.Drawing.Point(335, 105);
             this.tbFlat.Name = "tbFlat";
             this.tbFlat.Size = new System.Drawing.Size(70, 20);
             this.tbFlat.TabIndex = 17;
@@ -1163,7 +1121,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(275, 122);
+            this.label24.Location = new System.Drawing.Point(275, 108);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(55, 13);
             this.label24.TabIndex = 16;
@@ -1172,7 +1130,7 @@
             // tbKorpus
             // 
             this.tbKorpus.Enabled = false;
-            this.tbKorpus.Location = new System.Drawing.Point(209, 119);
+            this.tbKorpus.Location = new System.Drawing.Point(209, 105);
             this.tbKorpus.Name = "tbKorpus";
             this.tbKorpus.Size = new System.Drawing.Size(60, 20);
             this.tbKorpus.TabIndex = 15;
@@ -1180,7 +1138,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(160, 122);
+            this.label23.Location = new System.Drawing.Point(160, 108);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(43, 13);
             this.label23.TabIndex = 14;
@@ -1189,7 +1147,7 @@
             // tbHouse
             // 
             this.tbHouse.Enabled = false;
-            this.tbHouse.Location = new System.Drawing.Point(82, 119);
+            this.tbHouse.Location = new System.Drawing.Point(82, 105);
             this.tbHouse.Name = "tbHouse";
             this.tbHouse.Size = new System.Drawing.Size(72, 20);
             this.tbHouse.TabIndex = 13;
@@ -1197,7 +1155,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(46, 122);
+            this.label22.Location = new System.Drawing.Point(46, 108);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(30, 13);
             this.label22.TabIndex = 12;
@@ -1206,7 +1164,7 @@
             // tbStreet
             // 
             this.tbStreet.Enabled = false;
-            this.tbStreet.Location = new System.Drawing.Point(82, 84);
+            this.tbStreet.Location = new System.Drawing.Point(82, 78);
             this.tbStreet.Name = "tbStreet";
             this.tbStreet.Size = new System.Drawing.Size(323, 20);
             this.tbStreet.TabIndex = 11;
@@ -1214,7 +1172,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(37, 87);
+            this.label21.Location = new System.Drawing.Point(37, 81);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(39, 13);
             this.label21.TabIndex = 10;
@@ -1223,7 +1181,7 @@
             // tbCity
             // 
             this.tbCity.Enabled = false;
-            this.tbCity.Location = new System.Drawing.Point(82, 58);
+            this.tbCity.Location = new System.Drawing.Point(82, 52);
             this.tbCity.Name = "tbCity";
             this.tbCity.Size = new System.Drawing.Size(323, 20);
             this.tbCity.TabIndex = 9;
@@ -1231,7 +1189,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(39, 61);
+            this.label18.Location = new System.Drawing.Point(39, 55);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(37, 13);
             this.label18.TabIndex = 8;
@@ -1240,7 +1198,7 @@
             // tbCode
             // 
             this.tbCode.Enabled = false;
-            this.tbCode.Location = new System.Drawing.Point(82, 32);
+            this.tbCode.Location = new System.Drawing.Point(82, 26);
             this.tbCode.Name = "tbCode";
             this.tbCode.Size = new System.Drawing.Size(94, 20);
             this.tbCode.TabIndex = 7;
@@ -1248,7 +1206,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(24, 35);
+            this.label16.Location = new System.Drawing.Point(24, 29);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(45, 13);
             this.label16.TabIndex = 6;
@@ -1433,11 +1391,155 @@
             this.lblFIO.TabIndex = 9;
             this.lblFIO.Text = "FIO";
             // 
+            // chbHostelEducNo
+            // 
+            this.chbHostelEducNo.AutoSize = true;
+            this.chbHostelEducNo.Location = new System.Drawing.Point(401, 431);
+            this.chbHostelEducNo.Name = "chbHostelEducNo";
+            this.chbHostelEducNo.Size = new System.Drawing.Size(45, 17);
+            this.chbHostelEducNo.TabIndex = 130;
+            this.chbHostelEducNo.Text = "Нет";
+            this.chbHostelEducNo.UseVisualStyleBackColor = true;
+            // 
+            // chbHostelEducYes
+            // 
+            this.chbHostelEducYes.AutoSize = true;
+            this.chbHostelEducYes.Location = new System.Drawing.Point(353, 431);
+            this.chbHostelEducYes.Name = "chbHostelEducYes";
+            this.chbHostelEducYes.Size = new System.Drawing.Size(41, 17);
+            this.chbHostelEducYes.TabIndex = 129;
+            this.chbHostelEducYes.Text = "Да";
+            this.chbHostelEducYes.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(102, 432);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(245, 13);
+            this.label52.TabIndex = 131;
+            this.label52.Text = "Предоставлять общежитие на время обучения";
+            // 
+            // cbLicenseProgram
+            // 
+            this.cbLicenseProgram.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLicenseProgram.Enabled = false;
+            this.cbLicenseProgram.FormattingEnabled = true;
+            this.cbLicenseProgram.Location = new System.Drawing.Point(108, 100);
+            this.cbLicenseProgram.Name = "cbLicenseProgram";
+            this.cbLicenseProgram.Size = new System.Drawing.Size(340, 21);
+            this.cbLicenseProgram.TabIndex = 143;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(27, 103);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(75, 13);
+            this.label13.TabIndex = 144;
+            this.label13.Text = "Направление";
+            // 
+            // cbStudyBasis
+            // 
+            this.cbStudyBasis.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudyBasis.Enabled = false;
+            this.cbStudyBasis.FormattingEnabled = true;
+            this.cbStudyBasis.Location = new System.Drawing.Point(108, 73);
+            this.cbStudyBasis.Name = "cbStudyBasis";
+            this.cbStudyBasis.Size = new System.Drawing.Size(208, 21);
+            this.cbStudyBasis.TabIndex = 141;
+            this.cbStudyBasis.SelectedIndexChanged += new System.EventHandler(this.cbStudyBasis_SelectedIndexChanged);
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(8, 76);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(94, 13);
+            this.label51.TabIndex = 142;
+            this.label51.Text = "Основа обучения";
+            // 
+            // cbStudyForm
+            // 
+            this.cbStudyForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudyForm.Enabled = false;
+            this.cbStudyForm.FormattingEnabled = true;
+            this.cbStudyForm.Location = new System.Drawing.Point(108, 46);
+            this.cbStudyForm.Name = "cbStudyForm";
+            this.cbStudyForm.Size = new System.Drawing.Size(208, 21);
+            this.cbStudyForm.TabIndex = 139;
+            this.cbStudyForm.SelectedIndexChanged += new System.EventHandler(this.cbStudyForm_SelectedIndexChanged);
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(7, 49);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(93, 13);
+            this.label54.TabIndex = 140;
+            this.label54.Text = "Форма обучения";
+            // 
+            // dgvEducation
+            // 
+            this.dgvEducation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEducation.Location = new System.Drawing.Point(6, 6);
+            this.dgvEducation.Name = "dgvEducation";
+            this.dgvEducation.Size = new System.Drawing.Size(456, 66);
+            this.dgvEducation.TabIndex = 37;
+            this.dgvEducation.CurrentCellChanged += new System.EventHandler(this.dgvEducation_CurrentCellChanged);
+            // 
+            // btnEducationSave
+            // 
+            this.btnEducationSave.Enabled = false;
+            this.btnEducationSave.Location = new System.Drawing.Point(375, 10);
+            this.btnEducationSave.Name = "btnEducationSave";
+            this.btnEducationSave.Size = new System.Drawing.Size(75, 23);
+            this.btnEducationSave.TabIndex = 132;
+            this.btnEducationSave.Text = "Сохранить";
+            this.btnEducationSave.UseVisualStyleBackColor = true;
+            this.btnEducationSave.Click += new System.EventHandler(this.btnEducationSave_Click);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(268, 48);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(112, 13);
+            this.label29.TabIndex = 130;
+            this.label29.Text = "Год начала обучения";
+            // 
+            // tbEntryYear
+            // 
+            this.tbEntryYear.Enabled = false;
+            this.tbEntryYear.Location = new System.Drawing.Point(386, 45);
+            this.tbEntryYear.Name = "tbEntryYear";
+            this.tbEntryYear.Size = new System.Drawing.Size(58, 20);
+            this.tbEntryYear.TabIndex = 131;
+            // 
+            // cbRegionEduc
+            // 
+            this.cbRegionEduc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRegionEduc.Enabled = false;
+            this.cbRegionEduc.FormattingEnabled = true;
+            this.cbRegionEduc.Location = new System.Drawing.Point(64, 74);
+            this.cbRegionEduc.Name = "cbRegionEduc";
+            this.cbRegionEduc.Size = new System.Drawing.Size(179, 21);
+            this.cbRegionEduc.TabIndex = 133;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(15, 77);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(43, 13);
+            this.label55.TabIndex = 134;
+            this.label55.Text = "Регион";
+            // 
             // PersonTransferForeignCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 555);
+            this.ClientSize = new System.Drawing.Size(493, 634);
             this.Controls.Add(this.lblFIO);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnHistory);
@@ -1470,6 +1572,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvApps)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEducation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1524,10 +1627,6 @@
         private System.Windows.Forms.TextBox tbAccreditationNumber;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox chbHasAccreditation;
-        private System.Windows.Forms.TextBox tbCurrentEducationName;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ComboBox cbCurrentEducationType;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox tbNumber;
         private System.Windows.Forms.Label label35;
@@ -1597,12 +1696,24 @@
         private System.Windows.Forms.TextBox tbCodeKladr;
         private System.Windows.Forms.TextBox tbMobiles;
         private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.CheckBox chbHostelEducNo;
-        private System.Windows.Forms.CheckBox chbHostelEducYes;
-        private System.Windows.Forms.Label label52;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.CheckBox chbHostelEducNo;
+        private System.Windows.Forms.CheckBox chbHostelEducYes;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.ComboBox cbLicenseProgram;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cbStudyBasis;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.ComboBox cbStudyForm;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.DataGridView dgvEducation;
+        private System.Windows.Forms.Button btnEducationSave;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox tbEntryYear;
+        private System.Windows.Forms.ComboBox cbRegionEduc;
+        private System.Windows.Forms.Label label55;
     }
 }

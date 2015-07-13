@@ -35,7 +35,7 @@ namespace PriemForeignInspector
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            string query = "INSERT INTO [ForeignPersonHistory] (PersonId, Action, NewValue) VALUES (@PersonId, @Action, @NewValue)";
+            string query = "INSERT INTO [PersonHistory] (PersonId, Action, NewValue) VALUES (@PersonId, @Action, @NewValue)";
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("@PersonId", _personId);
             dic.Add("@Action", "Email");

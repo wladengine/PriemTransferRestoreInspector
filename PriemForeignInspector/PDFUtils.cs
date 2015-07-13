@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Data;
+using System.Windows.Forms;
 
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -212,20 +213,16 @@ namespace PriemForeignInspector
                                     EducYear = Semester.EducYear
                                 }).OrderBy(x => x.Priority).FirstOrDefault();
 
-                /* var abitProfileList = (from x in context.Application
-                                        join Ad in context.extApplicationDetails on x.Id equals Ad.ApplicationId
-                                        where x.CommitId == appId
-                                        select new ShortAppcationDetails()
-                                        {
-                                            ApplicationId = x.Id,
-                                            CurrVersion = Ad.CurrVersion,
-                                            CurrDate = Ad.CurrDate,
-                                            ObrazProgramInEntryPriority = Ad.ObrazProgramInEntryPriority,
-                                            ObrazProgramName = ((Ad.ObrazProgramCrypt + " ") ?? "") + Ad.ObrazProgramName,
-                                            ProfileInObrazProgramInEntryPriority = Ad.ProfileInObrazProgramInEntryPriority,
-                                            ProfileName = Ad.ProfileName
-                                        }).ToList();
-                 */
+               
+                var PersonCurEduc = (from x in context.PersonCurrentEducation
+                                     where x.PersonId == PersonId
+                                     select x).FirstOrDefault();
+
+                if (PersonCurEduc == null)
+                {
+                    MessageBox.Show("У абитуриента отсутствует информация о текущем образовании. Заполните информацию в графе \"Образование\" - \"Текущее образование\" и сохраните карточку.", "Ошибка");
+                    return null;
+                }
                 string query = "SELECT Email, IsForeign FROM [User] WHERE Id=@Id";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", PersonId } }); 
                 string email = tbl.Rows[0].Field<string>("Email");
@@ -425,7 +422,14 @@ namespace PriemForeignInspector
                                     SemesterName = Semester.Name,
                                     EducYear = Semester.EducYear
                                 }).OrderBy(x => x.Priority).FirstOrDefault();
- 
+                var PersonCurEduc = (from x in context.PersonCurrentEducation
+                                     where x.PersonId == PersonId
+                                     select x).FirstOrDefault();
+                if (PersonCurEduc == null)
+                {
+                    MessageBox.Show("У абитуриента отсутствует информация о текущем образовании. Заполните информацию в графе \"Образование\" - \"Текущее образование\" и сохраните карточку.", "Ошибка");
+                    return null;
+                }
                 string query = "SELECT Email, IsForeign FROM [User] WHERE Id=@Id";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", PersonId } });
                 string email = tbl.Rows[0].Field<string>("Email");
@@ -775,12 +779,18 @@ namespace PriemForeignInspector
                                     SemesterName = Semester.Name,
                                     EducYear = Semester.EducYear
                                 }).OrderBy(x => x.Priority).FirstOrDefault();
- 
+                var DisorderInfo = (from x in context.PersonDisorderInfo
+                                     where x.PersonId == PersonId
+                                     select x).FirstOrDefault();
+                if (DisorderInfo == null)
+                {
+                    MessageBox.Show("У абитуриента отсутствует информация об отчислении. Заполните информацию в графе \"Образование\" и сохраните карточку.", "Ошибка");
+                    return null;
+                }
                 string query = "SELECT Email, IsForeign FROM [User] WHERE Id=@Id";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", PersonId } });
                 string email = tbl.Rows[0].Field<string>("Email");
                 var person = (from x in context.Person 
-
                               join PersonDisorderInfo in context.PersonDisorderInfo on PersonId equals PersonDisorderInfo.PersonId into Sem2
                               from Sem in Sem2.DefaultIfEmpty()
 
@@ -1079,7 +1089,16 @@ namespace PriemForeignInspector
                                     SemesterName = Semester.Name,
                                     EducYear = Semester.EducYear
                                 }).OrderBy(x => x.Priority).FirstOrDefault();
- 
+
+                var PersonCurEduc = (from x in context.PersonCurrentEducation
+                                     where x.PersonId == PersonId
+                                     select x).FirstOrDefault();
+                if (PersonCurEduc == null)
+                {
+                    MessageBox.Show("У абитуриента отсутствует информация о текущем образовании. Заполните информацию в графе \"Образование\" - \"Текущее образование\" и сохраните карточку.", "Ошибка");
+                    return null;
+                }
+
                 string query = "SELECT Email, IsForeign FROM [User] WHERE Id=@Id";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", PersonId } });
                 string email = tbl.Rows[0].Field<string>("Email");
@@ -1240,6 +1259,15 @@ namespace PriemForeignInspector
                                     SemesterName = Semester.Name,
                                     EducYear = Semester.EducYear
                                 }).OrderBy(x => x.Priority).FirstOrDefault();
+
+                var PersonCurEduc = (from x in context.PersonCurrentEducation
+                                     where x.PersonId == PersonId
+                                     select x).FirstOrDefault();
+                if (PersonCurEduc == null)
+                {
+                    MessageBox.Show("У абитуриента отсутствует информация о текущем образовании. Заполните информацию в графе \"Образование\" - \"Текущее образование\" и сохраните карточку.", "Ошибка");
+                    return null;
+                }
 
                 string query = "SELECT Email, IsForeign FROM [User] WHERE Id=@Id";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", PersonId } });

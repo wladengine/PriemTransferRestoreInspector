@@ -145,20 +145,22 @@ namespace PriemForeignInspector
             }
             CheckBtnDisable();
 
-            string query = @"SELECT [Application].Id, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled,IsApprovedByComission,
-            case when ((select top 1 Application.SecondTypeId from Application where PersonId = @Id and IsCommited = 1)=2) 
-				then
-					(case 
-						when ((Select CountryEducId from PersonEducationDocument where PersonId=@Id )=193)
-						then (select [AbiturientType].[Description] from AbiturientType where Id = 3) 
-						else (select [AbiturientType].[Description] from AbiturientType where Id = 4) 
-						end ) 
-					else 
-					(Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
+            int ContryEduc = (int)Util.BDC.GetValue(@"Select top 1 CountryEducId from PersonEducationDocument where 
+								PersonId=@Id and SchoolTypeId = 4  order by Id", new Dictionary<string, object>() { { "@Id", _PersonId } });
+
+
+            string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
+            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
+            IsApprovedByComission,
+            case when (Application.SecondTypeId =2) 
+				then (
+					" + (ContryEduc == 193 ?
+                      @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
+                     @"select [AbiturientType].[Description] from AbiturientType where Id = 4 ") +
+                @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
             FROM [Application] 
             INNER JOIN Entry ON Entry.Id = [Application].EntryId 
-            WHERE PersonId=@Id and IsCommited = 1
+            WHERE PersonId=@Id  and IsCommited = 1
             --AND Enabled='True'  
             order by 'Тип', LicenseProgramName";
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
@@ -188,16 +190,6 @@ namespace PriemForeignInspector
         }
         private void dgvApps_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-          /*  bool Enabled = (bool)dgvApps.Rows[e.RowIndex].Cells["Enabled"].Value;
-            if (!Enabled)
-                e.CellStyle.BackColor = Color.Red;
-            bool IsCommited = (bool)dgvApps.Rows[e.RowIndex].Cells["IsCommited"].Value;
-            bool IsDeleted = (bool)dgvApps.Rows[e.RowIndex].Cells["IsDeleted"].Value;
-            if ((!IsCommited) || (IsDeleted))
-            {
-                e.CellStyle.BackColor = Color.Tomato;
-                e.CellStyle.ForeColor = Color.Black;
-            }*/
             bool IsApprovedByComission = (bool)dgvApps.Rows[e.RowIndex].Cells["IsApprovedByComission"].Value;
             if (IsApprovedByComission)
                 e.CellStyle.BackColor = Color.LightGreen;
@@ -236,76 +228,91 @@ namespace PriemForeignInspector
         {
             using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
             {
+                #region Person
                 var Person = context.Person.Where(x => x.Id == _PersonId).FirstOrDefault();
                 if (Person == null)
                 {
                     MessageBox.Show("Ошибка при получении данных Person");
                     return;
                 }
+                else
+                {
+                    Person.Surname = Surname;
+                    Person.Name = personName;
+                    Person.BirthDate = BirthDate;
+                    Person.BirthPlace = BirthPlace;
+                    Person.Sex = Sex;
+                    Person.NationalityId = NationalityId;
 
+                    Person.PassportSeries = PassportSeries;
+                    Person.PassportNumber = PassportNumber;
+                    Person.PassportAuthor = PassportAuthor;
+                    Person.PassportDate = PassportDate;
+                    Person.PassportCode = PassportCode;
+                    Person.SNILS = SNILS;
+                }
+                #endregion
+                #region PersonContacts
                 var PersonContacts = Person.PersonContacts;
                 if (PersonContacts == null)
                 {
                     MessageBox.Show("Ошибка при получении данных PersonContacts");
                     return;
                 }
+                else
+                {
+                    PersonContacts.Phone = Phone;
+                    PersonContacts.Mobiles = Mobiles;
+                    PersonContacts.CountryId = CountryId ?? Util.CountryRussiaId;
+                    PersonContacts.RegionId = RegionId;
 
+                    PersonContacts.KladrCode = CodeKLADR;
+                    PersonContacts.Code = Code;
+                    PersonContacts.City = City;
+                    PersonContacts.Street = Street;
+                    PersonContacts.House = House;
+                    PersonContacts.Korpus = Korpus;
+                    PersonContacts.Flat = Flat;
+
+                    PersonContacts.CodeReal = CodeReal;
+                    PersonContacts.CityReal = CityReal;
+                    PersonContacts.StreetReal = StreetReal;
+                    PersonContacts.HouseReal = HouseReal;
+                    PersonContacts.KorpusReal = KorpusReal;
+                    PersonContacts.FlatReal = FlatReal; 
+                }
+                #endregion
+                #region PersonDisorderInfo
                 var PersonDisorderInfo = Person.PersonDisorderInfo;
                 if (PersonDisorderInfo == null)
                 {
-                    MessageBox.Show("Ошибка при получении данных PersonDisorderInfo");
-                    return;
+                    PersonDisorderInfo = new PersonDisorderInfo();
+                    PersonDisorderInfo.EducationProgramName = DisorderEducationName;
+                    PersonDisorderInfo.YearOfDisorder = YearOfDisorder;
                 }
-
+                else
+                {
+                    PersonDisorderInfo.EducationProgramName = DisorderEducationName;
+                    PersonDisorderInfo.YearOfDisorder = YearOfDisorder;
+                }
+                #endregion
+                #region PersonAddInfo
                 var PersonAddInfo = Person.PersonAddInfo;
                 if (PersonAddInfo == null)
                 {
                     MessageBox.Show("Ошибка при получении данных PersonAddInfo");
                     return;
                 }
-
-                Person.Surname = Surname;
-                Person.Name = personName;
-                Person.BirthDate = BirthDate;
-                Person.BirthPlace = BirthPlace;
-                Person.Sex = Sex;
-                Person.NationalityId = NationalityId;
-
-                Person.PassportSeries = PassportSeries;
-                Person.PassportNumber = PassportNumber;
-                Person.PassportAuthor = PassportAuthor;
-                Person.PassportDate = PassportDate;
-                Person.PassportCode = PassportCode;
-                Person.SNILS = SNILS;
-                
-
-                PersonContacts.Phone = Phone;
-                PersonContacts.Mobiles = Mobiles;
-                PersonContacts.CountryId = CountryId ?? Util.CountryRussiaId;
-                PersonContacts.RegionId = RegionId;
-
-                PersonContacts.KladrCode = CodeKLADR;
-                PersonContacts.Code = Code;
-                PersonContacts.City = City;
-                PersonContacts.Street = Street;
-                PersonContacts.House = House;
-                PersonContacts.Korpus = Korpus;
-                PersonContacts.Flat = Flat;
-
-                PersonContacts.CodeReal = CodeReal;
-                PersonContacts.CityReal = CityReal;
-                PersonContacts.StreetReal = StreetReal;
-                PersonContacts.HouseReal = HouseReal;
-                PersonContacts.KorpusReal = KorpusReal;
-                PersonContacts.FlatReal = FlatReal; 
+                else
+                {
+                    PersonAddInfo.AddInfo = AddInfo;
+                    PersonAddInfo.Parents = Parents;
+                    PersonAddInfo.HostelEduc = HostelEduc;
+                }
+                #endregion
 
                 PersonDisorderInfo.EducationProgramName = DisorderEducationName;
                 PersonDisorderInfo.YearOfDisorder = YearOfDisorder;
-
-                PersonAddInfo.AddInfo = AddInfo;
-                PersonAddInfo.Parents = Parents;
-
-                PersonAddInfo.HostelEduc = HostelEduc;
                 context.SaveChanges();
             }
         }
@@ -348,8 +355,6 @@ namespace PriemForeignInspector
         private void chbHostelEducYes_CheckedChanged(object sender, EventArgs e)
         {
             chbHostelEducNo.Checked = !chbHostelEducYes.Checked;
-            /*if (_Id != null)
-                btnGetAssignToHostel.Enabled = chbHostelEducYes.Checked;*/
         }
 
         private void chbHostelEducNo_CheckedChanged(object sender, EventArgs e)

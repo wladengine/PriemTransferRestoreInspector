@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PriemForeignInspector
 {
-    partial class PersonTransferCard
+    partial class CardPerson
     {
         public string FIO
         {
@@ -560,5 +560,18 @@ namespace PriemForeignInspector
         }
         private int CurrEducationId { get; set; }
 
+        private bool IsEqual
+        {
+            get { return chbIsEqual.Checked; }
+            set
+            {
+                chbIsEqual.Checked = value; 
+            }
+        }
+        public string EqualDocumentNumber
+        {
+            get { return tbEqualityDocumentNumber.Text.Trim(); }
+            set { tbEqualityDocumentNumber.Text = value; }
+        }
     }
 }

@@ -264,10 +264,11 @@ INNER JOIN Person ON Person.Id = [Application].PersonId
             
             StudyForm = r.Field<int>("StudyFormId");
             StudyBasis = r.Field<int>("StudyBasisId");
-            
+            FillComboLicenseProgram();
             LicenseProgram = r.Field<int>("LicenseProgramId");
+            FillComboObrazProgram();
             ObrazProgram = r.Field<int>("ObrazProgramId");
-
+            FillComboSpecialization();
             int? temp = r.Field<int?>("ProfileId");
             if (temp != null)
             {
@@ -276,8 +277,9 @@ INNER JOIN Person ON Person.Id = [Application].PersonId
             else
             {
                 cbProfile.SelectedIndex = 0;
-                FillComboFaculty();
-            }           
+                
+            }  
+            FillComboFaculty();         
             Faculty = r.Field<int>("FacultyId");
 
             FIO = r.Field<string>("Surname") + " " + r.Field<string>("Name") + " " + (r.Field<string>("SecondName")??"");
@@ -306,12 +308,7 @@ INNER JOIN Person ON Person.Id = [Application].PersonId
             FillFiles();
         }
         private void FillFiles()
-        {
-            /*string query =
-@"SELECT Id, FileName AS 'Имя файла', Comment AS 'Комментарий', IsReadOnly, (case when IsApproved IS NULL then -1 else (case when IsApproved = 'True' then 1 else 0 end )end) AS IsApproved FROM PersonFile WHERE PersonId=@PersonId
-UNION
-SELECT Id, FileName, Comment, IsReadOnly, (case when IsApproved IS NULL then -1 else (case when IsApproved = 'True' then 1 else 0 end )end) AS IsApproved FROM ApplicationFile WHERE ApplicationId=@AppId ";
-          */
+        { 
             string query = "select Id, FileName AS 'Имя файла', Comment AS 'Комментарий', IsReadOnly, (case when IsApproved IS NULL then -1 else (case when IsApproved = 'True' then 1 else 0 end )end) AS IsApproved FROM extAbitFiles_All WHERE PersonId=@PersonId";
             Dictionary<string, object> dic = new Dictionary<string, object>()
             {
@@ -588,6 +585,9 @@ WHERE PersonId=@PersonId AND (IsApproved IS NULL OR IsApproved = 'False') ";
                     case 6:
                         { data = PDFUtils.GetApplicationPDFChangeObrazProgram(_ApplicationId, Application.StartupPath + "\\Data\\", _PersonId); break; }
                 }
+                if (data == null)
+                    return;
+
                 bw.Write(data);
                 bw.Flush();
                 bw.Close();

@@ -21,7 +21,7 @@ namespace PriemForeignInspector
 
         private void FillGrid()
         {
-            string query = "SELECT Action AS Действие, OldValue AS СтароеЗначение, NewValue AS НовоеЗначение, convert(nvarchar, Time, 104) AS Время, Owner AS Автор FROM ForeignPersonHistory WHERE PersonId=@PersonId ORDER BY Time";
+            string query = "SELECT Action AS Действие, OldValue AS СтароеЗначение, NewValue AS НовоеЗначение, convert(nvarchar, Time, 104) AS Время, Owner AS Автор FROM PersonHistory WHERE PersonId=@PersonId ORDER BY Time";
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@PersonId", PersonId } });
             dgv.DataSource = tbl;
             

@@ -253,8 +253,7 @@ namespace PriemForeignInspector
             string From = data.From;
 
             try
-            {
-
+            { 
                 MailerService.Service1Client client = new MailerService.Service1Client();
                 bool res = client.Email(To, Body, Subject, "6E764F0D-FFF5-4FA0-A966-05F12091158D", From);
             }
@@ -272,7 +271,7 @@ namespace PriemForeignInspector
             {
                 if (rw.Cells[searchfield] != null && rw.Cells[searchfield].Value.ToString().StartsWith(pattern, StringComparison.OrdinalIgnoreCase))
                 {
-                    dgv.Rows[rwIndex].Selected = true;
+                    dgv.CurrentCell = dgv.Rows[rwIndex].Cells[searchfield];
                     return;
                 }
                 rwIndex++;
@@ -497,64 +496,41 @@ namespace PriemForeignInspector
 
             return retStr;
         }
-
+        public static void SetAllControlsEnabled(Control ctrl, bool Enabled)
+        {
+            bool _isOpen = Enabled;
+            if (ctrl is DataGridView)
+            {
+                ctrl.Enabled = true;
+            }
+            else if (ctrl is TabControl)
+            {
+                ctrl.Enabled = true;
+                foreach (TabPage tp in ((TabControl)ctrl).TabPages)
+                {
+                    foreach (Control subCtrl in tp.Controls)
+                    {
+                        SetAllControlsEnabled(subCtrl, _isOpen);
+                    }
+                }
+            }
+            else if (ctrl is GroupBox || ctrl is TabPage)
+            {
+                ctrl.Enabled = true;
+                foreach (Control subCtrl in ctrl.Controls)
+                {
+                    SetAllControlsEnabled(subCtrl, _isOpen);
+                }
+            }
+            else
+                ctrl.Enabled = _isOpen;
+        }
         public static void SetAllControlsEnabled(Form frm, bool Enabled)
         {
             bool _isOpen = Enabled;
             foreach (Control ctrl in frm.Controls)
             {
-                if (ctrl is DataGridView)
-                    continue;
-
-                ctrl.Enabled = _isOpen;
-                if (ctrl is GroupBox || ctrl is TabPage)
-                {
-                    foreach (Control subCtrl in ctrl.Controls)
-                    {
-                        if (subCtrl is DataGridView)
-                            subCtrl.Enabled = true;
-                        else
-                        {
-                            if (subCtrl is GroupBox || subCtrl is TabPage)
-                            {
-                                foreach (Control subSubCtrl in ctrl.Controls)
-                                {
-                                    if (subCtrl is DataGridView)
-                                        subSubCtrl.Enabled = true;
-                                    else
-                                        subSubCtrl.Enabled = _isOpen;
-                                }
-                            }
-                            else
-                                subCtrl.Enabled = _isOpen;
-                        }
-                    }
-                }
-                else if (ctrl is TabControl)
-                {
-                    ctrl.Enabled = true;
-                    foreach (TabPage tp in ((TabControl)ctrl).TabPages)
-                    {
-                        foreach (Control subCtrl in tp.Controls)
-                        {
-                            if (subCtrl is DataGridView)
-                                subCtrl.Enabled = true;
-                            else
-                                subCtrl.Enabled = _isOpen;
-
-                            if (subCtrl is GroupBox)
-                            {
-                                foreach (Control subSubCtrl in subCtrl.Controls)
-                                {
-                                    if (subSubCtrl is DataGridView)
-                                        subSubCtrl.Enabled = true;
-                                    else
-                                        subSubCtrl.Enabled = _isOpen;
-                                }
-                            }
-                        }
-                    }
-                }
+                SetAllControlsEnabled(ctrl, _isOpen);
             }
         }
     }

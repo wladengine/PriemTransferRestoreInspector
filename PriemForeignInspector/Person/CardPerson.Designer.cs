@@ -1,6 +1,6 @@
 ﻿namespace PriemForeignInspector
 {
-    partial class PersonTransferCard
+    partial class CardPerson
     {
         /// <summary>
         /// Required designer variable.
@@ -65,6 +65,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.chbIsEqual = new System.Windows.Forms.CheckBox();
+            this.tbEqualityDocumentNumber = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
             this.cbLicenseProgram = new System.Windows.Forms.ComboBox();
             this.label48 = new System.Windows.Forms.Label();
             this.cbStudyBasis = new System.Windows.Forms.ComboBox();
@@ -84,6 +88,7 @@
             this.label28 = new System.Windows.Forms.Label();
             this.dgvEducation = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnEducationSave = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tbEntryYear = new System.Windows.Forms.TextBox();
             this.tbNumber = new System.Windows.Forms.TextBox();
@@ -154,12 +159,12 @@
             this.btnDisable = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnHistory = new System.Windows.Forms.Button();
-            this.btnEducationSave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEducation)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -192,7 +197,7 @@
             this.tabControl1.Location = new System.Drawing.Point(9, 36);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(476, 482);
+            this.tabControl1.Size = new System.Drawing.Size(476, 540);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -216,7 +221,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(468, 456);
+            this.tabPage1.Size = new System.Drawing.Size(468, 514);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Личные данные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -528,13 +533,14 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(468, 456);
+            this.tabPage2.Size = new System.Drawing.Size(468, 514);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Образование";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.groupBox7);
             this.groupBox4.Controls.Add(this.cbLicenseProgram);
             this.groupBox4.Controls.Add(this.label48);
             this.groupBox4.Controls.Add(this.cbStudyBasis);
@@ -547,22 +553,61 @@
             this.groupBox4.Controls.Add(this.chbHasScholarship);
             this.groupBox4.Controls.Add(this.cbCurrentEducationStudyLevel);
             this.groupBox4.Controls.Add(this.label28);
-            this.groupBox4.Location = new System.Drawing.Point(6, 258);
+            this.groupBox4.Location = new System.Drawing.Point(6, 244);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(456, 195);
+            this.groupBox4.Size = new System.Drawing.Size(456, 264);
             this.groupBox4.TabIndex = 133;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Текущее обучение";
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.chbIsEqual);
+            this.groupBox7.Controls.Add(this.tbEqualityDocumentNumber);
+            this.groupBox7.Controls.Add(this.label51);
+            this.groupBox7.Location = new System.Drawing.Point(8, 211);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(436, 47);
+            this.groupBox7.TabIndex = 139;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Свидетельство эквивалентности";
+            // 
+            // chbIsEqual
+            // 
+            this.chbIsEqual.AutoSize = true;
+            this.chbIsEqual.Location = new System.Drawing.Point(6, 18);
+            this.chbIsEqual.Name = "chbIsEqual";
+            this.chbIsEqual.Size = new System.Drawing.Size(160, 17);
+            this.chbIsEqual.TabIndex = 38;
+            this.chbIsEqual.Text = "Св-во об эквивалентности";
+            this.chbIsEqual.UseVisualStyleBackColor = true;
+            // 
+            // tbEqualityDocumentNumber
+            // 
+            this.tbEqualityDocumentNumber.Enabled = false;
+            this.tbEqualityDocumentNumber.Location = new System.Drawing.Point(243, 17);
+            this.tbEqualityDocumentNumber.Name = "tbEqualityDocumentNumber";
+            this.tbEqualityDocumentNumber.Size = new System.Drawing.Size(171, 20);
+            this.tbEqualityDocumentNumber.TabIndex = 40;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(189, 19);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(48, 13);
+            this.label51.TabIndex = 39;
+            this.label51.Text = "№ св-ва";
+            // 
             // cbLicenseProgram
             // 
             this.cbLicenseProgram.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLicenseProgram.Enabled = false;
             this.cbLicenseProgram.FormattingEnabled = true;
             this.cbLicenseProgram.Location = new System.Drawing.Point(115, 100);
             this.cbLicenseProgram.Name = "cbLicenseProgram";
             this.cbLicenseProgram.Size = new System.Drawing.Size(329, 21);
             this.cbLicenseProgram.TabIndex = 137;
+            this.cbLicenseProgram.SelectedIndexChanged += new System.EventHandler(this.cbLicenseProgram_SelectedIndexChanged);
             // 
             // label48
             // 
@@ -576,7 +621,6 @@
             // cbStudyBasis
             // 
             this.cbStudyBasis.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStudyBasis.Enabled = false;
             this.cbStudyBasis.FormattingEnabled = true;
             this.cbStudyBasis.Location = new System.Drawing.Point(115, 73);
             this.cbStudyBasis.Name = "cbStudyBasis";
@@ -596,7 +640,6 @@
             // cbStudyForm
             // 
             this.cbStudyForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStudyForm.Enabled = false;
             this.cbStudyForm.FormattingEnabled = true;
             this.cbStudyForm.Location = new System.Drawing.Point(115, 46);
             this.cbStudyForm.Name = "cbStudyForm";
@@ -616,7 +659,6 @@
             // cbCurrentEducationSemester
             // 
             this.cbCurrentEducationSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCurrentEducationSemester.Enabled = false;
             this.cbCurrentEducationSemester.FormattingEnabled = true;
             this.cbCurrentEducationSemester.Location = new System.Drawing.Point(315, 19);
             this.cbCurrentEducationSemester.Name = "cbCurrentEducationSemester";
@@ -631,7 +673,7 @@
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.dtpAccreditationDate);
             this.groupBox6.Controls.Add(this.label14);
-            this.groupBox6.Location = new System.Drawing.Point(8, 128);
+            this.groupBox6.Location = new System.Drawing.Point(8, 143);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(436, 62);
             this.groupBox6.TabIndex = 126;
@@ -641,7 +683,6 @@
             // chbHasAccreditation
             // 
             this.chbHasAccreditation.AutoSize = true;
-            this.chbHasAccreditation.Enabled = false;
             this.chbHasAccreditation.Location = new System.Drawing.Point(272, 11);
             this.chbHasAccreditation.Name = "chbHasAccreditation";
             this.chbHasAccreditation.Size = new System.Drawing.Size(158, 17);
@@ -695,7 +736,6 @@
             // 
             // chbHasScholarship
             // 
-            this.chbHasScholarship.Enabled = false;
             this.chbHasScholarship.Location = new System.Drawing.Point(341, 50);
             this.chbHasScholarship.Name = "chbHasScholarship";
             this.chbHasScholarship.Size = new System.Drawing.Size(103, 36);
@@ -706,7 +746,6 @@
             // cbCurrentEducationStudyLevel
             // 
             this.cbCurrentEducationStudyLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCurrentEducationStudyLevel.Enabled = false;
             this.cbCurrentEducationStudyLevel.FormattingEnabled = true;
             this.cbCurrentEducationStudyLevel.Location = new System.Drawing.Point(115, 19);
             this.cbCurrentEducationStudyLevel.Name = "cbCurrentEducationStudyLevel";
@@ -753,15 +792,25 @@
             this.groupBox3.Controls.Add(this.cbSchoolType);
             this.groupBox3.Location = new System.Drawing.Point(6, 74);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(456, 178);
+            this.groupBox3.Size = new System.Drawing.Size(456, 164);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Образовательное учреждение";
             // 
+            // btnEducationSave
+            // 
+            this.btnEducationSave.Location = new System.Drawing.Point(375, 12);
+            this.btnEducationSave.Name = "btnEducationSave";
+            this.btnEducationSave.Size = new System.Drawing.Size(75, 23);
+            this.btnEducationSave.TabIndex = 129;
+            this.btnEducationSave.Text = "Изменить";
+            this.btnEducationSave.UseVisualStyleBackColor = true;
+            this.btnEducationSave.Click += new System.EventHandler(this.btnEducationSave_Click);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(268, 48);
+            this.label13.Location = new System.Drawing.Point(268, 50);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(112, 13);
             this.label13.TabIndex = 127;
@@ -769,18 +818,16 @@
             // 
             // tbEntryYear
             // 
-            this.tbEntryYear.AllowDrop = true;
             this.tbEntryYear.Enabled = false;
-            this.tbEntryYear.Location = new System.Drawing.Point(386, 45);
+            this.tbEntryYear.Location = new System.Drawing.Point(386, 47);
             this.tbEntryYear.Name = "tbEntryYear";
             this.tbEntryYear.Size = new System.Drawing.Size(58, 20);
             this.tbEntryYear.TabIndex = 128;
             // 
             // tbNumber
             // 
-            this.tbNumber.AllowDrop = true;
             this.tbNumber.Enabled = false;
-            this.tbNumber.Location = new System.Drawing.Point(300, 149);
+            this.tbNumber.Location = new System.Drawing.Point(337, 135);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(107, 20);
             this.tbNumber.TabIndex = 37;
@@ -788,7 +835,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(253, 152);
+            this.label35.Location = new System.Drawing.Point(290, 138);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(41, 13);
             this.label35.TabIndex = 36;
@@ -797,7 +844,6 @@
             // cbRegionEduc
             // 
             this.cbRegionEduc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRegionEduc.Enabled = false;
             this.cbRegionEduc.FormattingEnabled = true;
             this.cbRegionEduc.Location = new System.Drawing.Point(65, 46);
             this.cbRegionEduc.Name = "cbRegionEduc";
@@ -834,9 +880,8 @@
             // 
             // tbSeries
             // 
-            this.tbSeries.AllowDrop = true;
             this.tbSeries.Enabled = false;
-            this.tbSeries.Location = new System.Drawing.Point(128, 149);
+            this.tbSeries.Location = new System.Drawing.Point(173, 135);
             this.tbSeries.Name = "tbSeries";
             this.tbSeries.Size = new System.Drawing.Size(107, 20);
             this.tbSeries.TabIndex = 35;
@@ -844,7 +889,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(90, 152);
+            this.label33.Location = new System.Drawing.Point(135, 138);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(38, 13);
             this.label33.TabIndex = 34;
@@ -852,12 +897,11 @@
             // 
             // tbEducationName
             // 
-            this.tbEducationName.AllowDrop = true;
             this.tbEducationName.Enabled = false;
             this.tbEducationName.Location = new System.Drawing.Point(89, 100);
             this.tbEducationName.Multiline = true;
             this.tbEducationName.Name = "tbEducationName";
-            this.tbEducationName.Size = new System.Drawing.Size(355, 43);
+            this.tbEducationName.Size = new System.Drawing.Size(355, 29);
             this.tbEducationName.TabIndex = 3;
             // 
             // Yfbvtyjdfybt
@@ -872,7 +916,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(250, 72);
+            this.label34.Location = new System.Drawing.Point(250, 74);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(130, 13);
             this.label34.TabIndex = 21;
@@ -889,9 +933,8 @@
             // 
             // tbExitYear
             // 
-            this.tbExitYear.AllowDrop = true;
             this.tbExitYear.Enabled = false;
-            this.tbExitYear.Location = new System.Drawing.Point(386, 69);
+            this.tbExitYear.Location = new System.Drawing.Point(386, 71);
             this.tbExitYear.Name = "tbExitYear";
             this.tbExitYear.Size = new System.Drawing.Size(58, 20);
             this.tbExitYear.TabIndex = 29;
@@ -899,7 +942,6 @@
             // cbSchoolType
             // 
             this.cbSchoolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSchoolType.Enabled = false;
             this.cbSchoolType.FormattingEnabled = true;
             this.cbSchoolType.Location = new System.Drawing.Point(65, 73);
             this.cbSchoolType.Name = "cbSchoolType";
@@ -926,7 +968,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(468, 456);
+            this.tabPage5.Size = new System.Drawing.Size(468, 514);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Адрес";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1323,7 +1365,7 @@
             this.tpApps.Location = new System.Drawing.Point(4, 22);
             this.tpApps.Name = "tpApps";
             this.tpApps.Padding = new System.Windows.Forms.Padding(3);
-            this.tpApps.Size = new System.Drawing.Size(468, 456);
+            this.tpApps.Size = new System.Drawing.Size(468, 514);
             this.tpApps.TabIndex = 5;
             this.tpApps.Text = "Заявления";
             this.tpApps.UseVisualStyleBackColor = true;
@@ -1372,14 +1414,13 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(468, 456);
+            this.tabPage3.Size = new System.Drawing.Size(468, 514);
             this.tabPage3.TabIndex = 6;
             this.tabPage3.Text = "Доп. инфо";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tbAddInfo
             // 
-            this.tbAddInfo.Enabled = false;
             this.tbAddInfo.Location = new System.Drawing.Point(124, 101);
             this.tbAddInfo.Multiline = true;
             this.tbAddInfo.Name = "tbAddInfo";
@@ -1415,7 +1456,7 @@
             // 
             // btnDisable
             // 
-            this.btnDisable.Location = new System.Drawing.Point(166, 524);
+            this.btnDisable.Location = new System.Drawing.Point(221, 582);
             this.btnDisable.Name = "btnDisable";
             this.btnDisable.Size = new System.Drawing.Size(119, 23);
             this.btnDisable.TabIndex = 2;
@@ -1425,7 +1466,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(16, 524);
+            this.btnSave.Location = new System.Drawing.Point(14, 582);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(81, 23);
             this.btnSave.TabIndex = 3;
@@ -1435,7 +1476,7 @@
             // 
             // btnHistory
             // 
-            this.btnHistory.Location = new System.Drawing.Point(351, 524);
+            this.btnHistory.Location = new System.Drawing.Point(406, 582);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(75, 23);
             this.btnHistory.TabIndex = 4;
@@ -1443,23 +1484,11 @@
             this.btnHistory.UseVisualStyleBackColor = true;
             this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
-            // btnEducationSave
-            // 
-            this.btnEducationSave.AllowDrop = true;
-            this.btnEducationSave.Enabled = false;
-            this.btnEducationSave.Location = new System.Drawing.Point(369, 12);
-            this.btnEducationSave.Name = "btnEducationSave";
-            this.btnEducationSave.Size = new System.Drawing.Size(75, 23);
-            this.btnEducationSave.TabIndex = 129;
-            this.btnEducationSave.Text = "Сохранить";
-            this.btnEducationSave.UseVisualStyleBackColor = true;
-            this.btnEducationSave.Click += new System.EventHandler(this.btnEducationSave_Click);
-            // 
-            // PersonTransferCard
+            // CardPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 559);
+            this.ClientSize = new System.Drawing.Size(497, 617);
             this.Controls.Add(this.btnHistory);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDisable);
@@ -1467,7 +1496,7 @@
             this.Controls.Add(this.lblFIO);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "PersonTransferCard";
+            this.Name = "CardPerson";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PersonCard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PersonCard_FormClosing);
@@ -1479,6 +1508,8 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEducation)).EndInit();
@@ -1629,5 +1660,9 @@
         private System.Windows.Forms.ComboBox cbStudyForm;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Button btnEducationSave;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox chbIsEqual;
+        private System.Windows.Forms.TextBox tbEqualityDocumentNumber;
+        private System.Windows.Forms.Label label51;
     }
 }
