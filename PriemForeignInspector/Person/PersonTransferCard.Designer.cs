@@ -154,7 +154,6 @@
             this.btnDisable = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnHistory = new System.Windows.Forms.Button();
-            this.btnEducationSave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -734,7 +733,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnEducationSave);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.tbEntryYear);
             this.groupBox3.Controls.Add(this.tbNumber);
@@ -1443,18 +1441,6 @@
             this.btnHistory.UseVisualStyleBackColor = true;
             this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
-            // btnEducationSave
-            // 
-            this.btnEducationSave.AllowDrop = true;
-            this.btnEducationSave.Enabled = false;
-            this.btnEducationSave.Location = new System.Drawing.Point(369, 12);
-            this.btnEducationSave.Name = "btnEducationSave";
-            this.btnEducationSave.Size = new System.Drawing.Size(75, 23);
-            this.btnEducationSave.TabIndex = 129;
-            this.btnEducationSave.Text = "Сохранить";
-            this.btnEducationSave.UseVisualStyleBackColor = true;
-            this.btnEducationSave.Click += new System.EventHandler(this.btnEducationSave_Click);
-            // 
             // PersonTransferCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1628,6 +1614,5 @@
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.ComboBox cbStudyForm;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.Button btnEducationSave;
     }
 }

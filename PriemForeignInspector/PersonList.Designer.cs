@@ -100,6 +100,7 @@
             this.cbFaculty.Name = "cbFaculty";
             this.cbFaculty.Size = new System.Drawing.Size(249, 21);
             this.cbFaculty.TabIndex = 3;
+            this.cbFaculty.SelectedIndexChanged += new System.EventHandler(this.cbFaculty_SelectedIndexChanged);
             // 
             // cbLicenseProgram
             // 
@@ -110,6 +111,7 @@
             this.cbLicenseProgram.Name = "cbLicenseProgram";
             this.cbLicenseProgram.Size = new System.Drawing.Size(249, 21);
             this.cbLicenseProgram.TabIndex = 4;
+            this.cbLicenseProgram.SelectedIndexChanged += new System.EventHandler(this.cbLicenseProgram_SelectedIndexChanged);
             // 
             // cbObrazProgram
             // 
@@ -120,6 +122,7 @@
             this.cbObrazProgram.Name = "cbObrazProgram";
             this.cbObrazProgram.Size = new System.Drawing.Size(249, 21);
             this.cbObrazProgram.TabIndex = 5;
+            this.cbObrazProgram.SelectedIndexChanged += new System.EventHandler(this.cbObrazProgram_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -228,6 +231,7 @@
             this.cbSemester.Name = "cbSemester";
             this.cbSemester.Size = new System.Drawing.Size(101, 21);
             this.cbSemester.TabIndex = 15;
+            this.cbSemester.SelectedIndexChanged += new System.EventHandler(this.cbSemester_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -258,6 +262,7 @@
             this.cbStudyLevel.Name = "cbStudyLevel";
             this.cbStudyLevel.Size = new System.Drawing.Size(85, 21);
             this.cbStudyLevel.TabIndex = 17;
+            this.cbStudyLevel.SelectedIndexChanged += new System.EventHandler(this.cbStudyLevel_SelectedIndexChanged);
             // 
             // chbTransfer
             // 
@@ -371,6 +376,7 @@
             this.Controls.Add(this.tbFIO);
             this.Controls.Add(this.dgvList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(865, 607);
             this.Name = "PersonList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список абитуриентов, подавших заявления в Интернете";

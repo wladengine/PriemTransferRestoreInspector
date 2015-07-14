@@ -15,51 +15,7 @@ namespace PriemForeignInspector
 {
     public partial class PersonList : Form
     {
-        public PersonList()
-        {
-            InitializeComponent();
-            ExtraInit();
-        }
-
-        void ExtraInit()
-        {
-            LoadStudyLevels();
-            LoadSemesters();
-            LoadFaculties();
-            LoadLicensePrograms();
-            LoadObrazPrograms();
-
-            cbFaculty.SelectedValueChanged += new EventHandler(cbFaculty_SelectedValueChanged);
-            cbLicenseProgram.SelectedValueChanged += new EventHandler(cbLicenseProgram_SelectedValueChanged);
-            cbObrazProgram.SelectedValueChanged += new EventHandler(cbObrazProgram_SelectedValueChanged);
-            cbSemester.SelectedIndexChanged += new EventHandler(cbSemester_SelectedIndexChanged);
-            cbStudyLevel.SelectedIndexChanged += new EventHandler(cbStudyLevel_SelectedIndexChanged);
-        }
-
-        void cbStudyLevel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int? oldSemId = SemesterId;
-            LoadSemesters();
-            if (oldSemId.HasValue)
-                SemesterId = oldSemId;
-        }
-        void cbSemester_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadFaculties();
-        }
-        void cbObrazProgram_SelectedValueChanged(object sender, EventArgs e)
-        {
-            FillGrid();
-        }
-        void cbLicenseProgram_SelectedValueChanged(object sender, EventArgs e)
-        {
-            LoadObrazPrograms();
-        }
-        void cbFaculty_SelectedValueChanged(object sender, EventArgs e)
-        {
-            LoadLicensePrograms();
-        }
-
+        #region Fields
         public int? StudyLevelId
         {
             get { return ComboServ.GetComboIdInt(cbStudyLevel); }
@@ -85,6 +41,64 @@ namespace PriemForeignInspector
             get { return ComboServ.GetComboIdInt(cbObrazProgram); }
             set { ComboServ.SetComboId(cbObrazProgram, value); }
         }
+        #endregion
+
+        public PersonList()
+        {
+            InitializeComponent();
+            ExtraInit();
+        }
+
+        void ExtraInit()
+        {
+            Init_delete_handlers();
+            LoadStudyLevels();
+            LoadSemesters();
+            LoadFaculties();
+            LoadLicensePrograms();
+            LoadObrazPrograms();
+            Init_add_handlers();
+            FillGrid();
+        }
+        public void Init_delete_handlers()
+        {
+            cbFaculty.SelectedIndexChanged -= new EventHandler(cbFaculty_SelectedIndexChanged);
+            cbLicenseProgram.SelectedIndexChanged -= new EventHandler(cbLicenseProgram_SelectedIndexChanged);
+            cbObrazProgram.SelectedIndexChanged -= new EventHandler(cbObrazProgram_SelectedIndexChanged);
+            cbSemester.SelectedIndexChanged -= new EventHandler(cbSemester_SelectedIndexChanged);
+            cbStudyLevel.SelectedIndexChanged -= new EventHandler(cbStudyLevel_SelectedIndexChanged);
+        }
+        public void Init_add_handlers()
+        {
+            cbFaculty.SelectedIndexChanged += new EventHandler(cbFaculty_SelectedIndexChanged);
+            cbLicenseProgram.SelectedIndexChanged += new EventHandler(cbLicenseProgram_SelectedIndexChanged);
+            cbObrazProgram.SelectedIndexChanged += new EventHandler(cbObrazProgram_SelectedIndexChanged);
+            cbSemester.SelectedIndexChanged += new EventHandler(cbSemester_SelectedIndexChanged);
+            cbStudyLevel.SelectedIndexChanged += new EventHandler(cbStudyLevel_SelectedIndexChanged);
+        }
+        void cbStudyLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int? oldSemId = SemesterId;
+            LoadSemesters();
+            if (oldSemId.HasValue)
+                SemesterId = oldSemId;
+        }
+        void cbSemester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadFaculties();
+        }
+        void cbObrazProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillGrid();
+        }
+        void cbLicenseProgram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadObrazPrograms();
+        }
+        void cbFaculty_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadLicensePrograms();
+        }
 
         private void LoadStudyLevels()
         {
@@ -93,7 +107,6 @@ namespace PriemForeignInspector
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@CampaignYear", Util.CampaignYear }, { "@DateNow", DateTime.Now } });
             var bind = (from DataRow rw in tbl.Rows
                         select new KeyValuePair<string, string>(rw.Field<int>("Id").ToString(), rw.Field<string>("Name"))).ToList();
-            //cbStudyLevel.AddItems(bind);
             ComboServ.FillCombo(cbStudyLevel, bind, false, true);
         }
         private void LoadSemesters()
@@ -108,7 +121,6 @@ namespace PriemForeignInspector
             DataTable tbl = Util.BDC.GetDataTable(query + " ORDER BY 1", dic);
             var bind = (from DataRow rw in tbl.Rows
                         select new KeyValuePair<string, string>(rw.Field<int>("Id").ToString(), rw.Field<string>("Name"))).ToList();
-            //cbSemester.AddItems(bind);
             ComboServ.FillCombo(cbSemester, bind, false, true);
         }
         private void LoadFaculties()
@@ -127,16 +139,7 @@ namespace PriemForeignInspector
             var bind = (from DataRow rw in tbl.Rows
                         select new KeyValuePair<string, string>(rw.Field<int>("Id").ToString(), rw.Field<string>("Name"))).ToList();
             ComboServ.FillCombo(cbFaculty, bind, false, true);
-            if (chbFaculty.Checked)
-            {
-                LoadLicensePrograms();
-                cbFaculty.Enabled = true;
-            }
-            else
-            {
-                FillGrid();
-                cbFaculty.Enabled = false;
-            }
+            cbFaculty.Enabled = chbFaculty.Checked;
         }
         private void LoadLicensePrograms()
         {
@@ -156,16 +159,7 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
             var bind = (from DataRow rw in tblLP.Rows
                         select new KeyValuePair<string, string>(rw.Field<int>("Id").ToString(), rw.Field<string>("Name"))).ToList();
             ComboServ.FillCombo(cbLicenseProgram, bind, false, true);
-            if (chbLicenseProgram.Checked)
-            {
-                LoadObrazPrograms();
-                cbLicenseProgram.Enabled = true;
-            }
-            else
-            {
-                cbLicenseProgram.Enabled = false;
-                FillGrid();
-            }
+            cbLicenseProgram.Enabled = chbLicenseProgram.Checked;
         }
         private void LoadObrazPrograms()
         {
@@ -182,9 +176,7 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
             DataTable tbl = Util.BDC.GetDataTable(query + " ORDER BY 2", dic);
             var bind = (from DataRow rw in tbl.Rows
                         select new KeyValuePair<string, string>(rw.Field<int>("Id").ToString(), rw.Field<string>("Name"))).ToList();
-            //cbObrazProgram.AddItems(bind);
             ComboServ.FillCombo(cbObrazProgram, bind, false, true);
-            FillGrid();
             cbObrazProgram.Enabled = chbObrazProgram.Checked;
         }
         private void FillGrid()
@@ -284,7 +276,7 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
             var FIOs =
                 (from DataRow rw in tbl.Rows
                  select rw.Field<string>("ФИО")).ToArray();
-
+            dgvList.AllowUserToResizeRows = false;
             tbFIO.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             tbFIO.AutoCompleteSource = AutoCompleteSource.CustomSource;
             tbFIO.AutoCompleteCustomSource.Clear();
@@ -302,48 +294,40 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
         }
         private void chbFaculty_CheckedChanged(object sender, EventArgs e)
         {
+            chbLicenseProgram.CheckedChanged -= new EventHandler(chbLicenseProgram_CheckedChanged);
+            chbObrazProgram.CheckedChanged -= new EventHandler(chbObrazProgram_CheckedChanged);
             chbLicenseProgram.Checked = false;
+            chbObrazProgram.Checked = false;
             cbFaculty.Enabled = chbFaculty.Checked;
+            cbLicenseProgram.Enabled = chbLicenseProgram.Checked;
+            cbObrazProgram.Enabled = chbObrazProgram.Checked;
             chbLicenseProgram.Enabled = chbFaculty.Checked;
-            if (chbFaculty.Checked)
-            {
-                LoadFaculties();
-            }
-            else
-            {
-                FillGrid();
-            }
+            chbObrazProgram.Enabled = chbLicenseProgram.Checked; 
+
+            FillGrid();
+            chbLicenseProgram.CheckedChanged += new EventHandler(chbLicenseProgram_CheckedChanged);
+            chbObrazProgram.CheckedChanged += new EventHandler(chbObrazProgram_CheckedChanged);
         }
         private void chbLicenseProgram_CheckedChanged(object sender, EventArgs e)
         {
+            chbObrazProgram.CheckedChanged -= new EventHandler(chbObrazProgram_CheckedChanged);
             chbObrazProgram.Checked = false;
             cbLicenseProgram.Enabled = chbLicenseProgram.Checked;
+            cbObrazProgram.Enabled = chbObrazProgram.Checked;
             chbObrazProgram.Enabled = chbLicenseProgram.Checked;
-            if (chbLicenseProgram.Checked)
-            {
-                LoadLicensePrograms();
-            }
-            else
-            {
-                FillGrid();
-            }
+            FillGrid();
+            chbObrazProgram.CheckedChanged += new EventHandler(chbObrazProgram_CheckedChanged);
         }
         private void chbObrazProgram_CheckedChanged(object sender, EventArgs e)
         {
             cbObrazProgram.Enabled = chbObrazProgram.Checked;
-            if (chbObrazProgram.Checked)
-            {
-                LoadObrazPrograms();
-            }
-            else
-            {
-                FillGrid();
-            }
+            FillGrid();
         }
 
         private void tbFIO_TextChanged(object sender, EventArgs e)
         {
-            dgvList.FindVal("ФИО", tbFIO.Text);
+           //  dgvList.FindVal("ФИО", tbFIO.Text);
+           Util.FindVal(dgvList, "ФИО", tbFIO.Text);
         }
 
         private void dgvList_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

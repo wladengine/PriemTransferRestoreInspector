@@ -72,6 +72,9 @@
             this.tbDisorderEducationName = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.chbHostelEducNo = new System.Windows.Forms.CheckBox();
+            this.chbHostelEducYes = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tbFlatReal = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
@@ -120,9 +123,7 @@
             this.tbParents = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.lblFIO = new System.Windows.Forms.Label();
-            this.chbHostelEducNo = new System.Windows.Forms.CheckBox();
-            this.chbHostelEducYes = new System.Windows.Forms.CheckBox();
-            this.label52 = new System.Windows.Forms.Label();
+            this.chbIsForIGA = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -517,6 +518,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chbIsForIGA);
             this.groupBox3.Controls.Add(this.tbYearOfDisorder);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.tbDisorderEducationName);
@@ -585,6 +587,35 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Адрес";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // chbHostelEducNo
+            // 
+            this.chbHostelEducNo.AutoSize = true;
+            this.chbHostelEducNo.Location = new System.Drawing.Point(405, 429);
+            this.chbHostelEducNo.Name = "chbHostelEducNo";
+            this.chbHostelEducNo.Size = new System.Drawing.Size(45, 17);
+            this.chbHostelEducNo.TabIndex = 130;
+            this.chbHostelEducNo.Text = "Нет";
+            this.chbHostelEducNo.UseVisualStyleBackColor = true;
+            // 
+            // chbHostelEducYes
+            // 
+            this.chbHostelEducYes.AutoSize = true;
+            this.chbHostelEducYes.Location = new System.Drawing.Point(357, 429);
+            this.chbHostelEducYes.Name = "chbHostelEducYes";
+            this.chbHostelEducYes.Size = new System.Drawing.Size(41, 17);
+            this.chbHostelEducYes.TabIndex = 129;
+            this.chbHostelEducYes.Text = "Да";
+            this.chbHostelEducYes.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(106, 430);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(245, 13);
+            this.label52.TabIndex = 131;
+            this.label52.Text = "Предоставлять общежитие на время обучения";
             // 
             // groupBox5
             // 
@@ -1051,34 +1082,15 @@
             this.lblFIO.TabIndex = 12;
             this.lblFIO.Text = "FIO";
             // 
-            // chbHostelEducNo
+            // chbIsForIGA
             // 
-            this.chbHostelEducNo.AutoSize = true;
-            this.chbHostelEducNo.Location = new System.Drawing.Point(405, 429);
-            this.chbHostelEducNo.Name = "chbHostelEducNo";
-            this.chbHostelEducNo.Size = new System.Drawing.Size(45, 17);
-            this.chbHostelEducNo.TabIndex = 130;
-            this.chbHostelEducNo.Text = "Нет";
-            this.chbHostelEducNo.UseVisualStyleBackColor = true;
-            // 
-            // chbHostelEducYes
-            // 
-            this.chbHostelEducYes.AutoSize = true;
-            this.chbHostelEducYes.Location = new System.Drawing.Point(357, 429);
-            this.chbHostelEducYes.Name = "chbHostelEducYes";
-            this.chbHostelEducYes.Size = new System.Drawing.Size(41, 17);
-            this.chbHostelEducYes.TabIndex = 129;
-            this.chbHostelEducYes.Text = "Да";
-            this.chbHostelEducYes.UseVisualStyleBackColor = true;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(106, 430);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(245, 13);
-            this.label52.TabIndex = 131;
-            this.label52.Text = "Предоставлять общежитие на время обучения";
+            this.chbIsForIGA.AutoSize = true;
+            this.chbIsForIGA.Location = new System.Drawing.Point(275, 66);
+            this.chbIsForIGA.Name = "chbIsForIGA";
+            this.chbIsForIGA.Size = new System.Drawing.Size(172, 17);
+            this.chbIsForIGA.TabIndex = 4;
+            this.chbIsForIGA.Text = "Восстанавливается для ИГА";
+            this.chbIsForIGA.UseVisualStyleBackColor = true;
             // 
             // PersonRecoverCard
             // 
@@ -1213,5 +1225,6 @@
         private System.Windows.Forms.CheckBox chbHostelEducNo;
         private System.Windows.Forms.CheckBox chbHostelEducYes;
         private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.CheckBox chbIsForIGA;
     }
 }

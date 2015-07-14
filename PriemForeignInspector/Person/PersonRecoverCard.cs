@@ -166,6 +166,7 @@ namespace PriemForeignInspector
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
             dgvApps.DataSource = tbl;
             dgvApps.Columns["Id"].Visible = false;
+            dgvApps.Columns["CommitId"].Visible = false;
             dgvApps.Columns["Enabled"].Visible = false;
             dgvApps.Columns["IsCommited"].Visible = false;
             dgvApps.Columns["IsDeleted"].Visible = false;
@@ -287,13 +288,17 @@ namespace PriemForeignInspector
                 if (PersonDisorderInfo == null)
                 {
                     PersonDisorderInfo = new PersonDisorderInfo();
+                    PersonDisorderInfo.PersonId = _PersonId;
                     PersonDisorderInfo.EducationProgramName = DisorderEducationName;
+                    PersonDisorderInfo.IsForIGA = chbIsForIGA.Checked;
                     PersonDisorderInfo.YearOfDisorder = YearOfDisorder;
+                    context.PersonDisorderInfo.Add(PersonDisorderInfo);
                 }
                 else
                 {
                     PersonDisorderInfo.EducationProgramName = DisorderEducationName;
                     PersonDisorderInfo.YearOfDisorder = YearOfDisorder;
+                    PersonDisorderInfo.IsForIGA = chbIsForIGA.Checked;
                 }
                 #endregion
                 #region PersonAddInfo

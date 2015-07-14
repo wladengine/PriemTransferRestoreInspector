@@ -266,15 +266,19 @@ namespace PriemForeignInspector
         public static void FindVal(this DataGridView dgv, string searchfield, string pattern)
         {
             int rwIndex = 0;
-            dgv.ClearSelection();
             foreach (DataGridViewRow rw in dgv.Rows)
             {
                 if (rw.Cells[searchfield] != null && rw.Cells[searchfield].Value.ToString().StartsWith(pattern, StringComparison.OrdinalIgnoreCase))
                 {
-                    dgv.CurrentCell = dgv.Rows[rwIndex].Cells[searchfield];
-                    return;
+                    //dgv.CurrentCell = dgv.Rows[rwIndex].Cells[searchfield];
+                    break;
                 }
                 rwIndex++;
+            }
+            if (rwIndex< dgv.Rows.Count)
+            {
+                dgv.CurrentCell = null;
+                dgv.CurrentCell = dgv.Rows[rwIndex].Cells[searchfield];
             }
         }
 

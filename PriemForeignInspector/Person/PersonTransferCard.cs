@@ -573,6 +573,7 @@ namespace PriemForeignInspector
 
             if (_currentEducRow != dgvEducation.CurrentRow.Index)
             {
+                SaveEducationDocument();
                 _currentEducRow = dgvEducation.CurrentRow.Index;
                 ViewEducationInfo(int.Parse(dgvEducation.CurrentRow.Cells["Id"].Value.ToString()));
             }

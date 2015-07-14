@@ -287,6 +287,7 @@ namespace PriemForeignInspector
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
             dgvApps.DataSource = tbl;
             dgvApps.Columns["Id"].Visible = false;
+            dgvApps.Columns["CommitId"].Visible = false;
             dgvApps.Columns["Enabled"].Visible = false;
             dgvApps.Columns["IsCommited"].Visible = false;
             dgvApps.Columns["IsDeleted"].Visible = false;
@@ -658,6 +659,7 @@ namespace PriemForeignInspector
 
             if (_currentEducRow != dgvEducation.CurrentRow.Index)
             {
+                SaveEducationDocument();
                 _currentEducRow = dgvEducation.CurrentRow.Index;
                 ViewEducationInfo(int.Parse(dgvEducation.CurrentRow.Cells["Id"].Value.ToString()));
             }
