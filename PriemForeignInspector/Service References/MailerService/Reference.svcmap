@@ -18,14 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://81.89.183.133:3456/Service1.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://81.89.183.234:3456/Service1.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service11.disco" MetadataType="Disco" ID="450e8221-cd05-4544-a8d6-007b4582ade0" SourceId="1" SourceUrl="http://81.89.183.133:3456/Service1.svc?disco" />
-    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="cafa33d2-d48f-469e-a41e-5aec566faca9" SourceId="1" SourceUrl="http://81.89.183.133:3456/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service13.xsd" MetadataType="Schema" ID="d76f99b0-2131-4436-a19f-699c8d25d689" SourceId="1" SourceUrl="http://81.89.183.133:3456/Service1.svc?xsd=xsd0" />
-    <MetadataFile FileName="Service131.xsd" MetadataType="Schema" ID="18b8c6d3-48ec-4de3-bf49-9a30efde8c19" SourceId="1" SourceUrl="http://81.89.183.133:3456/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service132.xsd" MetadataType="Schema" ID="2b2f9f78-adb0-42b7-ae2a-ac0728f1f08d" SourceId="1" SourceUrl="http://81.89.183.133:3456/Service1.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="c78d4428-e578-4abd-b07b-09bef5aa5b11" SourceId="1" SourceUrl="http://81.89.183.234:3456/Service1.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="bcadad80-0eaf-42d3-ac1d-2f9eede694c0" SourceId="1" SourceUrl="http://81.89.183.234:3456/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="452bac91-f86a-4a6a-a878-aafdf3fe3073" SourceId="1" SourceUrl="http://81.89.183.234:3456/Service1.svc?disco" />
+    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="0fbebab3-fe8a-471a-9c80-ac3808b39322" SourceId="1" SourceUrl="http://81.89.183.234:3456/Service1.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="77ff26f3-2071-43c9-bd51-448efd02fce9" SourceId="1" SourceUrl="http://81.89.183.234:3456/Service1.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
