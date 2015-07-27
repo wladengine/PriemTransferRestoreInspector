@@ -14,24 +14,28 @@ namespace PriemForeignInspector
         private Guid _PersonId;
         private bool _isOpen;
         public UpdateHandler _handler;
-        private int _AbitType;
+        public int _AbitType;
         int _currentEducRow;
         List<PersonEducationDocument> PersonEducDocument;
+        public bool HasCurrentEdication;
+        public bool HasDisorderInfo;
 
-        public CardPerson(Guid id, int AbitType)
+        public CardPerson()
+        { }
+        public CardPerson(Guid id)
         {
             this.CenterToParent();
+            this.MdiParent = Util.MainForm;
+
             InitializeComponent();
-            _PersonId = id;
-            _AbitType = AbitType;
-            FillText();
+            _PersonId = id; 
             FillCombos();
-            FillCard();
+            FillCard(); 
             this.Icon = PriemForeignInspector.Properties.Resources.Person_Male_Light;
             _isOpen = false;
         }
 
-        private void FillText()
+        protected void FillText(int _AbitType)
         {
             switch (_AbitType)
             {
@@ -47,12 +51,22 @@ namespace PriemForeignInspector
                     }
                 case 3:
                     {
-                        this.Text = "";
+                        this.Text = "Восстановление в СПбГУ";
                         break;
                     }
                 case 4:
                     {
-                        this.Text = "";
+                        this.Text = "Перевода в СПБГУ из иностранного ВУЗа";
+                        break;
+                    }
+                case 5:
+                    {
+                        this.Text = "Перевод с платной основы обучения на бюджетную (смена основы обучения)";
+                        break;
+                    }
+                case 6:
+                    {
+                        this.Text = "Смена образовательной программы";
                         break;
                     }
                 default:
@@ -61,28 +75,67 @@ namespace PriemForeignInspector
                         }
             }
         }
-        private void InitSetHandlers()
+        protected void InitSetHandlers()
         {
             cbCurrentEducationSemester.SelectedIndexChanged += new EventHandler(cbCurrentEducationSemester_SelectedIndexChanged);
             cbCurrentEducationStudyLevel.SelectedIndexChanged += new EventHandler(cbCurrentEducationStudyLevel_SelectedIndexChanged);
             cbLicenseProgram.SelectedIndexChanged += new EventHandler(cbLicenseProgram_SelectedIndexChanged);
             cbStudyBasis.SelectedIndexChanged += new EventHandler(cbStudyBasis_SelectedIndexChanged);
             cbStudyForm.SelectedIndexChanged += new EventHandler(cbStudyForm_SelectedIndexChanged);
+            dgvEducation.CurrentCellChanged += new EventHandler(dgvEducation_CurrentCellChanged);
+
         }
-        private void InitDeleteHandlers()
+        protected void InitDeleteHandlers()
         {
             cbCurrentEducationSemester.SelectedIndexChanged -= new EventHandler(cbCurrentEducationSemester_SelectedIndexChanged);
             cbCurrentEducationStudyLevel.SelectedIndexChanged-= new EventHandler(cbCurrentEducationStudyLevel_SelectedIndexChanged);
             cbLicenseProgram.SelectedIndexChanged -= new EventHandler(cbLicenseProgram_SelectedIndexChanged);
             cbStudyBasis.SelectedIndexChanged -= new EventHandler(cbStudyBasis_SelectedIndexChanged);
             cbStudyForm.SelectedIndexChanged -= new EventHandler(cbStudyForm_SelectedIndexChanged);
+            dgvEducation.CurrentCellChanged -= new EventHandler(dgvEducation_CurrentCellChanged);
         }
-        private void FillCombos()
+        
+        #region ChangeVisibility
+        protected void ChangeVisiblegbCurrentEducation(bool Visible)
+        {
+            gbCurrenctEducationInfo.Visible = Visible;
+        }
+        protected void ChangeVisiblegbDisorderInfo(bool Visible)
+        {
+            gbDisorderInfo.Location = gbCurrenctEducationInfo.Location;
+            gbDisorderInfo.Visible = Visible;
+        }
+        protected void ChangeVisibleCurrentObrazProgramProfile(bool Visible)
+        {
+            tbCurrentProfile.Visible =
+                cbCurrentObrazProgram.Visible =
+                lbCurrentProfile.Visible =
+                lblCurrentObrazProgram.Visible =
+               Visible;
+        }
+        protected void ChangeVisiblegbReason(bool Visible)
+        {
+           gbReason.Visible = 
+               Visible;
+        }
+        protected void ChangeVisibleIsEqual(bool Visible)
+        {
+            gbEqualInfo.Visible = chbIsEqual.Visible = 
+                Visible;
+        }
+        protected void ChangeVisibleAccreditationInfo(bool Visible)
+        {
+            gbAccreditationInfo.Visible = chbHasAccreditation.Visible =
+                Visible;
+        }
+
+        #endregion
+        #region FillCombos
+        protected void FillCombos()
         {
             FillComboPassportType();
             FillComboNationality();
-            FillComboCountry();
-            FillComboRegion();
+            FillComboCountry(); 
             FillComboSchoolType();
             FillComboCountryEduc();
             InitDeleteHandlers();
@@ -90,11 +143,10 @@ namespace PriemForeignInspector
             FillComboCurrentEducationSemester();
             FillComboCurrentStudyForm();
             FillComboCurrentStudyBasis();
+            FillComboCurrentLicenseProgram();
             InitSetHandlers();
-            //FillComboCurrentLicenseProgram();
         }
-
-        private void FillComboPassportType()
+        protected void FillComboPassportType()
         {
             string query = "SELECT Id, Name FROM PassportType ORDER BY Name";
             DataTable tbl = Util.BDC.GetDataTable(query, null);
@@ -103,7 +155,7 @@ namespace PriemForeignInspector
                  select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
             cbPassportType.AddItems(bind);
         }
-        private void FillComboNationality()
+        protected void FillComboNationality()
         {
             string query = "SELECT Id, ISNULL(Name, NameEng) AS Name FROM Country ORDER BY LevelOfUsing, Name";
             DataTable tbl = Util.BDC.GetDataTable(query, null);
@@ -112,23 +164,35 @@ namespace PriemForeignInspector
                  select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
             cbNationality.AddItems(bind);
         }
-        private void FillComboCountry()
+        protected void FillComboCountry()
         {
-            string query = "SELECT Id, ISNULL(Name, NameEng) AS Name FROM Country ORDER BY LevelOfUsing, Name";
+            string query = "SELECT Id, ISNULL(Name, NameEng) AS Name FROM Country ORDER BY LevelOfUsing desc, Name";
             DataTable tbl = Util.BDC.GetDataTable(query, null);
             List<KeyValuePair<object, string>> bind =
                 (from DataRow rw in tbl.Rows
                  select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
             cbCountry.AddItems(bind);
         }
-        private void FillComboRegion()
+        protected void FillComboRegion()
         {
-            string query = "SELECT Id, Name FROM Region ORDER BY 2";
-            DataTable tbl = Util.BDC.GetDataTable(query, null);
+            string query = @"SELECT Region.Id, Region.Name FROM dbo.Region 
+" + (CountryId == 193 ? " where RegionNumber >0 " : " left join dbo.Country on Country.RegionId = Region.Id where Country.Id = @CountryId ") +
+" ORDER BY 2 ";
+            DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string,object>(){{"@CountryId", CountryId}});
             List<KeyValuePair<object, string>> bind =
                 (from DataRow rw in tbl.Rows
                  select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
             cbRegion.AddItems(bind);
+        }
+        protected void FillComboRegionEduc()
+        {
+            string query = @"SELECT Region.Id, Region.Name FROM dbo.Region 
+" + (CountryEducId == 193 ? " where RegionNumber >0 " : " left join dbo.Country on Country.RegionId = Region.Id where Country.Id = @CountryId ") +
+" ORDER BY 2 "; 
+            DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@CountryId", CountryEducId } });
+            List<KeyValuePair<object, string>> bind =
+                (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
             cbRegionEduc.AddItems(bind);
         }
         private void FillComboSchoolType()
@@ -187,7 +251,7 @@ namespace PriemForeignInspector
         }
         private void FillComboCurrentLicenseProgram()
         {
-            if (!CurrentEducationStudyLevelId.HasValue)
+            if (!CurrentEducationStudyLevelId.HasValue || !CurrentEducationSemesterId.HasValue || !StudyFormId.HasValue || !StudyBasisId.HasValue)
             {
                 List<KeyValuePair<object, string>> bind = new List<KeyValuePair<object, string>>();
                 cbLicenseProgram.AddItems(bind);
@@ -196,9 +260,14 @@ namespace PriemForeignInspector
             else
             {
                 string query = @"SELECT DISTINCT LicenseProgramId, LicenseProgramCode, LicenseProgramName 
-                             FROM Entry WHERE StudyLevelId=@StudyLevelId ORDER BY LicenseProgramCode, LicenseProgramName";
+                             FROM Entry 
+                             WHERE StudyLevelId=@StudyLevelId and SemesterId = @SemesterId and StudyBasisId=@StudyBasisId and StudyFormId=@StudyFormId
+                             ORDER BY LicenseProgramCode, LicenseProgramName";
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("@StudyLevelId", CurrentEducationStudyLevelId);
+                dic.Add("@SemesterId", CurrentEducationSemesterId);
+                dic.Add("@StudyBasisId", StudyBasisId);
+                dic.Add("@StudyFormId", StudyFormId);
 
                 DataTable tbl = Util.BDC.GetDataTable(query, dic);
                 List<KeyValuePair<object, string>> bind =
@@ -211,6 +280,40 @@ namespace PriemForeignInspector
                 cbLicenseProgram.AddItems(bind);
             }
         }
+        private void FillComboCurrentObrazProgram()
+        {
+            if (!CurrentEducationStudyLevelId.HasValue || !CurrentEducationSemesterId.HasValue || !StudyFormId.HasValue || !StudyBasisId.HasValue || !CurrentLicenseProgramId.HasValue)
+            {
+                List<KeyValuePair<object, string>> bind = new List<KeyValuePair<object, string>>();
+                cbLicenseProgram.AddItems(bind);
+                return;
+            }
+            else
+            {
+                string query = @"SELECT DISTINCT ObrazProgramId, ObrazProgramName 
+                             FROM Entry 
+                             WHERE StudyLevelId=@StudyLevelId and SemesterId = @SemesterId and StudyBasisId=@StudyBasisId and StudyFormId=@StudyFormId
+                             and LicenseProgramId = @LicenseProgramId
+                             ORDER BY ObrazProgramName";
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("@StudyLevelId", CurrentEducationStudyLevelId);
+                dic.Add("@SemesterId", CurrentEducationSemesterId);
+                dic.Add("@StudyBasisId", StudyBasisId);
+                dic.Add("@StudyFormId", StudyFormId);
+                dic.Add("@LicenseProgramId", CurrentLicenseProgramId);
+
+                DataTable tbl = Util.BDC.GetDataTable(query, dic);
+                List<KeyValuePair<object, string>> bind =
+                    (from DataRow rw in tbl.Rows
+                     orderby rw.Field<string>("ObrazProgramName")
+                     select new KeyValuePair<object, string>(
+                         rw.Field<int>("ObrazProgramId"),
+                         rw.Field<string>("ObrazProgramName")
+                     )).ToList();
+                cbLicenseProgram.AddItems(bind);
+            }
+        }
+        #endregion
         private void FillCard()
         {
             using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
@@ -233,7 +336,19 @@ namespace PriemForeignInspector
                 PassportDate = p.PassportDate ?? DateTime.Now;
                 PassportCode = p.PassportCode;
                 SNILS = p.SNILS;
-                //------------------------------------------------------
+                //-----------------------------------------------------PersonAddInfo--
+                var PersonAddInfo = p.PersonAddInfo;
+                if (PersonAddInfo == null)
+                    PersonAddInfo = new PriemForeignInspector.PersonAddInfo();
+                Parents = PersonAddInfo.Parents;
+                AddInfo = PersonAddInfo.AddInfo;
+                IsDisabled = p.IsDisabled ?? false;
+                HostelEduc = PersonAddInfo.HostelEduc;
+
+                gbTRKI.Visible = !(NationalityId == 193);
+                HasTRKI = PersonAddInfo.HasTRKI;
+                TRKINumber = PersonAddInfo.TRKICertificateNumber ?? "";
+                //-----------------------------------------------------PersonContacts-
 
                 var PersonContacts = p.PersonContacts;
                 if (PersonContacts == null)
@@ -244,7 +359,13 @@ namespace PriemForeignInspector
                 Mobiles = PersonContacts.Mobiles;
 
                 CountryId = PersonContacts.CountryId;
+
+                int iRegion = ComboServ.GetComboIdInt(cbRegion) ?? 1;
                 RegionId = PersonContacts.RegionId ?? 1;
+                if (!RegionId.HasValue)
+                    RegionId = iRegion;
+
+                lblRegion.Visible = cbRegion.Visible = (CountryId == Util.CountryRussiaId);
 
                 Code = PersonContacts.Code;
                 City = PersonContacts.City;
@@ -260,8 +381,7 @@ namespace PriemForeignInspector
                 HouseReal = PersonContacts.HouseReal;
                 KorpusReal = PersonContacts.KorpusReal;
                 FlatReal = PersonContacts.FlatReal;
-                //------------------------------------------------------
-
+                //----------------------------------------------------PERSON CURRENT EDUCATION--
                 var PersonCurrentEducation = p.PersonCurrentEducation;
                 if (PersonCurrentEducation == null)
                     PersonCurrentEducation = new PriemForeignInspector.PersonCurrentEducation();
@@ -278,81 +398,88 @@ namespace PriemForeignInspector
                 CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
                 StudyBasisId = PersonCurrentEducation.StudyBasisId ?? 1;
                 StudyFormId = PersonCurrentEducation.StudyFormId ?? 1;
-                //------------------------------------------------------
-                var PersonAddInfo = p.PersonAddInfo;
-                if (PersonAddInfo == null)
-                    PersonAddInfo = new PriemForeignInspector.PersonAddInfo();
-                Parents = PersonAddInfo.Parents;
-                AddInfo = PersonAddInfo.AddInfo;
-                IsDisabled = p.IsDisabled ?? false;
-                HostelEduc = PersonAddInfo.HostelEduc;
+
+                //-----------------------------------------------------PersonDisorderInfo--
+                var PersonDisorderInfo = p.PersonDisorderInfo;
+                if (PersonDisorderInfo == null)
+                    PersonDisorderInfo = new PriemForeignInspector.PersonDisorderInfo();
+
+                DisorderEducationName = PersonDisorderInfo.EducationProgramName;
+                YearOfDisorder = PersonDisorderInfo.YearOfDisorder;
+                IsForIGA = PersonDisorderInfo.IsForIGA;
+
+                CheckBtnDisable();
+                FillEducationData(_PersonId);
+
+                var CountryList = (from x in context.PersonEducationDocument
+                                   where x.PersonId == _PersonId
+                                   select new
+                                   {
+                                       x.CountryEducId,
+                                       x.SchoolTypeId,
+                                   }).ToList();
+                int CountryEduc = CountryList.OrderByDescending(x => x.SchoolTypeId).Select(x => x.CountryEducId).First();
+
+                string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
+                ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
+                IsApprovedByComission,
+                case when (Application.SecondTypeId =2) 
+				    then (
+					    " + (CountryEduc > 0 ? (CountryEduc == 193 ?
+                              @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
+                              @"select [AbiturientType].[Description] from AbiturientType where Id = 4") : "'перевод в СПбГУ'") +
+                        @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
+                FROM [Application] 
+                INNER JOIN Entry ON Entry.Id = [Application].EntryId 
+                WHERE PersonId=@Id  and IsCommited = 1 
+                order by 'Тип', LicenseProgramName";
+                DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
+                dgvApps.DataSource = tbl;
+                dgvApps.Columns["Id"].Visible = false;
+                dgvApps.Columns["CommitId"].Visible = false;
+                dgvApps.Columns["Enabled"].Visible = false;
+                dgvApps.Columns["IsCommited"].Visible = false;
+                dgvApps.Columns["IsDeleted"].Visible = false;
+                dgvApps.Columns["IsApprovedByComission"].Visible = false;
             }
-            CheckBtnDisable();
-
-            FillEducationData(_PersonId);
-
-            var CountryEducId = (int) Util.BDC.GetValue(@"Select top 1 CountryEducId from PersonEducationDocument where 
-								PersonId=@Id and SchoolTypeId = 4  order by Id", new Dictionary<string, object>() { { "@Id", _PersonId } });
-            int CountryEduc = -1;
-            if (CountryEducId != null)
-                if (!int.TryParse(CountryEducId.ToString(), out CountryEduc))
-                {
-                    CountryEduc = -1;
-                }
-
-            string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
-            IsApprovedByComission,
-            case when (Application.SecondTypeId =2) 
-				then (
-					" + (CountryEduc >0 ? (CountryEduc == 193 ? 
-                      @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
-                      @"select [AbiturientType].[Description] from AbiturientType where Id = 4" ):"перевод в СПбГУ" )+ 
-				@") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
-            FROM [Application] 
-            INNER JOIN Entry ON Entry.Id = [Application].EntryId 
-            WHERE PersonId=@Id  and IsCommited = 1 
-            order by 'Тип', LicenseProgramName";
-            DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
-            dgvApps.DataSource = tbl;
-            dgvApps.Columns["Id"].Visible = false;
-            dgvApps.Columns["CommitId"].Visible = false;
-            dgvApps.Columns["Enabled"].Visible = false;
-            dgvApps.Columns["IsCommited"].Visible = false;
-            dgvApps.Columns["IsDeleted"].Visible = false;
-            dgvApps.Columns["IsApprovedByComission"].Visible = false;
         }
         private void FillEducationData(Guid _PersonId)
         {
             using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
             {
-            var lstVals = (from x in context.Person
-                           join ed in context.PersonEducationDocument on x.Id equals ed.PersonId
-                           where x.Id == _PersonId
-                           select ed).ToList();
+                PersonEducDocument = context.PersonEducationDocument.Where(x => x.PersonId == _PersonId).ToList();
 
-            PersonEducDocument = lstVals;
+                var lstVals = (from x in context.Person
+                               join ed in context.PersonEducationDocument on x.Id equals ed.PersonId
+                               where x.Id == _PersonId
+                               select new
+                               {
+                                   Id = ed.Id,
+                                   SchoolName = ed.SchoolName,
+                                   Series = ed.Series,
+                                   ed.SchoolTypeId,
+                                   ed.Number
+                               }).ToList();
+                dgvEducation.DataSource = lstVals.Select(x => new
+                {
+                    x.Id,
+                    School = x.SchoolName,
+                    Series = x.Series,
+                    Num = x.Number,
+                }).ToList();
 
-            dgvEducation.DataSource = lstVals.Select(x => new
-            {
-                x.Id,
-                School = x.SchoolName,
-                Series = x.Series,
-                Num = x.Number,
-            }).ToList();
+                dgvEducation.Columns["Id"].Visible = false;
+                dgvEducation.Columns["School"].HeaderText = "Уч. учреждение";
+                dgvEducation.Columns["School"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvEducation.Columns["Series"].HeaderText = "Серия";
+                dgvEducation.Columns["Series"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                dgvEducation.Columns["Num"].HeaderText = "Номер";
+                dgvEducation.Columns["Num"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
-            dgvEducation.Columns["Id"].Visible = false;
-            dgvEducation.Columns["School"].HeaderText = "Уч. учреждение";
-            dgvEducation.Columns["School"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvEducation.Columns["Series"].HeaderText = "Серия";
-            dgvEducation.Columns["Series"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dgvEducation.Columns["Num"].HeaderText = "Номер";
-            dgvEducation.Columns["Num"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-
-            if (lstVals.Count > 0)
-                ViewEducationInfo(lstVals.First().Id);
-
-            _currentEducRow = 0;
+                CurrEducationId = lstVals.First().Id;
+                if (lstVals.Count > 0)
+                    ViewEducationInfo(CurrEducationId);
+                _currentEducRow = 0;
             }
         }
         private void ViewEducationInfo(int EducId)
@@ -360,17 +487,23 @@ namespace PriemForeignInspector
             using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
             {
                 var lstVals = PersonEducDocument.Where(x => x.Id == EducId).Select(x => x).First();
+
                 var vEntryYear = (from x in context.PersonHighEducationInfo
                                  where x.EducationDocumentId == EducId
                                  select x.EntryYear).FirstOrDefault();
 
                 CountryEducId = lstVals.CountryEducId;
+
                 SchoolTypeId = lstVals.SchoolTypeId;
+                SchoolCity = lstVals.SchoolCity;
+                    
                 EducationName = lstVals.SchoolName;
                 EducationDocumentSeries = lstVals.Series;
                 EducationDocumentNumber = lstVals.Number;
+                    
+                lblRegionEduc.Visible = cbRegionEduc.Visible = (CountryEducId == 193);
                 RegionEduc = lstVals.RegionEducId;
-
+                
                 int ex_year;
                 if (int.TryParse(lstVals.SchoolExitYear, out ex_year))
                     ExitYear = ex_year;
@@ -380,7 +513,9 @@ namespace PriemForeignInspector
                     EntryYear = vEntryYear.Value;
                 else
                     EntryYear = null;
-
+                IsEqual = lstVals.IsEqual;
+                EqualDocumentNumber = lstVals.EqualDocumentNumber;
+                chbIsEqual.Visible = gbEqualInfo.Visible = (CountryEducId != Util.CountryRussiaId);
             }
         }
         private void CheckBtnDisable()
@@ -505,71 +640,66 @@ namespace PriemForeignInspector
                     PersonAddInfo.Parents = Parents;
                     PersonAddInfo.AddInfo = AddInfo;
                     PersonAddInfo.HostelEduc = HostelEduc;
+                    PersonAddInfo.HasTRKI = HasTRKI;
+                    PersonAddInfo.TRKICertificateNumber = TRKINumber;
                 }
                 #endregion
 
-                var PersonCurrentEducation = Person.PersonCurrentEducation;
-                // смотря какая карточка (+ создать новое)
-                if (PersonCurrentEducation == null)
+                if (HasCurrentEdication)
                 {
-                    MessageBox.Show("Ошибка при получении данных PersonCurrentEducation");
-                    return;
+                    #region CurrentEducation
+                    var CurrentEducation = Person.PersonCurrentEducation;
+                    bool bHas = true;
+                    if (CurrentEducation == null)
+                    {
+                        bHas = false;
+                        CurrentEducation = new PersonCurrentEducation();
+                        CurrentEducation.PersonId = _PersonId;
+                    }
+
+                    CurrentEducation.AccreditationDate = AccreditationDate;
+                    CurrentEducation.AccreditationNumber = AccreditationNumber;
+                    CurrentEducation.EducName = "";
+                    CurrentEducation.HasAccreditation = HasAccreditation;
+                    CurrentEducation.HasScholarship = HasScholarship;
+                    CurrentEducation.SemesterId = CurrentEducationSemesterId ?? 3;
+                    CurrentEducation.StudyLevelId = CurrentEducationStudyLevelId ?? 16;
+                    CurrentEducation.LicenseProgramId = CurrentLicenseProgramId ?? 1;
+                    CurrentEducation.ObrazProgramId = CurrentObrazProgramId;
+                    CurrentEducation.ProfileName = ProfileName;
+                    if (!bHas)
+                        context.PersonCurrentEducation.Add(CurrentEducation);
+                    #endregion
                 }
-
-                PersonCurrentEducation.AccreditationDate = AccreditationDate;
-                PersonCurrentEducation.AccreditationNumber = AccreditationNumber;
-                PersonCurrentEducation.EducName = "";
-                PersonCurrentEducation.HasAccreditation = HasAccreditation;
-                PersonCurrentEducation.HasScholarship = HasScholarship;
-                PersonCurrentEducation.SemesterId = CurrentEducationSemesterId ?? 3;
-                PersonCurrentEducation.StudyLevelId = CurrentEducationStudyLevelId ?? 16;
-                PersonCurrentEducation.LicenseProgramId = CurrentLicenseProgramId ?? 1;
-
-                int ind = PersonEducDocument.FindIndex(x => x.Id == CurrEducationId);
-                if (ind >= 0)
+                if (HasDisorderInfo)
                 {
-                    PersonEducDocument[ind].SchoolTypeId = SchoolTypeId;
-                    PersonEducDocument[ind].SchoolName = EducationName;
-                    PersonEducDocument[ind].SchoolExitYear = ExitYear.ToString();
-                    PersonEducDocument[ind].CountryEducId = CountryEducId;
-                    PersonEducDocument[ind].RegionEducId = RegionEduc.Value;
-                    PersonEducDocument[ind].Series = EducationDocumentSeries;
-                    PersonEducDocument[ind].Number = EducationDocumentNumber;
-                    PersonEducDocument[ind].IsEqual = IsEqual;
-                    PersonEducDocument[ind].EqualDocumentNumber = EqualDocumentNumber;
-
-                    //EntryYear
-
-                    dgvEducation["School", ind].Value = EducationName;
-                    dgvEducation["Series", ind].Value = EducationDocumentSeries;
-                    dgvEducation["Num", ind].Value = EducationDocumentNumber;
+                    #region PersonDisorderInfo
+                    PersonDisorderInfo DisorderInfo = Person.PersonDisorderInfo;
+                    bool bHas = true;
+                    if (DisorderInfo == null)
+                    {
+                        bHas = false;
+                        DisorderInfo = new PersonDisorderInfo();
+                        DisorderInfo.PersonId = _PersonId;
+                    }
+                    DisorderInfo.EducationProgramName = DisorderEducationName;
+                    DisorderInfo.IsForIGA = chbIsForIGA.Checked;
+                    DisorderInfo.YearOfDisorder = YearOfDisorder;
+                    if (!bHas)
+                        context.PersonDisorderInfo.Add(DisorderInfo);
+                    #endregion
                 }
-                
-
 
                 context.SaveChanges();
+                SaveEducationDocument();
+
             }
         }
         private void Lock()
         {
             _isOpen = !_isOpen;
-
-            tbSurname.Enabled = _isOpen;
-            tbName.Enabled = _isOpen;
-            tbPassportSeries.Enabled = _isOpen;
-            tbPassportNumber.Enabled = _isOpen;
-            tbBirthPlace.Enabled = _isOpen;
-            dtpBirthDate.Enabled = _isOpen;
-            dtpPassportDate.Enabled = _isOpen;
-
-            tbEducationName.Enabled = _isOpen;
-            tbExitYear.Enabled = _isOpen;
-
-
-            tbPhone.Enabled = _isOpen;
-
-            cbNationality.Enabled = _isOpen;
-
+            Util.SetAllControlsEnabled(this, _isOpen);
+            tbEmail.Enabled = tbEmail.ReadOnly = true;
             btnSave.Text = _isOpen ? "Сохранить" : "Изменить";
         }
 
@@ -613,41 +743,91 @@ namespace PriemForeignInspector
 
             if (_currentEducRow != dgvEducation.CurrentRow.Index)
             {
+                SaveEducationDocument();
                 _currentEducRow = dgvEducation.CurrentRow.Index;
                 CurrEducationId = int.Parse(dgvEducation.CurrentRow.Cells["Id"].Value.ToString());
                 ViewEducationInfo(CurrEducationId);
             }
-
         }
 
         private void cbCurrentEducationStudyLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FillComboCurrentLicenseProgram();
         }
 
         private void cbCurrentEducationSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FillComboCurrentLicenseProgram();
         }
 
         private void cbStudyForm_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FillComboCurrentLicenseProgram();
         }
 
         private void cbStudyBasis_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FillComboCurrentLicenseProgram();
         }
 
         private void cbLicenseProgram_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FillComboCurrentObrazProgram();
         }
 
-        private void btnEducationSave_Click(object sender, EventArgs e)
+        private void SaveEducationDocument()
         {
+            using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
+            {
+                PersonEducationDocument Doc = context.PersonEducationDocument.Where(x => x.Id == CurrEducationId).Select(x => x).First();
+                bool bHas = true;
+                if (Doc == null)
+                {
+                    bHas = false;
+                    Doc = new PersonEducationDocument();
+                    Doc.PersonId = _PersonId;
+                }
 
+                Doc.SchoolTypeId = SchoolTypeId;
+                Doc.SchoolCity = SchoolCity;
+                Doc.SchoolName = EducationName;
+                Doc.SchoolExitYear = ExitYear.ToString();
+                Doc.SchoolName = EducationName;
+                Doc.RegionEducId = RegionEduc.Value;
+                Doc.Series = EducationDocumentSeries;
+                Doc.Number = EducationDocumentNumber;
+                Doc.IsEqual = chbIsEqual.Checked;
+                Doc.EqualDocumentNumber = EqualDocumentNumber;
+                if (!bHas)
+                    context.PersonEducationDocument.Add(Doc);
+                context.SaveChanges();
+
+                if (SchoolTypeId == 4)
+                {
+                    PersonHighEducationInfo HEduc = context.PersonHighEducationInfo.Where(x => x.EducationDocumentId == CurrEducationId).Select(x => x).FirstOrDefault();
+                    bool bHEHas = true;
+                    if (HEduc == null)
+                    {
+                        bHEHas =  false;
+                        HEduc = new PersonHighEducationInfo();
+                        HEduc.EducationDocumentId = CurrEducationId;
+                    }
+                    HEduc.EntryYear = EntryYear;
+                    if (!bHEHas)
+                        context.PersonHighEducationInfo.Add(HEduc);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        private void cbCountryEduc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillComboRegionEduc();
+        }
+
+        private void cbCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillComboRegion();
         }
 
     }

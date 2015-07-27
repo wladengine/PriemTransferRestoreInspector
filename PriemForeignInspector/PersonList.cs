@@ -187,7 +187,7 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
                             case when (Application.SecondTypeId=2) 
 								then
 									(case 
-										when ((Select TOP 1 CountryEducId from PersonEducationDocument where PersonId=extPersonAll.Id and SchoolTypeId = 4  order by Id)=193)
+										when ((Select TOP 1 CountryEducId from PersonEducationDocument where PersonId=extPersonAll.Id and SchoolTypeId <> 1  order by SchoolTypeId desc)=193)
 										then (select [AbiturientType].[Description] from AbiturientType where Id = 3) 
 										else (select [AbiturientType].[Description] from AbiturientType where Id = 4) 
 										end ) 

@@ -250,6 +250,10 @@ namespace PriemForeignInspector
 
                 CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
                 CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
+                StudyBasisId = PersonCurrentEducation.StudyBasisId;
+                StudyFormId = PersonCurrentEducation.StudyFormId;
+                FillComboCurrentLicenseProgram();
+                CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
 
                 //------------------------------------------------------
                 var PersonAddInfo = p.PersonAddInfo;
@@ -263,35 +267,41 @@ namespace PriemForeignInspector
                 AddInfo = PersonAddInfo.AddInfo;
                 HostelEduc = PersonAddInfo.HostelEduc;
                 IsDisabled = p.IsDisabled ?? false;
+
+                var CountryList = (from x in context.PersonEducationDocument
+                                   where x.PersonId == _PersonId
+                                   select new
+                                   {
+                                       x.CountryEducId,
+                                       x.SchoolTypeId, 
+                                   }).ToList();
+                int CountryEduc = CountryList.OrderByDescending(x => x.SchoolTypeId).Select(x => x.CountryEducId).First();                   
+
+                string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
+                ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
+                IsApprovedByComission,
+                case when (Application.SecondTypeId =2) 
+				    then (
+					    " + (CountryEduc == 193 ?
+                          @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
+                         @"select [AbiturientType].[Description] from AbiturientType where Id = 4 ") +
+                    @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
+                FROM [Application] 
+                INNER JOIN Entry ON Entry.Id = [Application].EntryId 
+                WHERE PersonId=@Id  and IsCommited = 1
+                --AND Enabled='True'  
+                order by 'Тип', LicenseProgramName";
+                DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
+                dgvApps.DataSource = tbl;
+                dgvApps.Columns["Id"].Visible = false;
+                dgvApps.Columns["CommitId"].Visible = false;
+                dgvApps.Columns["Enabled"].Visible = false;
+                dgvApps.Columns["IsCommited"].Visible = false;
+                dgvApps.Columns["IsDeleted"].Visible = false;
+                dgvApps.Columns["IsApprovedByComission"].Visible = false;
             }
             CheckBtnDisable();
             FillEducationData(_PersonId);
-            int ContryEduc = (int)Util.BDC.GetValue(@"Select top 1 CountryEducId from PersonEducationDocument where 
-								PersonId=@Id and SchoolTypeId = 4  order by Id", new Dictionary<string, object>() { { "@Id", _PersonId } });
-
-
-            string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-            ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
-            IsApprovedByComission,
-            case when (Application.SecondTypeId =2) 
-				then (
-					" + (ContryEduc == 193 ?
-                      @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
-                     @"select [AbiturientType].[Description] from AbiturientType where Id = 4 ") +
-                @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
-            FROM [Application] 
-            INNER JOIN Entry ON Entry.Id = [Application].EntryId 
-            WHERE PersonId=@Id  and IsCommited = 1
-            --AND Enabled='True'  
-            order by 'Тип', LicenseProgramName";
-            DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
-            dgvApps.DataSource = tbl;
-            dgvApps.Columns["Id"].Visible = false;
-            dgvApps.Columns["CommitId"].Visible = false;
-            dgvApps.Columns["Enabled"].Visible = false;
-            dgvApps.Columns["IsCommited"].Visible = false;
-            dgvApps.Columns["IsDeleted"].Visible = false;
-            dgvApps.Columns["IsApprovedByComission"].Visible = false;
         }
         private void FillEducationData(Guid _PersonId)
         {
@@ -389,16 +399,6 @@ namespace PriemForeignInspector
         }
         private void dgvApps_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-           /* bool Enabled = (bool)dgvApps.Rows[e.RowIndex].Cells["Enabled"].Value;
-            if (!Enabled)
-                e.CellStyle.BackColor = Color.Red;
-            bool IsCommited = (bool)dgvApps.Rows[e.RowIndex].Cells["IsCommited"].Value;
-            bool IsDeleted = (bool)dgvApps.Rows[e.RowIndex].Cells["IsDeleted"].Value;
-            if ((!IsCommited)||(IsDeleted))
-            {
-                e.CellStyle.BackColor = Color.Tomato;
-                e.CellStyle.ForeColor = Color.Black;
-            } */
             bool IsApprovedByComission = (bool)dgvApps.Rows[e.RowIndex].Cells["IsApprovedByComission"].Value;
             if (IsApprovedByComission)
                 e.CellStyle.BackColor = Color.LightGreen;

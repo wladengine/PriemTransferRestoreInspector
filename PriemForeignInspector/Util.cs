@@ -108,57 +108,7 @@ namespace PriemForeignInspector
         } 
         public static void OpenPersonCard(Form parent, Guid id, int AbiturientTypeId )
         {
-            foreach (Form f in MainForm.MdiChildren)
-            {
-                if (f is PersonTransferCard)
-                {
-                    f.Close();
-                }
-            }
-            switch (AbiturientTypeId)
-            {
-                case 2:
-                    {
-                        int? CountryId = (int?)BDC.GetValue("SELECT CountryEducId FROM PersonEducationDocument Inner join Person on Person.Id = PersonId WHERE Person.Id=@Id", new Dictionary<string, object>() { { "@Id", id } });
-                        if (CountryId.HasValue)
-                            if (CountryId == Util.CountryRussiaId)
-                            {
-                                var pcard = new PersonTransferCard(id);
-                                pcard.MdiParent = MainForm;
-                                pcard.Show();
-                                break;
-                            }
-                            else
-                            {
-                                var pcard = new PersonTransferForeignCard(id);
-                                pcard.MdiParent = MainForm;
-                                pcard.Show();
-                                break;
-                            }
-                        else { break; }
-                    }
-                case 3:
-                    {
-                        var pcard = new PersonRecoverCard(id);
-                        pcard.MdiParent = MainForm;
-                        pcard.Show();
-                        break;
-                    }
-                case 5:
-                    {
-                        var pcard = new PersonChangeStudyBasisCard(id);
-                        pcard.MdiParent = MainForm;
-                        pcard.Show();
-                        break;
-                    }
-                case 6:
-                    {
-                        var pcard = new PersonChangeObrazProgramCard(id);
-                        pcard.MdiParent = MainForm;
-                        pcard.Show();
-                        break;
-                    }
-            }
+            OpenPersonCard(parent, id, AbiturientTypeId, null);
         }  
         public static void OpenPersonCard(Form parent, Guid id, int AbiturientTypeId, UpdateHandler handler)
         {
@@ -181,6 +131,7 @@ namespace PriemForeignInspector
                                 pcard._handler = handler;
                                 pcard.MdiParent = MainForm;
                                 pcard.Show();
+                                //new CardPersonTransfer(id).Show();
                                 break;
                             }
                             else
@@ -189,6 +140,7 @@ namespace PriemForeignInspector
                                 pcard._handler = handler;
                                 pcard.MdiParent = MainForm;
                                 pcard.Show();
+                                //new CardPersonTransferForeign(id).Show();
                                 break;
                             }
                         else { break; }
@@ -199,6 +151,7 @@ namespace PriemForeignInspector
                         pcard._handler = handler;
                         pcard.MdiParent = MainForm;
                         pcard.Show();
+                        //new CardPersonRestore(id).Show();
                         break;
                     }
                 case 5:
