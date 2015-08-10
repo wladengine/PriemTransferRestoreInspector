@@ -908,7 +908,7 @@
             this.groupBox3.Controls.Add(this.cbSchoolType);
             this.groupBox3.Location = new System.Drawing.Point(6, 94);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(543, 216);
+            this.groupBox3.Size = new System.Drawing.Size(543, 226);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Образовательное учреждение";
@@ -942,7 +942,7 @@
             // chbIsEqual
             // 
             this.chbIsEqual.Enabled = false;
-            this.chbIsEqual.Location = new System.Drawing.Point(3, 172);
+            this.chbIsEqual.Location = new System.Drawing.Point(3, 181);
             this.chbIsEqual.Name = "chbIsEqual";
             this.chbIsEqual.Size = new System.Drawing.Size(114, 38);
             this.chbIsEqual.TabIndex = 38;
@@ -960,7 +960,7 @@
             // tbNumber
             // 
             this.tbNumber.Enabled = false;
-            this.tbNumber.Location = new System.Drawing.Point(319, 134);
+            this.tbNumber.Location = new System.Drawing.Point(319, 146);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(107, 20);
             this.tbNumber.TabIndex = 37;
@@ -968,7 +968,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(272, 137);
+            this.label35.Location = new System.Drawing.Point(272, 149);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(41, 13);
             this.label35.TabIndex = 36;
@@ -988,7 +988,7 @@
             // 
             this.gbEqualInfo.Controls.Add(this.tbEqualityDocumentNumber);
             this.gbEqualInfo.Controls.Add(this.label51);
-            this.gbEqualInfo.Location = new System.Drawing.Point(126, 160);
+            this.gbEqualInfo.Location = new System.Drawing.Point(126, 172);
             this.gbEqualInfo.Name = "gbEqualInfo";
             this.gbEqualInfo.Size = new System.Drawing.Size(411, 47);
             this.gbEqualInfo.TabIndex = 139;
@@ -1044,7 +1044,7 @@
             // tbSeries
             // 
             this.tbSeries.Enabled = false;
-            this.tbSeries.Location = new System.Drawing.Point(155, 134);
+            this.tbSeries.Location = new System.Drawing.Point(155, 146);
             this.tbSeries.Name = "tbSeries";
             this.tbSeries.Size = new System.Drawing.Size(107, 20);
             this.tbSeries.TabIndex = 35;
@@ -1052,7 +1052,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(117, 137);
+            this.label33.Location = new System.Drawing.Point(117, 149);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(38, 13);
             this.label33.TabIndex = 34;
@@ -1064,7 +1064,7 @@
             this.tbEducationName.Location = new System.Drawing.Point(89, 99);
             this.tbEducationName.Multiline = true;
             this.tbEducationName.Name = "tbEducationName";
-            this.tbEducationName.Size = new System.Drawing.Size(446, 29);
+            this.tbEducationName.Size = new System.Drawing.Size(446, 41);
             this.tbEducationName.TabIndex = 3;
             // 
             // Yfbvtyjdfybt
@@ -1699,7 +1699,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 652);
+            this.ClientSize = new System.Drawing.Size(574, 642);
             this.Controls.Add(this.btnHistory);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDisable);
