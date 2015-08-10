@@ -64,8 +64,6 @@
             this.tbSurname = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnEducationDelete = new System.Windows.Forms.Button();
-            this.btnEducationAdd = new System.Windows.Forms.Button();
             this.gbDisorderInfo = new System.Windows.Forms.GroupBox();
             this.chbIsForIGA = new System.Windows.Forms.CheckBox();
             this.label57 = new System.Windows.Forms.Label();
@@ -551,8 +549,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btnEducationDelete);
-            this.tabPage2.Controls.Add(this.btnEducationAdd);
             this.tabPage2.Controls.Add(this.gbDisorderInfo);
             this.tabPage2.Controls.Add(this.gbCurrenctEducationInfo);
             this.tabPage2.Controls.Add(this.dgvEducation);
@@ -565,24 +561,6 @@
             this.tabPage2.Text = "Образование";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnEducationDelete
-            // 
-            this.btnEducationDelete.Location = new System.Drawing.Point(466, 35);
-            this.btnEducationDelete.Name = "btnEducationDelete";
-            this.btnEducationDelete.Size = new System.Drawing.Size(83, 23);
-            this.btnEducationDelete.TabIndex = 136;
-            this.btnEducationDelete.Text = "Удалить";
-            this.btnEducationDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnEducationAdd
-            // 
-            this.btnEducationAdd.Location = new System.Drawing.Point(466, 6);
-            this.btnEducationAdd.Name = "btnEducationAdd";
-            this.btnEducationAdd.Size = new System.Drawing.Size(83, 23);
-            this.btnEducationAdd.TabIndex = 135;
-            this.btnEducationAdd.Text = "Добавить";
-            this.btnEducationAdd.UseVisualStyleBackColor = true;
-            // 
             // gbDisorderInfo
             // 
             this.gbDisorderInfo.Controls.Add(this.chbIsForIGA);
@@ -590,7 +568,7 @@
             this.gbDisorderInfo.Controls.Add(this.tbDisorderYear);
             this.gbDisorderInfo.Controls.Add(this.tbEducationDisorderName);
             this.gbDisorderInfo.Controls.Add(this.label56);
-            this.gbDisorderInfo.Location = new System.Drawing.Point(95, 51);
+            this.gbDisorderInfo.Location = new System.Drawing.Point(161, 33);
             this.gbDisorderInfo.Name = "gbDisorderInfo";
             this.gbDisorderInfo.Size = new System.Drawing.Size(543, 132);
             this.gbDisorderInfo.TabIndex = 134;
@@ -632,7 +610,7 @@
             this.tbEducationDisorderName.Location = new System.Drawing.Point(17, 81);
             this.tbEducationDisorderName.Multiline = true;
             this.tbEducationDisorderName.Name = "tbEducationDisorderName";
-            this.tbEducationDisorderName.Size = new System.Drawing.Size(504, 46);
+            this.tbEducationDisorderName.Size = new System.Drawing.Size(520, 46);
             this.tbEducationDisorderName.TabIndex = 1;
             // 
             // label56
@@ -695,6 +673,7 @@
             // 
             // tbCurrentProfile
             // 
+            this.tbCurrentProfile.Enabled = false;
             this.tbCurrentProfile.Location = new System.Drawing.Point(113, 127);
             this.tbCurrentProfile.Name = "tbCurrentProfile";
             this.tbCurrentProfile.Size = new System.Drawing.Size(422, 20);
@@ -901,7 +880,7 @@
             this.dgvEducation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEducation.Location = new System.Drawing.Point(6, 6);
             this.dgvEducation.Name = "dgvEducation";
-            this.dgvEducation.Size = new System.Drawing.Size(456, 82);
+            this.dgvEducation.Size = new System.Drawing.Size(488, 82);
             this.dgvEducation.TabIndex = 36;
             this.dgvEducation.CurrentCellChanged += new System.EventHandler(this.dgvEducation_CurrentCellChanged);
             // 
@@ -1913,8 +1892,6 @@
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.TextBox tbEducationSchoolCity;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.Button btnEducationDelete;
-        private System.Windows.Forms.Button btnEducationAdd;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.TextBox tbCodeKladr;
         private System.Windows.Forms.GroupBox gbReason;

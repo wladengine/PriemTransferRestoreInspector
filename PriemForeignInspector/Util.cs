@@ -19,6 +19,18 @@ namespace PriemForeignInspector
         public static int CampaignYear { get; private set; }
         public static int CountryRussiaId { get; private set; }
 
+        public static Dictionary<int, string> NationalityList { get; private set; }
+        public static Dictionary<int, string> RegionList { get; private set; }
+        public static Dictionary<int, string> PassportTypeList { get; private set; }
+        public static Dictionary<int, string> StudyLevelList { get; private set; }
+        public static Dictionary<int, string> SemesterList { get; private set; }
+        public static Dictionary<int, string> StudyFormList { get; private set; }
+        public static Dictionary<int, string> StudyBasisList { get; private set; }
+        public static Dictionary<int, string> LicenseProgramList { get; private set; }
+        public static Dictionary<int, string> ObrazProgramList { get; private set; }
+        public static Dictionary<int, string> SchoolTypeList { get; private set; }
+
+
         static Util()
         {
             string connStr = "Data Source=SRVPRIEM1;Initial Catalog=OnlinePriem2015;Integrated Security=True;Connect Timeout=300";
@@ -27,7 +39,7 @@ namespace PriemForeignInspector
             TemplateFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\PriemForeignInspector_TempFiles\";
             CampaignYear = 2015;
             CountryRussiaId = 193;
-
+            InitLists();
             try
             {
                 // Determine whether the directory exists.
@@ -127,36 +139,33 @@ namespace PriemForeignInspector
                         if (CountryId.HasValue)
                             if (CountryId == Util.CountryRussiaId)
                             {
-                                var pcard = new PersonTransferCard(id);
+                                var pcard = new CardPersonTransfer(id);
                                 pcard._handler = handler;
                                 pcard.MdiParent = MainForm;
                                 pcard.Show();
-                                //new CardPersonTransfer(id).Show();
                                 break;
                             }
                             else
                             {
-                                var pcard = new PersonTransferForeignCard(id);
+                                var pcard = new CardPersonTransferForeign(id);
                                 pcard._handler = handler;
                                 pcard.MdiParent = MainForm;
                                 pcard.Show();
-                                //new CardPersonTransferForeign(id).Show();
                                 break;
                             }
                         else { break; }
                     }
                 case 3:
                     {
-                        var pcard = new PersonRecoverCard(id);
+                        var pcard = new CardPersonRestore(id);
                         pcard._handler = handler;
                         pcard.MdiParent = MainForm;
                         pcard.Show();
-                        //new CardPersonRestore(id).Show();
                         break;
                     }
                 case 5:
                     {
-                        var pcard = new PersonChangeStudyBasisCard(id);
+                        var pcard = new CardPersonChangeStudyBasis(id);
                         pcard._handler = handler;
                         pcard.MdiParent = MainForm;
                         pcard.Show();
@@ -164,7 +173,7 @@ namespace PriemForeignInspector
                     }
                 case 6:
                     {
-                        var pcard = new PersonChangeObrazProgramCard(id);
+                        var pcard = new CardPersonChangeObrazProgram(id);
                         pcard._handler = handler;
                         pcard.MdiParent = MainForm;
                         pcard.Show();
@@ -489,6 +498,102 @@ namespace PriemForeignInspector
             {
                 SetAllControlsEnabled(ctrl, _isOpen);
             }
+        }
+
+        public static void InitLists()
+        {
+            string query = "SELECT Id, ISNULL(Name, NameEng) AS Name FROM Country ORDER BY LevelOfUsing, Name";
+            DataTable tbl = Util.BDC.GetDataTable(query, null);
+            List<KeyValuePair<object, string>> bind =
+                (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            NationalityList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                NationalityList.Add((int)x.Key, x.Value);
+
+            query = @"SELECT Region.Id, Region.Name FROM dbo.Region ORDER BY 2 ";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            RegionList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                RegionList.Add((int)x.Key, x.Value);
+
+            query = "SELECT Id, Name FROM PassportType ORDER BY Name";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            PassportTypeList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                PassportTypeList.Add((int)x.Key, x.Value);
+
+            query = "SELECT Distinct StudyLevelId AS Id, StudyLevelName AS Name FROM Entry ORDER BY 2";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                    select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            StudyLevelList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                StudyLevelList.Add((int)x.Key, x.Value);
+
+            query = "SELECT  distinct Semester.Id, Semester.Name FROM Entry join Semester on Entry.SemesterId = Semester.Id ORDER BY 1";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                    select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            SemesterList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                SemesterList.Add((int)x.Key, x.Value);
+
+            query = "SELECT Id, Name FROM StudyForm ORDER BY 1";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            StudyFormList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                StudyFormList.Add((int)x.Key, x.Value);
+
+            query = "SELECT Id, Name FROM StudyBasis ORDER BY 1";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind =
+                (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            StudyBasisList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                StudyBasisList.Add((int)x.Key, x.Value);
+
+            query = @"SELECT DISTINCT LicenseProgramId, LicenseProgramCode, LicenseProgramName 
+                             FROM Entry   ";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 orderby rw.Field<string>("LicenseProgramCode")
+                 select new KeyValuePair<object, string>(
+                     rw.Field<int>("LicenseProgramId"),
+                     "(" + rw.Field<string>("LicenseProgramCode") + ") " + rw.Field<string>("LicenseProgramName")
+                 )).ToList();
+            LicenseProgramList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                LicenseProgramList.Add((int)x.Key, x.Value);
+
+            query = @"SELECT DISTINCT ObrazProgramId, ObrazProgramName 
+                             FROM Entry 
+                             ORDER BY ObrazProgramName";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 orderby rw.Field<string>("ObrazProgramName")
+                 select new KeyValuePair<object, string>(
+                     rw.Field<int>("ObrazProgramId"),
+                     rw.Field<string>("ObrazProgramName")
+                 )).ToList();
+            ObrazProgramList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                ObrazProgramList.Add((int)x.Key, x.Value);
+
+            query = "SELECT Id, Name FROM SchoolTypeAll ORDER BY 2";
+            tbl = Util.BDC.GetDataTable(query, null);
+            bind = (from DataRow rw in tbl.Rows
+                 select new KeyValuePair<object, string>(rw.Field<int>("Id"), rw.Field<string>("Name"))).ToList();
+            SchoolTypeList = new Dictionary<int, string>();
+            foreach (var x in bind)
+                SchoolTypeList.Add((int)x.Key, x.Value);
         }
     }
 }

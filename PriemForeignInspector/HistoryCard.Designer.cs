@@ -36,6 +36,7 @@
             // 
             this.dgv.AllowUserToAddRows = false;
             this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.AllowUserToResizeRows = false;
             this.dgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -44,14 +45,14 @@
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersVisible = false;
-            this.dgv.Size = new System.Drawing.Size(420, 485);
+            this.dgv.Size = new System.Drawing.Size(787, 485);
             this.dgv.TabIndex = 0;
             // 
             // HistoryCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 509);
+            this.ClientSize = new System.Drawing.Size(811, 509);
             this.Controls.Add(this.dgv);
             this.Name = "HistoryCard";
             this.Text = "История действий с абитуриентом";

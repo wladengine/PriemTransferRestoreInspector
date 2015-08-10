@@ -400,5 +400,112 @@ namespace PriemForeignInspector
             }
         }
         #endregion
+
+        #region PersonReason
+        public string Reason
+        {
+            get { return tbReason.Text.Trim(); }
+            set { tbReason.Text = value.Trim(); }
+        }
+        #endregion
+
+        #region Данные для отслеживания изменений в карточке
+        #region PERSON
+        public bool oldIsDisabled { get; set; }
+        public string oldFIO  { get; set; }
+        public string oldSurname  { get; set; }
+        public string oldpersonName { get; set; }
+        public string oldSecondName { get; set; }
+        public DateTime oldBirthDate { get; set; }
+        public string oldBirthPlace { get; set; }
+        public bool oldSex { get; set; }
+        public int oldNationalityId { get; set; }
+
+        public int oldPassportTypeId { get; set; }
+        public string oldPassportSeries { get; set; }
+        public string oldPassportNumber { get; set; }
+        public string oldPassportAuthor { get; set; }
+        public string oldPassportCode { get; set; }
+        public string oldSNILS { get; set; }
+        public string oldPersonCode { get; set; }
+
+        public DateTime oldPassportDate { get; set; }
+        
+
+        #endregion
+
+        #region PersonEDUCATION
+        private int oldCurrEducationId { get; set; }
+        public int oldSchoolTypeId { get; set; }
+        public string oldSchoolCity { get; set; }
+        public string oldEducationName { get; set; }
+        public int oldCountryEducId { get; set; }
+        public int? oldRegionEduc { get; set; }
+        public int? oldStudyFormId { get; set; }
+        public int? oldStudyBasisId { get; set; }
+        public int? oldExitYear { get; set; }
+        public int? oldEntryYear { get; set; }
+        public string oldEducationDocumentSeries { get; set; }
+        public string oldEducationDocumentNumber { get; set; }
+        private bool oldIsEqual { get; set; }
+        public string oldEqualDocumentNumber { get; set; }
+        #endregion
+
+        #region PersonCONTACTS
+        public string oldPhone { get; set; }
+        public string oldEmail { get; set; }
+        public string oldMobiles { get; set; }
+        public int? oldCountryId { get; set; }
+        public int? oldRegionId { get; set; }
+        public string oldCode { get; set; }
+        public string oldCodeKLADR { get; set; }
+        public string oldCity { get; set; }
+        public string oldStreet { get; set; }
+        public string oldHouse { get; set; }
+        public string oldKorpus { get; set; }
+        public string oldFlat { get; set; }
+        public string oldCodeReal { get; set; }
+        public string oldCityReal { get; set; }
+        public string oldStreetReal { get; set; }
+        public string oldHouseReal { get; set; }
+        public string oldKorpusReal { get; set; }
+        public string oldFlatReal { get; set; }
+        #endregion
+
+        #region PersonCURRENT_EDUCATION
+        public int? oldCurrentEducationStudyLevelId { get; set; }
+        public int? oldCurrentEducationSemesterId { get; set; }
+        public int? oldCurrentLicenseProgramId { get; set; }
+        public string oldProfileName { get; set; }
+        public int? oldCurrentObrazProgramId { get; set; }
+        public string oldAccreditationNumber { get; set; }
+        public DateTime? oldAccreditationDate { get; set; }
+        public bool oldHasAccreditation { get; set; }
+        public bool oldHasScholarship { get; set; }
+        #endregion
+
+        #region PersonADDITIONAL_INFO
+        public string oldParents { get; set; }
+
+        public string oldAddInfo { get; set; }
+        public bool oldHostelEduc { get; set; }
+        public bool oldHasTRKI { get; set; }
+        public string oldTRKINumber { get; set; }
+        #endregion
+
+        #region PersonDISORDER_info
+        public string oldYearOfDisorder { get; set; }
+        public string oldDisorderEducationName { get; set; }
+        private bool oldIsForIGA { get; set; }
+        #endregion
+
+        #region PersonReason
+        public string oldReason { get; set; }
+        #endregion
+
+        #endregion
+
     }
+
+
 }

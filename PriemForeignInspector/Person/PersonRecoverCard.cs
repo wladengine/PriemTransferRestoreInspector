@@ -104,7 +104,7 @@ namespace PriemForeignInspector
 
                 DisorderEducationName = PersonDisorderInfo.EducationProgramName;
                 YearOfDisorder = PersonDisorderInfo.YearOfDisorder;
-
+                chbIsForIGA.Checked = PersonDisorderInfo.IsForIGA;
 
                 //StudyLevel = r.Field<string>("StudyLevelRus");
 

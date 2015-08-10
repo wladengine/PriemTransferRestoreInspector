@@ -11,16 +11,23 @@ namespace PriemForeignInspector
 {
     public partial class CardPersonRestore : CardPerson
     {
+        public CardPersonRestore()
+            : base()
+        {
+        }
         public CardPersonRestore(Guid id)
             :base(id)
         {
-            //InitializeComponent(); 
-            _AbitType = 3;
-            HasCurrentEdication = true;
-            HasDisorderInfo = false;
-
-            FillText(_AbitType);
-
+        }
+        protected override void FillText()
+        {
+            this.Text = "Восстановление в СПбГУ";
+        }
+        protected override void InitFields()
+        {
+            HasCurrentEdication = false;
+            HasDisorderInfo = true;
+            HasReason = false;
 
             ChangeVisiblegbCurrentEducation(false);
             ChangeVisiblegbDisorderInfo(true);

@@ -238,23 +238,23 @@ namespace PriemForeignInspector
                 var PersonCurrentEducation = p.PersonCurrentEducation;
                 if (PersonCurrentEducation == null)
                     PersonCurrentEducation = new PriemForeignInspector.PersonCurrentEducation();
+                
+                    AccreditationDate = PersonCurrentEducation.AccreditationDate;
+                    AccreditationNumber = PersonCurrentEducation.AccreditationNumber;
 
-                AccreditationDate = PersonCurrentEducation.AccreditationDate;
-                AccreditationNumber = PersonCurrentEducation.AccreditationNumber;
+                    IsEqual = PersonEducationDocument.IsEqual;
+                    EqualityDocumentNumber = PersonEducationDocument.EqualDocumentNumber;
+                    CountryEducId = PersonEducationDocument.CountryEducId;
+                    HasAccreditation = PersonCurrentEducation.HasAccreditation;
+                    HasScholarship = PersonCurrentEducation.HasScholarship;
 
-                IsEqual = PersonEducationDocument.IsEqual;
-                EqualityDocumentNumber = PersonEducationDocument.EqualDocumentNumber;
-                CountryEducId = PersonEducationDocument.CountryEducId;
-                HasAccreditation = PersonCurrentEducation.HasAccreditation;
-                HasScholarship = PersonCurrentEducation.HasScholarship;
+                    CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
+                    CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
 
-                CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
-                CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
-                StudyBasisId = PersonCurrentEducation.StudyBasisId;
-                StudyFormId = PersonCurrentEducation.StudyFormId;
-                FillComboCurrentLicenseProgram();
-                CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
-
+                    StudyBasisId = PersonCurrentEducation.StudyBasisId ?? 1;
+                    StudyFormId = PersonCurrentEducation.StudyFormId ?? 1;
+                    FillComboCurrentLicenseProgram();
+                    CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
                 //------------------------------------------------------
                 var PersonAddInfo = p.PersonAddInfo;
                 if (PersonAddInfo == null)

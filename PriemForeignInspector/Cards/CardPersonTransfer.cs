@@ -18,18 +18,22 @@ namespace PriemForeignInspector
         public CardPersonTransfer(Guid id)
             :base(id)
         {
-            InitializeComponent();
-            _AbitType = 2;
+        }
+        protected override void FillText()
+        {
+            this.Text = "Перевода в СПБГУ";
+        }
+        protected override void InitFields()
+        {
             HasCurrentEdication = true;
             HasDisorderInfo = false;
+            HasReason = false;
 
-            FillText(_AbitType);
             ChangeVisibleCurrentObrazProgramProfile(true);
             ChangeVisiblegbDisorderInfo(false);
             ChangeVisibleCurrentObrazProgramProfile(false);
             ChangeVisiblegbReason(false);
         }
-
 
 
     }

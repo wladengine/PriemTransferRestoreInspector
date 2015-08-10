@@ -17,8 +17,9 @@ namespace PriemForeignInspector
         public int _AbitType;
         int _currentEducRow;
         List<PersonEducationDocument> PersonEducDocument;
-        public bool HasCurrentEdication;
-        public bool HasDisorderInfo;
+        public bool HasCurrentEdication = false; 
+        public bool HasDisorderInfo = false;
+        public bool HasReason = false;
 
         public CardPerson()
         { }
@@ -28,53 +29,20 @@ namespace PriemForeignInspector
             this.MdiParent = Util.MainForm;
 
             InitializeComponent();
-            _PersonId = id; 
+            _PersonId = id;
+            InitFields();
+            
             FillCombos();
             FillCard(); 
             this.Icon = PriemForeignInspector.Properties.Resources.Person_Male_Light;
             _isOpen = false;
+            FillText();
         }
 
-        protected void FillText(int _AbitType)
+        protected virtual void FillText()
         {
-            switch (_AbitType)
-            {
-                case 1:
-                    {
-                        this.Text = "";
-                        break;
-                    }
-                case 2:
-                    {
-                        this.Text = "Перевод в СПБГУ из Российского ВУЗа";
-                        break;
-                    }
-                case 3:
-                    {
-                        this.Text = "Восстановление в СПбГУ";
-                        break;
-                    }
-                case 4:
-                    {
-                        this.Text = "Перевода в СПБГУ из иностранного ВУЗа";
-                        break;
-                    }
-                case 5:
-                    {
-                        this.Text = "Перевод с платной основы обучения на бюджетную (смена основы обучения)";
-                        break;
-                    }
-                case 6:
-                    {
-                        this.Text = "Смена образовательной программы";
-                        break;
-                    }
-                default:
-                        {
-                            break;
-                        }
-            }
         }
+
         protected void InitSetHandlers()
         {
             cbCurrentEducationSemester.SelectedIndexChanged += new EventHandler(cbCurrentEducationSemester_SelectedIndexChanged);
@@ -83,6 +51,10 @@ namespace PriemForeignInspector
             cbStudyBasis.SelectedIndexChanged += new EventHandler(cbStudyBasis_SelectedIndexChanged);
             cbStudyForm.SelectedIndexChanged += new EventHandler(cbStudyForm_SelectedIndexChanged);
             dgvEducation.CurrentCellChanged += new EventHandler(dgvEducation_CurrentCellChanged);
+
+        }
+        protected virtual void InitFields()
+        {
 
         }
         protected void InitDeleteHandlers()
@@ -224,7 +196,7 @@ namespace PriemForeignInspector
         }
         private void FillComboCurrentEducationSemester()
         {
-            string query = "SELECT Id, Name FROM Semester ORDER BY 1";
+            string query = "SELECT  distinct Semester.Id, Semester.Name FROM Entry join Semester on Entry.SemesterId = Semester.Id ORDER BY 1";
             DataTable tbl = Util.BDC.GetDataTable(query, null);
             List<KeyValuePair<string, string>> bind =
                 (from DataRow rw in tbl.Rows
@@ -277,6 +249,8 @@ namespace PriemForeignInspector
                          rw.Field<int>("LicenseProgramId"),
                          "(" + rw.Field<string>("LicenseProgramCode") + ") " + rw.Field<string>("LicenseProgramName")
                      )).ToList();
+                if (bind.Count == 0)
+                    cbLicenseProgram.DataSource = new List<KeyValuePair<object, string>>();
                 cbLicenseProgram.AddItems(bind);
             }
         }
@@ -285,7 +259,7 @@ namespace PriemForeignInspector
             if (!CurrentEducationStudyLevelId.HasValue || !CurrentEducationSemesterId.HasValue || !StudyFormId.HasValue || !StudyBasisId.HasValue || !CurrentLicenseProgramId.HasValue)
             {
                 List<KeyValuePair<object, string>> bind = new List<KeyValuePair<object, string>>();
-                cbLicenseProgram.AddItems(bind);
+                cbCurrentObrazProgram.AddItems(bind);
                 return;
             }
             else
@@ -310,7 +284,7 @@ namespace PriemForeignInspector
                          rw.Field<int>("ObrazProgramId"),
                          rw.Field<string>("ObrazProgramName")
                      )).ToList();
-                cbLicenseProgram.AddItems(bind);
+                cbCurrentObrazProgram.AddItems(bind);
             }
         }
         #endregion
@@ -382,35 +356,54 @@ namespace PriemForeignInspector
                 KorpusReal = PersonContacts.KorpusReal;
                 FlatReal = PersonContacts.FlatReal;
                 //----------------------------------------------------PERSON CURRENT EDUCATION--
-                var PersonCurrentEducation = p.PersonCurrentEducation;
-                if (PersonCurrentEducation == null)
-                    PersonCurrentEducation = new PriemForeignInspector.PersonCurrentEducation();
+                if (HasCurrentEdication)
+                {
+                    var PersonCurrentEducation = p.PersonCurrentEducation;
+                    if (PersonCurrentEducation == null)
+                        PersonCurrentEducation = new PriemForeignInspector.PersonCurrentEducation();
 
-                HasAccreditation = PersonCurrentEducation.HasAccreditation;
-                AccreditationDate = PersonCurrentEducation.AccreditationDate;
-                AccreditationNumber = PersonCurrentEducation.AccreditationNumber;
-                HasScholarship = PersonCurrentEducation.HasScholarship;
-                if (PersonCurrentEducation.SemesterId > 0)
-                    CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
-                if (PersonCurrentEducation.StudyLevelId > 0)
-                    CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
-                FillComboCurrentLicenseProgram();
-                CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
-                StudyBasisId = PersonCurrentEducation.StudyBasisId ?? 1;
-                StudyFormId = PersonCurrentEducation.StudyFormId ?? 1;
+                    HasAccreditation = PersonCurrentEducation.HasAccreditation;
+                    AccreditationDate = PersonCurrentEducation.AccreditationDate;
+                    AccreditationNumber = PersonCurrentEducation.AccreditationNumber;
+                    HasScholarship = PersonCurrentEducation.HasScholarship;
 
+                    StudyBasisId = PersonCurrentEducation.StudyBasisId ?? 1;
+                    StudyFormId = PersonCurrentEducation.StudyFormId ?? 1;
+
+                    if (PersonCurrentEducation.SemesterId > 0)
+                        CurrentEducationSemesterId = PersonCurrentEducation.SemesterId;
+                    if (PersonCurrentEducation.StudyLevelId > 0)
+                        CurrentEducationStudyLevelId = PersonCurrentEducation.StudyLevelId;
+                    FillComboCurrentLicenseProgram();
+                    CurrentLicenseProgramId = PersonCurrentEducation.LicenseProgramId;
+                    FillComboCurrentObrazProgram();
+                    CurrentObrazProgramId = PersonCurrentEducation.ObrazProgramId;
+                    ProfileName = PersonCurrentEducation.ProfileName ?? "";
+                }
                 //-----------------------------------------------------PersonDisorderInfo--
-                var PersonDisorderInfo = p.PersonDisorderInfo;
-                if (PersonDisorderInfo == null)
-                    PersonDisorderInfo = new PriemForeignInspector.PersonDisorderInfo();
+                if (HasDisorderInfo)
+                {
+                    var PersonDisorderInfo = p.PersonDisorderInfo;
+                    if (PersonDisorderInfo == null)
+                        PersonDisorderInfo = new PriemForeignInspector.PersonDisorderInfo();
 
-                DisorderEducationName = PersonDisorderInfo.EducationProgramName;
-                YearOfDisorder = PersonDisorderInfo.YearOfDisorder;
-                IsForIGA = PersonDisorderInfo.IsForIGA;
-
+                    DisorderEducationName = PersonDisorderInfo.EducationProgramName;
+                    YearOfDisorder = PersonDisorderInfo.YearOfDisorder;
+                    IsForIGA = PersonDisorderInfo.IsForIGA;
+                }
+                //-----------------------------------------------------PersonReason--
+                if (HasReason)
+                {
+                    var PersonReason = p.PersonChangeStudyFormReason;
+                    if (PersonReason == null)
+                        PersonReason = new PersonChangeStudyFormReason();
+                    Reason = PersonReason.Reason ?? "";
+                }
+                CopyToOldValues();
+                //-----------------------------------------------------PersonEducation-
                 CheckBtnDisable();
                 FillEducationData(_PersonId);
-
+                CopyToOldValues_Education();
                 var CountryList = (from x in context.PersonEducationDocument
                                    where x.PersonId == _PersonId
                                    select new
@@ -442,6 +435,98 @@ namespace PriemForeignInspector
                 dgvApps.Columns["IsDeleted"].Visible = false;
                 dgvApps.Columns["IsApprovedByComission"].Visible = false;
             }
+        }
+        private void CopyToOldValues()
+        {
+            oldSurname = Surname;
+            oldpersonName = personName;
+            oldSecondName = SecondName;
+            oldBirthDate = BirthDate;
+            oldBirthPlace = BirthPlace;
+            oldSex = Sex;
+            oldNationalityId = NationalityId;
+
+            oldPassportSeries = PassportSeries;
+            oldPassportNumber = PassportNumber;
+            oldPassportAuthor = PassportAuthor;
+            oldPassportTypeId = PassportTypeId;
+            oldPassportDate = PassportDate;
+            oldPassportCode = PassportCode;
+            oldSNILS = SNILS;
+
+            oldParents = Parents;
+            oldAddInfo = AddInfo;
+            oldIsDisabled = IsDisabled;
+            oldHostelEduc = HostelEduc;
+
+            oldHasTRKI = HasTRKI;
+            oldTRKINumber = TRKINumber;
+
+            oldPhone = Phone;
+            oldMobiles = Mobiles;
+
+            oldCountryId = CountryId;
+
+            oldRegionId = RegionId;
+
+            oldCode = Code;
+            oldCity = City;
+            oldStreet = Street;
+            oldHouse = House;
+            oldKorpus = Korpus;
+            oldFlat = Flat;
+
+            oldCodeReal = CodeReal;
+            oldCityReal = CityReal;
+            oldStreetReal = StreetReal;
+            oldHouseReal = HouseReal;
+            oldKorpusReal = KorpusReal;
+            oldFlatReal = FlatReal;
+
+            if (HasCurrentEdication)
+            {
+                oldHasAccreditation = HasAccreditation;
+                oldAccreditationDate = AccreditationDate;
+                oldAccreditationNumber = AccreditationNumber;
+                oldHasScholarship = HasScholarship;
+
+                oldStudyBasisId = StudyBasisId;
+                oldStudyFormId = StudyFormId;
+
+                if (CurrentEducationSemesterId>0)
+                    oldCurrentEducationSemesterId = CurrentEducationSemesterId;
+                if (CurrentEducationStudyLevelId > 0)
+                    oldCurrentEducationStudyLevelId = CurrentEducationStudyLevelId;
+                oldCurrentLicenseProgramId = CurrentLicenseProgramId;
+                oldCurrentObrazProgramId = CurrentObrazProgramId;
+                oldProfileName = ProfileName;
+            }
+            if (HasDisorderInfo)
+            {
+                oldDisorderEducationName = DisorderEducationName;
+                oldYearOfDisorder = YearOfDisorder;
+                oldIsForIGA = IsForIGA;
+            }
+            if (HasReason)
+            {
+                oldReason = Reason;
+            }
+        }
+        private void CopyToOldValues_Education()
+        {
+            oldCountryEducId = CountryEducId;
+            oldSchoolTypeId = SchoolTypeId;
+            oldSchoolCity = SchoolCity;
+            oldEducationName = EducationName;
+            oldEducationDocumentSeries = EducationDocumentSeries;
+            oldEducationDocumentNumber = EducationDocumentNumber;
+            oldRegionEduc = RegionEduc;
+            if (ExitYear.HasValue)
+                oldExitYear = ExitYear;
+            if (EntryYear.HasValue)
+                oldEntryYear = EntryYear;
+            oldIsEqual = IsEqual;
+            oldEqualDocumentNumber = EqualDocumentNumber;
         }
         private void FillEducationData(Guid _PersonId)
         {
@@ -562,10 +647,13 @@ namespace PriemForeignInspector
         {
             if (!_isOpen)
                 Lock();
-            else
+            else if (Check())
             {
                 Lock();
                 SaveCard();
+                WriteAllChangesToHistory();
+                WriteEducationChangesToHistory();
+                CopyToOldValues();
                 if (_handler != null)
                     _handler();
             }
@@ -585,6 +673,7 @@ namespace PriemForeignInspector
                 {
                     Person.Surname = Surname;
                     Person.Name = personName;
+                    Person.SecondName = SecondName;
                     Person.BirthDate = BirthDate;
                     Person.BirthPlace = BirthPlace;
                     Person.Sex = Sex;
@@ -648,6 +737,7 @@ namespace PriemForeignInspector
                 if (HasCurrentEdication)
                 {
                     #region CurrentEducation
+
                     var CurrentEducation = Person.PersonCurrentEducation;
                     bool bHas = true;
                     if (CurrentEducation == null)
@@ -664,11 +754,14 @@ namespace PriemForeignInspector
                     CurrentEducation.HasScholarship = HasScholarship;
                     CurrentEducation.SemesterId = CurrentEducationSemesterId ?? 3;
                     CurrentEducation.StudyLevelId = CurrentEducationStudyLevelId ?? 16;
+                    CurrentEducation.StudyBasisId = StudyBasisId ?? 1;
+                    CurrentEducation.StudyFormId = StudyFormId ?? 1;
                     CurrentEducation.LicenseProgramId = CurrentLicenseProgramId ?? 1;
                     CurrentEducation.ObrazProgramId = CurrentObrazProgramId;
                     CurrentEducation.ProfileName = ProfileName;
                     if (!bHas)
                         context.PersonCurrentEducation.Add(CurrentEducation);
+
                     #endregion
                 }
                 if (HasDisorderInfo)
@@ -689,10 +782,24 @@ namespace PriemForeignInspector
                         context.PersonDisorderInfo.Add(DisorderInfo);
                     #endregion
                 }
-
+                if (HasReason)
+                {
+                    #region Reason
+                    var PersonReason = Person.PersonChangeStudyFormReason;
+                    bool bHas = true;
+                    if (PersonReason == null)
+                    {
+                        bHas = false;
+                        PersonReason = new PersonChangeStudyFormReason();
+                    }
+                    PersonReason.Reason = Reason ?? "";
+                    PersonReason.PersonId = _PersonId;
+                    if (!bHas)
+                        context.PersonChangeStudyFormReason.Add(PersonReason);
+                    #endregion
+                }
                 context.SaveChanges();
                 SaveEducationDocument();
-
             }
         }
         private void Lock()
@@ -701,6 +808,9 @@ namespace PriemForeignInspector
             Util.SetAllControlsEnabled(this, _isOpen);
             tbEmail.Enabled = tbEmail.ReadOnly = true;
             btnSave.Text = _isOpen ? "Сохранить" : "Изменить";
+            btnSave.Enabled = true;
+            btnHistory.Enabled = true; btnDisable.Enabled = true;
+            lblFIO.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -743,10 +853,13 @@ namespace PriemForeignInspector
 
             if (_currentEducRow != dgvEducation.CurrentRow.Index)
             {
-                SaveEducationDocument();
+                if (_isOpen)
+                    SaveEducationDocument();
                 _currentEducRow = dgvEducation.CurrentRow.Index;
                 CurrEducationId = int.Parse(dgvEducation.CurrentRow.Cells["Id"].Value.ToString());
                 ViewEducationInfo(CurrEducationId);
+                WriteEducationChangesToHistory();
+                CopyToOldValues_Education();
             }
         }
 
@@ -829,6 +942,137 @@ namespace PriemForeignInspector
         {
             FillComboRegion();
         }
+        private bool Check()
+        {
+            if (HasCurrentEdication)
+                if (CurrentLicenseProgramId == null)
+                {
+                    MessageBox.Show("Выберите текущее направление обучения", "Ошибка");
+                    return false;
+                }
+            return true;
+        }
 
+        private void WriteAllChangesToHistory()
+        {
+            string query = "INSERT INTO PersonHistory (PersonId, Action, OldValue, NewValue, Time, Owner) VALUES ('" + _PersonId.ToString() + "',  @Action, @OldValue, @NewValue, '" + DateTime.Now.ToString() + "', '" + System.Environment.UserName + "')";
+            List<KeyValuePair<KeyValuePair<object, object>, string>> lst = new List<KeyValuePair<KeyValuePair<object, object>, string>>();
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldSurname, Surname), "Изменение фамилии"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldpersonName, personName), "Изменение имени"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldSecondName, SecondName), "Изменение отчества"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldBirthDate, BirthDate), "Изменение даты рождения"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldBirthPlace, BirthPlace), "Изменение места рождения"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldSex?"мужской":"женский", Sex?"мужской":"женский"), "Изменение пола"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(Util.NationalityList[oldNationalityId], Util.NationalityList[NationalityId]), "Изменение национальности"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPassportSeries, PassportSeries), "Изменение серии паспорта"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPassportNumber, PassportNumber), "Изменение номера паспорта"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPassportAuthor, PassportAuthor), "Изменение орг-ции, выдавшей паспорт"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(Util.PassportTypeList[oldPassportTypeId], Util.PassportTypeList[PassportTypeId]), "Изменение типа паспорта"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPassportDate, PassportDate), "Изменение даты выдачи паспорта"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPassportCode, PassportCode), "Изменение кода паспорта"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldSNILS, SNILS), "Изменение СНИЛС"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldParents, Parents), "Изменение сведений о родителях"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldAddInfo, AddInfo), "Изменение доп. сведений"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldIsDisabled ? "да" : "нет", IsDisabled ? "да" : "нет"), "Изменение видимости в списке"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHostelEduc ? "да, нуждается" : "нет, не нуждается", HostelEduc ? "да, нуждается" : "нет, не нуждается"), "Изменение требования общежития"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHasTRKI ? "да" : "нет", HasTRKI ? "да" : "нет"), "Изменение наличие ТРКИ-сертификата"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldTRKINumber, TRKINumber), "Изменение номера ТРКИ-сертфиката"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldPhone, Phone), "Изменение номера телефона"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldMobiles, Mobiles), "Изменение номера мобильного телефона"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCountryId.HasValue ? Util.NationalityList[oldCountryId.Value]:"", CountryId.HasValue ? Util.NationalityList[CountryId.Value]:""), "Изменение страны проживания"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldRegionId.HasValue ? Util.RegionList[oldRegionId.Value] : "", RegionId.HasValue ? Util.RegionList[RegionId.Value]:""), "Изменение региона проживания"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCode, Code), "Изменение адреса: индекс"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCity, City), "Изменение адреса: город"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldStreet, Street), "Изменение адреса: улица"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHouse, House), "Изменение адреса: дом"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldKorpus, Korpus), "Изменение адреса: корпус"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldFlat, Flat), "Изменение адреса: квартира"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCodeReal, CodeReal), "Изменение фактического адреса: индекс"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCityReal, CityReal), "Изменение фактического адреса: город"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldStreetReal, StreetReal), "Изменение фактического адреса: улица"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHouseReal, HouseReal), "Изменение фактического адреса: дом"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldKorpusReal, KorpusReal), "Изменение фактического адреса: корпус"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldFlatReal, FlatReal), "Изменение фактического адреса: квартира"));
+
+            if (HasCurrentEdication)
+            {
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHasAccreditation ? "да" : "нет", HasAccreditation ? "да" : "нет"), "Изменение наличия аккредитации"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldAccreditationDate, AccreditationDate), "Изменение даты аккредитации"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldAccreditationNumber, AccreditationNumber), "Изменение номера аккредитации"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldHasScholarship ? "да" : "нет", HasScholarship ? "да" : "нет"), "Изменение наличия стипендии"));
+
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldStudyBasisId.HasValue ? Util.StudyBasisList[oldStudyBasisId.Value] : "", StudyBasisId.HasValue ? Util.StudyBasisList[StudyBasisId.Value]:""), "Изменение текущей основы обучения"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldStudyFormId.HasValue ? Util.StudyFormList[oldStudyFormId.Value] : "", StudyFormId.HasValue ? Util.StudyFormList[StudyFormId.Value] : ""), "Изменение текущей формы обучения"));
+
+                if (CurrentEducationSemesterId > 0)
+                    lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCurrentEducationSemesterId.HasValue ? Util.SemesterList[oldCurrentEducationSemesterId.Value] : "", CurrentEducationSemesterId.HasValue ? Util.SemesterList[CurrentEducationSemesterId.Value]:""), "Изменение текущего семестра"));
+                if (CurrentEducationStudyLevelId > 0)
+                    lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCurrentEducationStudyLevelId.HasValue ? Util.StudyLevelList[oldCurrentEducationStudyLevelId.Value] : "", CurrentEducationStudyLevelId.HasValue ? Util.StudyLevelList[CurrentEducationStudyLevelId.Value]:""), "Изменение текущего уровня образования"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCurrentLicenseProgramId.HasValue ? Util.LicenseProgramList[oldCurrentLicenseProgramId.Value] : "", CurrentLicenseProgramId.HasValue? Util.LicenseProgramList[CurrentLicenseProgramId.Value]:""), "Изменение текущего направления"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldCurrentObrazProgramId.HasValue ? Util.ObrazProgramList[oldCurrentObrazProgramId.Value] : "", CurrentObrazProgramId.HasValue ? Util.ObrazProgramList[CurrentObrazProgramId.Value]:""), "Изменение текущей образовательной программы"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldProfileName, ProfileName), "Изменение текущего профиля"));
+            }
+            if (HasDisorderInfo)
+            {
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldYearOfDisorder, YearOfDisorder), "Изменение года отчисления"));
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldIsForIGA, IsForIGA), "Изменение условия \"Восстановление для ИГА\""));
+            }
+            if (HasReason)
+            {
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldReason, Reason), "Изменение причины смены основы обучения"));
+            }
+            foreach (var x in lst)
+                if (x.Key.Key == null && x.Key.Value == null)
+                { }
+                else if (x.Key.Key == null && x.Key.Value != null)
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", DBNull.Value }, { "@NewValue", x.Key.Value.ToString() }, { "@Action", x.Value } });
+                else if (x.Key.Key != null && x.Key.Value == null)
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", x.Key.Key.ToString() }, { "@NewValue", DBNull.Value }, { "@Action", x.Value } });
+                else if (x.Key.Key.ToString() != x.Key.Value.ToString())
+                {
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", x.Key.Key.ToString() }, { "@NewValue", x.Key.Value.ToString() }, { "@Action", x.Value } });
+                }
+        }
+        private void WriteEducationChangesToHistory()
+        {
+            string query = "INSERT INTO PersonHistory (PersonId, Action, OldValue, NewValue, Time, Owner) VALUES ('" + _PersonId.ToString() + "',  @Action, @OldValue, @NewValue, '" + DateTime.Now.ToString() + "', '" + System.Environment.UserName + "')";
+            List<KeyValuePair<KeyValuePair<object, object>, string>> lst = new List<KeyValuePair<KeyValuePair<object, object>, string>>();
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(Util.NationalityList[oldCountryEducId], Util.NationalityList[CountryEducId]), "Изменение страны обучения"));
+
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(Util.SchoolTypeList[oldSchoolTypeId],Util.SchoolTypeList[SchoolTypeId]), "Изменение типа образ.учрежд."));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldSchoolCity, SchoolCity), "Изменение нас. пункта образ.учрежд."));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldEducationName ,EducationName), "Изменение названия образ. учрежд."));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldEducationDocumentSeries ,EducationDocumentSeries), "Изменение серии документа об образовании"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldEducationDocumentNumber, EducationDocumentNumber), "Изменение номера документа об образовании"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldRegionEduc.HasValue ? Util.RegionList[oldRegionEduc.Value] : "", RegionEduc.HasValue ? Util.RegionList[RegionEduc.Value]:""), "Изменение региона образ.учрежд."));
+            if (ExitYear.HasValue)
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldExitYear ,ExitYear), "Изменение года выпуска"));
+            if (EntryYear.HasValue)
+                lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldEntryYear ,EntryYear), "Изменение года поступления"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldIsEqual ? "есть" : "нет", IsEqual ? "есть" : "нет"), "Изменение параметра - св-во эквивалентности"));
+            lst.Add(new KeyValuePair<KeyValuePair<object, object>, string>(new KeyValuePair<object, object>(oldEqualDocumentNumber ,EqualDocumentNumber), "Изменение номера св-ва эквивалентности"));
+
+
+            foreach (var x in lst)
+                if (x.Key.Key == null && x.Key.Value == null)
+                { }
+                else if (x.Key.Key == null && x.Key.Value != null)
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", DBNull.Value }, { "@NewValue", x.Key.Value.ToString() }, { "@Action", x.Value } });
+                else if (x.Key.Key != null && x.Key.Value == null)
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", x.Key.Key.ToString() }, { "@NewValue", DBNull.Value }, { "@Action", x.Value } });
+                else if (x.Key.Key.ToString() != x.Key.Value.ToString())
+                {
+                    Util.BDC.ExecuteQuery(query, new Dictionary<string, object>() { { "@OldValue", x.Key.Key.ToString() }, { "@NewValue", x.Key.Value.ToString() }, { "@Action", x.Value } });
+                }
+        }
     }
 }

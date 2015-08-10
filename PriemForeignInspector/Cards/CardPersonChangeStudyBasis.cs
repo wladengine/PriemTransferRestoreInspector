@@ -7,32 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PriemForeignInspector 
+namespace PriemForeignInspector
 {
-    public partial class CardPersonTransferForeign : CardPerson
+    public partial class CardPersonChangeStudyBasis : CardPerson
     {
-        public CardPersonTransferForeign():
-            base()
+        
+        public CardPersonChangeStudyBasis()
+            : base()
         {
             InitializeComponent();
         }
-        public CardPersonTransferForeign(Guid id)
-            :base(id)
+        public CardPersonChangeStudyBasis(Guid id)
+            : base(id)
         {
         }
         protected override void FillText()
         {
-            this.Text = "Перевода в СПБГУ из иностранного ВУЗа";
+            this.Text = "Смена основы обучения";
         }
         protected override void InitFields()
         {
             HasCurrentEdication = true;
             HasDisorderInfo = false;
-            HasReason = false;
-            ChangeVisibleCurrentObrazProgramProfile(true);
+            HasReason = true;
+
+            ChangeVisiblegbCurrentEducation(true);
             ChangeVisiblegbDisorderInfo(false);
-            ChangeVisibleCurrentObrazProgramProfile(false);
-            ChangeVisiblegbReason(false);
+            ChangeVisiblegbReason(true);
+            ChangeVisibleAccreditationInfo(false);
         }
     }
 }
