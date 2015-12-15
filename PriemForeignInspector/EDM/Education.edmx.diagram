@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="239413c7796a4fdda59913a7156f3b6b" Name="Diagram1" ZoomLevel="53">
+        <EntityTypeShape EntityType="EducationModel.SP_EducationDocument" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_EducationPeriod" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_EducationPermit" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_Faculty" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_Language" Width="1.5" PointX="11.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_LicenseProgram" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_ObrazProgram" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_ObrazProgramInYear" Width="1.5" PointX="3.875" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_PayPeriod" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_Profile" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_ProfileInStudyPlan" Width="1.5" PointX="12" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_Qualification" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_StudyBasis" Width="1.5" PointX="11.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_StudyForm" Width="1.5" PointX="5.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_StudyLevel" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_StudyLevelGroup" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.SP_StudyPlan" Width="1.5" PointX="9.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationModel.extStudyPlan" Width="1.5" PointX="14.75" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyLevel_SP_EducationDocument" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_EducationPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyLevel_SP_EducationPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.fk_Profession_Faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_LicenseProgram_StudyLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_ObrazProgram_LicenseProgram" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_LicenseProgram_SP_Qualification1" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_ObrazProgramInYear_SP_ObrazProgram" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_ObrazProgram" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_PayPeriod" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_ProfileInStudyPlan_SP_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_ProfileInStudyPlan_SP_StudyPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_StudyForm" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyLevel_SP_StudyLevelGroup" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EducationModel.SP_Status" Width="1.5" PointX="4.8833732329697224" PointY="20.518113488572702" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_Status" />
+        <EntityTypeShape EntityType="EducationModel.SP_Year" Width="1.5" PointX="6.8650740174879665" PointY="19.944352278459981" />
+        <AssociationConnector Association="EducationModel.FK_SP_ObrazProgramInYear_SP_Year" />
+        <AssociationConnector Association="EducationModel.FK_SP_StudyPlan_SP_Year" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

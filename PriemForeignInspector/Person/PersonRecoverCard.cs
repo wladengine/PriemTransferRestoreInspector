@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PriemForeignInspector.EDM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -79,7 +80,6 @@ namespace PriemForeignInspector
             {
                 Person p = context.Person.Where(x => x.Id == _PersonId).FirstOrDefault();
 
-
                 Surname = p.Surname;
                 personName = p.Name;
                 SecondName = p.SecondName;
@@ -100,7 +100,7 @@ namespace PriemForeignInspector
 
                 var PersonDisorderInfo = p.PersonDisorderInfo;
                 if (PersonDisorderInfo == null)
-                    PersonDisorderInfo = new PriemForeignInspector.PersonDisorderInfo();
+                    PersonDisorderInfo = new PriemForeignInspector.EDM.PersonDisorderInfo();
 
                 DisorderEducationName = PersonDisorderInfo.EducationProgramName;
                 YearOfDisorder = PersonDisorderInfo.YearOfDisorder;
@@ -110,7 +110,7 @@ namespace PriemForeignInspector
 
                 var PersonContacts = p.PersonContacts;
                 if (PersonContacts == null)
-                    PersonContacts = new PriemForeignInspector.PersonContacts();
+                    PersonContacts = new PriemForeignInspector.EDM.PersonContacts();
 
                 Phone = PersonContacts.Phone;
                 Email = p.User.Email;
@@ -136,7 +136,7 @@ namespace PriemForeignInspector
                 //------------------------------------------------------
                 var PersonAddInfo = p.PersonAddInfo;
                 if (PersonAddInfo == null)
-                    PersonAddInfo = new PriemForeignInspector.PersonAddInfo();
+                    PersonAddInfo = new PriemForeignInspector.EDM.PersonAddInfo();
 
                 Parents = PersonAddInfo.Parents;
                 AddInfo = PersonAddInfo.AddInfo;

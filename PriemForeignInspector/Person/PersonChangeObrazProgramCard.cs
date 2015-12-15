@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PriemForeignInspector.EDM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -262,7 +263,7 @@ namespace PriemForeignInspector
 
                 var PersonContacts = p.PersonContacts;
                 if (PersonContacts == null)
-                    PersonContacts = new PriemForeignInspector.PersonContacts();
+                    PersonContacts = new PriemForeignInspector.EDM.PersonContacts();
 
                 Phone = PersonContacts.Phone;
                 Mobiles = PersonContacts.Mobiles;
@@ -288,10 +289,9 @@ namespace PriemForeignInspector
                 FlatReal = PersonContacts.FlatReal;
                 //------------------------------------------------------
 
-
                 var PersonAddInfo = p.PersonAddInfo;
                 if (PersonAddInfo == null)
-                    PersonAddInfo = new PriemForeignInspector.PersonAddInfo();
+                    PersonAddInfo = new PriemForeignInspector.EDM.PersonAddInfo();
 
                 Parents = PersonAddInfo.Parents;
                 AddInfo = PersonAddInfo.AddInfo;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PriemForeignInspector.EDM;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -193,11 +194,11 @@ namespace PriemForeignInspector
 
                 var PersonEducationDocument = p.PersonEducationDocument.FirstOrDefault();
                 if (PersonEducationDocument == null)
-                    PersonEducationDocument = new PriemForeignInspector.PersonEducationDocument();
+                    PersonEducationDocument = new PriemForeignInspector.EDM.PersonEducationDocument();
 
                 var PersonContacts = p.PersonContacts;
                 if (PersonContacts == null)
-                    PersonContacts = new PriemForeignInspector.PersonContacts();
+                    PersonContacts = new PriemForeignInspector.EDM.PersonContacts();
 
                 Phone = PersonContacts.Phone;
                 Email = p.User.Email;
@@ -224,7 +225,7 @@ namespace PriemForeignInspector
 
                 var PersonCurrentEducation = p.PersonCurrentEducation;
                 if (PersonCurrentEducation == null)
-                    PersonCurrentEducation = new PriemForeignInspector.PersonCurrentEducation();
+                    PersonCurrentEducation = new PriemForeignInspector.EDM.PersonCurrentEducation();
 
                 CountryEducId = PersonEducationDocument.CountryEducId;
 
@@ -246,7 +247,7 @@ namespace PriemForeignInspector
                 //------------------------------------------------------
                 var PersonAddInfo = p.PersonAddInfo;
                 if (PersonAddInfo == null)
-                    PersonAddInfo = new PriemForeignInspector.PersonAddInfo();
+                    PersonAddInfo = new PriemForeignInspector.EDM.PersonAddInfo();
                 Parents = PersonAddInfo.Parents;
                 AddInfo = PersonAddInfo.AddInfo;
                 IsDisabled = p.IsDisabled ?? false;

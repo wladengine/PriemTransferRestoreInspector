@@ -8,6 +8,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 
 using System.Data;
+using PriemForeignInspector.EDM;
 
 namespace PriemForeignInspector
 {

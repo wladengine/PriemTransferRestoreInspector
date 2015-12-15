@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriemTransferRestoreInspector", "PriemForeignInspector\PriemTransferRestoreInspector.csproj", "{CA05D1E8-B4B4-408F-B730-838F127AB2EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducServLib", "..\_Shared libs\EducServLib\EducServLib\EducServLib.csproj", "{96257583-5FF8-4F63-AED3-96C36DF6477D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducServLib", "..\..\EDUCATION\EducServLib\EducServLib\EducServLib.csproj", "{96257583-5FF8-4F63-AED3-96C36DF6477D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseFormsLib", "..\..\EDUCATION\BaseFormsLib\BaseFormsLib\BaseFormsLib.csproj", "{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +37,16 @@ Global
 		{96257583-5FF8-4F63-AED3-96C36DF6477D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{96257583-5FF8-4F63-AED3-96C36DF6477D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{96257583-5FF8-4F63-AED3-96C36DF6477D}.Release|x86.ActiveCfg = Release|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{264EF71D-FE21-4BE1-B7EB-CCF3B5FD219F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
