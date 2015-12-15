@@ -117,6 +117,19 @@ namespace PriemForeignInspector
             var AbList = new PersonList();
             AbList.MdiParent = MainForm;
             AbList.Show();
+        }
+        public static void OpenAbitList()
+        {
+            foreach (Form f in MainForm.MdiChildren)
+            {
+                if (f is AbitList)
+                {
+                    f.Close();
+                }
+            }
+            var AbList = new AbitList();
+            AbList.MdiParent = MainForm;
+            AbList.Show();
         } 
         public static void OpenPersonCard(Form parent, Guid id, int AbiturientTypeId )
         {

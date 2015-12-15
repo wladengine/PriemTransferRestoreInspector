@@ -20,7 +20,7 @@ namespace PriemForeignInspector
 
         void Start()
         {
-            Util.OpenPersonList();
+            //Util.OpenPersonList();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -37,6 +37,11 @@ namespace PriemForeignInspector
         private void mainListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Util.OpenPersonList(); 
+        }
+
+        private void списокЗзаявленйToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Util.OpenAbitList();
         }
 
     }

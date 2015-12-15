@@ -1667,7 +1667,7 @@
             // 
             // btnDisable
             // 
-            this.btnDisable.Location = new System.Drawing.Point(233, 617);
+            this.btnDisable.Location = new System.Drawing.Point(146, 617);
             this.btnDisable.Name = "btnDisable";
             this.btnDisable.Size = new System.Drawing.Size(119, 23);
             this.btnDisable.TabIndex = 2;

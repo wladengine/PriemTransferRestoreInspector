@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriemTransferRestoreInspector", "PriemForeignInspector\PriemTransferRestoreInspector.csproj", "{CA05D1E8-B4B4-408F-B730-838F127AB2EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducServLib", "..\..\EDUCATION\EducServLib\EducServLib\EducServLib.csproj", "{96257583-5FF8-4F63-AED3-96C36DF6477D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducServLib", "..\_Shared libs\EducServLib\EducServLib\EducServLib.csproj", "{96257583-5FF8-4F63-AED3-96C36DF6477D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

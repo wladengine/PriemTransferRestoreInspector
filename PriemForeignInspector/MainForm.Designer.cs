@@ -33,6 +33,7 @@
             this.mainListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDics = new System.Windows.Forms.ToolStripMenuItem();
             this.entryListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.списокЗзаявленйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,8 @@
             // listsToolStripMenuItem
             // 
             this.listsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mainListToolStripMenuItem});
+            this.mainListToolStripMenuItem,
+            this.списокЗзаявленйToolStripMenuItem});
             this.listsToolStripMenuItem.Name = "listsToolStripMenuItem";
             this.listsToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.listsToolStripMenuItem.Text = "Списки";
@@ -77,6 +79,13 @@
             this.entryListToolStripMenuItem.Text = "EntryList";
             this.entryListToolStripMenuItem.Click += new System.EventHandler(this.entryListToolStripMenuItem_Click);
             // 
+            // списокЗзаявленйToolStripMenuItem
+            // 
+            this.списокЗзаявленйToolStripMenuItem.Name = "списокЗзаявленйToolStripMenuItem";
+            this.списокЗзаявленйToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.списокЗзаявленйToolStripMenuItem.Text = "Список заявлений";
+            this.списокЗзаявленйToolStripMenuItem.Click += new System.EventHandler(this.списокЗзаявленйToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,7 +93,6 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(667, 475);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -105,6 +113,7 @@
         private System.Windows.Forms.ToolStripMenuItem mainListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smiDics;
         private System.Windows.Forms.ToolStripMenuItem entryListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem списокЗзаявленйToolStripMenuItem;
     }
 }
 

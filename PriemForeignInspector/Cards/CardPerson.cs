@@ -414,7 +414,7 @@ namespace PriemForeignInspector
                 int CountryEduc = CountryList.OrderByDescending(x => x.SchoolTypeId).Select(x => x.CountryEducId).First();
 
                 string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-                ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, 
+                ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, IsViewed,
                 IsApprovedByComission,
                 case when (Application.SecondTypeId =2) 
 				    then (
@@ -434,6 +434,7 @@ namespace PriemForeignInspector
                 dgvApps.Columns["IsCommited"].Visible = false;
                 dgvApps.Columns["IsDeleted"].Visible = false;
                 dgvApps.Columns["IsApprovedByComission"].Visible = false;
+                
             }
         }
         private void CopyToOldValues()
@@ -621,6 +622,8 @@ namespace PriemForeignInspector
         }
         private void dgvApps_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            if(!(bool)dgvApps.Rows[e.RowIndex].Cells["IsViewed"].Value)
+                e.CellStyle.BackColor = Color.LightBlue;
             bool IsApprovedByComission = (bool)dgvApps.Rows[e.RowIndex].Cells["IsApprovedByComission"].Value;
             if (IsApprovedByComission)
                 e.CellStyle.BackColor = Color.LightGreen;
