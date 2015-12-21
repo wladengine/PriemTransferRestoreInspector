@@ -18,6 +18,7 @@ namespace PriemForeignInspector.EDM
         public System.Guid PersonId { get; set; }
         public int WorkTypeId { get; set; }
         public string WorkInfo { get; set; }
+        public string WorkYear { get; set; }
     
         public virtual Person Person { get; set; }
     }

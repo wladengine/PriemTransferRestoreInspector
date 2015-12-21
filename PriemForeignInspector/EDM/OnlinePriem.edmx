@@ -172,6 +172,13 @@
           <Property Name="StartEnglish" Type="bit" Nullable="false" />
           <Property Name="EnglishMark" Type="float" Nullable="false" />
           <Property Name="LanguageId" Type="int" />
+          <Property Name="Parent_Surname" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_SecondName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_Phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_Work" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent_WorkPosition" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="PersonChangeStudyFormReason">
           <Key>
@@ -288,6 +295,7 @@
           <Property Name="PersonId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="WorkTypeId" Type="int" Nullable="false" />
           <Property Name="WorkInfo" Type="nvarchar(max)" />
+          <Property Name="WorkYear" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PersonSportQualification">
           <Key>
@@ -1685,6 +1693,13 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Name="EnglishMark" Type="Double" Nullable="false" />
           <Property Name="LanguageId" Type="Int32" />
           <NavigationProperty Name="Person" Relationship="OnlinePriem2012Model.FK_PersonAddInfo_Person" FromRole="PersonAddInfo" ToRole="Person" />
+          <Property Name="Parent_Surname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_SecondName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_Work" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent_WorkPosition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PersonChangeStudyFormReason">
           <Key>
@@ -1754,6 +1769,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Name="WorkTypeId" Type="Int32" Nullable="false" />
           <Property Name="WorkInfo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Person" Relationship="OnlinePriem2012Model.FK_PersonScienceWork_Person" FromRole="PersonScienceWork" ToRole="Person" />
+          <Property Name="WorkYear" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PersonSportQualification">
           <Key>
@@ -2862,6 +2878,13 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <EntitySetMapping Name="PersonAddInfo">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.PersonAddInfo">
               <MappingFragment StoreEntitySet="PersonAddInfo">
+                <ScalarProperty Name="Parent_WorkPosition" ColumnName="Parent_WorkPosition" />
+                <ScalarProperty Name="Parent_Work" ColumnName="Parent_Work" />
+                <ScalarProperty Name="Parent_Email" ColumnName="Parent_Email" />
+                <ScalarProperty Name="Parent_Phone" ColumnName="Parent_Phone" />
+                <ScalarProperty Name="Parent_SecondName" ColumnName="Parent_SecondName" />
+                <ScalarProperty Name="Parent_Name" ColumnName="Parent_Name" />
+                <ScalarProperty Name="Parent_Surname" ColumnName="Parent_Surname" />
                 <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="EnglishMark" ColumnName="EnglishMark" />
                 <ScalarProperty Name="StartEnglish" ColumnName="StartEnglish" />
@@ -2937,6 +2960,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <EntitySetMapping Name="PersonScienceWork">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.PersonScienceWork">
               <MappingFragment StoreEntitySet="PersonScienceWork">
+                <ScalarProperty Name="WorkYear" ColumnName="WorkYear" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="WorkTypeId" ColumnName="WorkTypeId" />

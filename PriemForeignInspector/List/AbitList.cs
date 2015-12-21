@@ -196,6 +196,7 @@ Application.Id as AppId,
 								 (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип', 
                             extPersonAll.Barcode AS ИдНомер, 
                             extPersonAll.Surname + ' ' + extPersonAll.Name + (case when (extPersonAll.SecondName is not null) then (' ' +extPersonAll.SecondName) else ('')end) AS 'ФИО', 
+                            [Entry].LicenseProgramCode + ' ' + [Entry].LicenseProgramName AS [Направление],
                             Nationality AS Гражданство, 
                             ISNULL(IsDisabled, 0) AS DisabledPerson, 
 
@@ -210,9 +211,10 @@ Application.Id as AppId,
                             INNER JOIN [Entry] ON [Entry].Id = [Application].EntryId 
                             INNER JOIN PersonEducationDocument on PersonEducationDocument.PersonId = extPersonAll.Id
                             INNER JOIN AbiturientType on AbiturientType.AppSecondTypeId = Application.SecondTypeId 
-                            WHERE 1=1 AND Entry.SemesterId > 1 and Application.IsCommited = 1 ";
+                            WHERE 1=1 AND Entry.SemesterId > 1 and Application.IsCommited = 1 AND Entry.CampaignYear=@CampaignYear ";
             
             Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.AddVal("@CampaignYear", Util.CampaignYear);
             if (SemesterId.HasValue)
             {
                 query += " AND Entry.SemesterId=@SemesterId ";
@@ -224,7 +226,8 @@ Application.Id as AppId,
                 dic.AddVal("@StudyLevelId", StudyLevelId);
             }
             if (chbOnlyLastCampaign.Checked)
-                query += " AND Application.DateOfStart >= Entry.DateOfStart ";//AND Entry.IsUsedForPriem=1 ";
+                query += " AND Entry.IsUsedForPriem=1 ";
+                //query += " AND Application.DateOfStart >= Entry.DateOfStart ";//AND Entry.IsUsedForPriem=1 ";
 
             if (chbFaculty.Checked && FacultyId.HasValue)
             {

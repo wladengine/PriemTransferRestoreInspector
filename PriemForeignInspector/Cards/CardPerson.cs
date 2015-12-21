@@ -415,7 +415,7 @@ namespace PriemForeignInspector
                 int CountryEduc = CountryList.OrderByDescending(x => x.SchoolTypeId).Select(x => x.CountryEducId).First();
 
                 string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
-                ProfileName AS 'Профиль', SemesterId as 'Семестр',  IsCommited, IsDeleted, Enabled, IsViewed,
+                ProfileName AS 'Профиль', Semester.Name as 'Семестр',  IsCommited, IsDeleted, Enabled, IsViewed,
                 IsApprovedByComission,
                 case when (Application.SecondTypeId =2) 
 				    then (
@@ -425,6 +425,7 @@ namespace PriemForeignInspector
                         @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
                 FROM [Application] 
                 INNER JOIN Entry ON Entry.Id = [Application].EntryId 
+                INNER JOIN Semester ON Semester.Id = Entry.SemesterId
                 WHERE PersonId=@Id  and IsCommited = 1 
                 order by 'Тип', LicenseProgramName";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
@@ -435,6 +436,7 @@ namespace PriemForeignInspector
                 dgvApps.Columns["IsCommited"].Visible = false;
                 dgvApps.Columns["IsDeleted"].Visible = false;
                 dgvApps.Columns["IsApprovedByComission"].Visible = false;
+                dgvApps.Columns["IsViewed"].Visible = false;
                 
             }
         }

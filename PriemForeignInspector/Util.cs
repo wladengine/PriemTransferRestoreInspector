@@ -38,7 +38,22 @@ namespace PriemForeignInspector
             //"Data Source=81.89.183.103;Initial Catalog=OnlinePriem2012;Integrated Security=False;User ID=OnlinePriem2012Inspector;Password=372639BE-888B-4FF4-8D17-0E86B364566C;Connect Timeout=300";
             BDC = new BDClass(connStr);
             TemplateFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\PriemForeignInspector_TempFiles\";
-            CampaignYear = 2015;
+
+            try
+            {
+                string sCampaignYear = BDC.GetValue("SELECT [Value] FROM _appsettings WHERE [Key]=@Key", new Dictionary<string, object>() { { "@Key", "PriemYear" } }).ToString();
+                int tmp = 0;
+                if (!int.TryParse(sCampaignYear, out tmp))
+                    CampaignYear = DateTime.Now.Year;
+                else
+                    CampaignYear = tmp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                CampaignYear = DateTime.Now.Year;
+            }
+
             CountryRussiaId = 193;
             InitLists();
             try

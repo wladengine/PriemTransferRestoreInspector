@@ -16,7 +16,7 @@ namespace PriemForeignInspector.EDM
     {
         public SP_Profile()
         {
-            this.SP_ProfileInStudyPlan = new HashSet<SP_ProfileInStudyPlan>();
+            this.C_Entry = new HashSet<C_Entry>();
         }
     
         public int Id { get; set; }
@@ -26,9 +26,7 @@ namespace PriemForeignInspector.EDM
         public string AcronymEng { get; set; }
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
-        public string Author { get; set; }
-        public System.DateTime DateCreated { get; set; }
     
-        public virtual ICollection<SP_ProfileInStudyPlan> SP_ProfileInStudyPlan { get; set; }
+        public virtual ICollection<C_Entry> C_Entry { get; set; }
     }
 }

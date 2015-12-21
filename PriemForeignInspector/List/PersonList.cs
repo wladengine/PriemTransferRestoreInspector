@@ -208,9 +208,10 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
                             INNER JOIN [Entry] ON [Entry].Id = [Application].EntryId 
                             INNER JOIN PersonEducationDocument on PersonEducationDocument.PersonId = extPersonAll.Id
                             INNER JOIN AbiturientType on AbiturientType.AppSecondTypeId = Application.SecondTypeId 
-                            WHERE 1=1 AND Entry.SemesterId > 1 and Application.IsCommited = 1 ";
+                            WHERE 1=1 AND Entry.SemesterId > 1 and Application.IsCommited = 1 AND Entry.CampaignYear=@CampaignYear ";
             
             Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.AddVal("@CampaignYear", Util.CampaignYear);
             if (SemesterId.HasValue)
             {
                 query += " AND Entry.SemesterId=@SemesterId ";
@@ -222,7 +223,8 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
                 dic.AddVal("@StudyLevelId", StudyLevelId);
             }
             if (chbOnlyLastCampaign.Checked)
-                query += " AND Application.DateOfStart >= Entry.DateOfStart ";//AND Entry.IsUsedForPriem=1 ";
+                query += " AND Entry.IsUsedForPriem=1 ";
+                //query += " AND Application.DateOfStart >= Entry.DateOfStart ";
 
             if (chbFaculty.Checked && FacultyId.HasValue)
             {

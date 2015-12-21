@@ -28,6 +28,13 @@ namespace PriemForeignInspector.EDM
         public bool StartEnglish { get; set; }
         public double EnglishMark { get; set; }
         public Nullable<int> LanguageId { get; set; }
+        public string Parent_Surname { get; set; }
+        public string Parent_Name { get; set; }
+        public string Parent_SecondName { get; set; }
+        public string Parent_Phone { get; set; }
+        public string Parent_Email { get; set; }
+        public string Parent_Work { get; set; }
+        public string Parent_WorkPosition { get; set; }
     
         public virtual Person Person { get; set; }
     }

@@ -16,38 +16,23 @@ namespace PriemForeignInspector.EDM
     {
         public SP_ObrazProgram()
         {
-            this.SP_ObrazProgramInYear = new HashSet<SP_ObrazProgramInYear>();
-            this.SP_StudyPlan = new HashSet<SP_StudyPlan>();
+            this.C_Entry = new HashSet<C_Entry>();
+            this.PersonCurrentEducation = new HashSet<PersonCurrentEducation>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
         public string NameEng { get; set; }
-        public string Acronym { get; set; }
-        public string PrintName { get; set; }
         public string Number { get; set; }
         public int LicenseProgramId { get; set; }
         public int FacultyId { get; set; }
-        public string OrderStart { get; set; }
-        public string OrderClose { get; set; }
-        public Nullable<int> SpecialistId { get; set; }
-        public Nullable<int> ProgramStatusId { get; set; }
         public int ProgramModeId { get; set; }
-        public string Agreement { get; set; }
-        public Nullable<int> MobilityTypeId { get; set; }
         public bool IsExpress { get; set; }
         public bool IsOpen { get; set; }
         public string Holder { get; set; }
-        public bool IsUseEng { get; set; }
-        public string AdditionalInfo { get; set; }
-        public double HoursForCredit { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public System.DateTime DateUpdate { get; set; }
-        public string Author { get; set; }
     
-        public virtual SP_Faculty SP_Faculty { get; set; }
+        public virtual ICollection<C_Entry> C_Entry { get; set; }
+        public virtual ICollection<PersonCurrentEducation> PersonCurrentEducation { get; set; }
         public virtual SP_LicenseProgram SP_LicenseProgram { get; set; }
-        public virtual ICollection<SP_ObrazProgramInYear> SP_ObrazProgramInYear { get; set; }
-        public virtual ICollection<SP_StudyPlan> SP_StudyPlan { get; set; }
     }
 }

@@ -55,7 +55,7 @@
         <AssociationConnector Association="OnlinePriem2012Model.FK_PersonCurrentEducation_StudyBasis" />
         <AssociationConnector Association="OnlinePriem2012Model.FK_PersonCurrentEducation_StudyForm" />
         <EntityTypeShape EntityType="OnlinePriem2012Model.User" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="OnlinePriem2012Model.SP_Faculty_" Width="1.5" PointX="22.875" PointY="2.25" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.SP_Faculty_" Width="1.5" PointX="22.375" PointY="2.5" />
         <EntityTypeShape EntityType="OnlinePriem2012Model.SP_LicenseProgram" Width="1.5" PointX="6.625" PointY="12.875" />
         <EntityTypeShape EntityType="OnlinePriem2012Model.SP_ObrazProgram" Width="1.5" PointX="11.75" PointY="6" />
         <EntityTypeShape EntityType="OnlinePriem2012Model.SP_Profile" Width="1.5" PointX="3.75" PointY="0.75" />
