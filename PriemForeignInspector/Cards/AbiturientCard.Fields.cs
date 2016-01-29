@@ -131,7 +131,10 @@ namespace PriemForeignInspector
                 tbAppStatus.Text = value;
             }
         }
- 
+        public string Version
+        {
+            set { lblVersion.Text = value; }
+        }
         public string Email { get; set; }
     }
 }

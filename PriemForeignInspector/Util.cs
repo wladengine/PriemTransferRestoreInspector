@@ -155,7 +155,7 @@ namespace PriemForeignInspector
         {
             foreach (Form f in MainForm.MdiChildren)
             {
-                if (f is PersonTransferCard)
+                if (f is CardPerson)
                 {
                     f.Close();
                 }

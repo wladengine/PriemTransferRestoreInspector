@@ -255,6 +255,13 @@ INNER JOIN Person ON Person.Id = [Application].PersonId
             DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _ApplicationId } });
             if (tbl.Rows.Count == 0)
                 return;
+            query = @"select ApplicationCommitVersion.Id, ApplicationCommitVersion.VersionDate from dbo.ApplicationCommitVersion 
+join dbo.Application on Application.CommitId = ApplicationCommitVersion.CommitId
+                where Application.Id = @Id";
+            DataTable tbl_vers = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _ApplicationId } });
+
+            if (tbl_vers.Rows.Count>0)
+                Version = "№ " + tbl_vers.Rows[0].Field<int>("Id").ToString() + " от " + tbl_vers.Rows[0].Field<DateTime>("VersionDate").ToShortDateString();
 
             DataRow r = tbl.Rows[0];
             _CommitId = r.Field<Guid>("CommitId");

@@ -232,10 +232,13 @@ namespace PriemForeignInspector
             }
             else
             {
-                string query = @"SELECT DISTINCT LicenseProgramId, LicenseProgramCode, LicenseProgramName 
-                             FROM Entry 
-                             WHERE StudyLevelId=@StudyLevelId and SemesterId = @SemesterId and StudyBasisId=@StudyBasisId and StudyFormId=@StudyFormId
-                             ORDER BY LicenseProgramCode, LicenseProgramName";
+                string query = @"
+  SELECT LP.Id LicenseProgramId, LP.Code LicenseProgramCode, LP.Name LicenseProgramName
+  FROM dbo.SP_LicenseProgram LP
+  join dbo.SP_StudyPlanHelp on LP.Id = SP_StudyPlanHelp.LicenseProgramId
+  WHERE LP.StudyLevelId=@StudyLevelId and SemesterId = @SemesterId 
+  and StudyFormId=@StudyFormId
+  ORDER BY LP.Code, LP.Name";
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("@StudyLevelId", CurrentEducationStudyLevelId);
                 dic.Add("@SemesterId", CurrentEducationSemesterId);
@@ -265,15 +268,15 @@ namespace PriemForeignInspector
             }
             else
             {
-                string query = @"SELECT DISTINCT ObrazProgramId, ObrazProgramName 
-                             FROM Entry 
-                             WHERE StudyLevelId=@StudyLevelId and SemesterId = @SemesterId and StudyBasisId=@StudyBasisId and StudyFormId=@StudyFormId
-                             and LicenseProgramId = @LicenseProgramId
-                             ORDER BY ObrazProgramName";
+                string query = @"SELECT DISTINCT OP.Id ObrazProgramId, OP.Name ObrazProgramName 
+                    FROM SP_ObrazProgram OP
+                    join dbo.SP_StudyPlanHelp on OP.Id = SP_StudyPlanHelp.ObrazProgramId 
+                    WHERE SP_StudyPlanHelp.LicenseProgramId=@LicenseProgramId
+                    and SemesterId = @SemesterId 
+                    and StudyFormId=@StudyFormId 
+                    ORDER BY ObrazProgramName";
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("@StudyLevelId", CurrentEducationStudyLevelId);
                 dic.Add("@SemesterId", CurrentEducationSemesterId);
-                dic.Add("@StudyBasisId", StudyBasisId);
                 dic.Add("@StudyFormId", StudyFormId);
                 dic.Add("@LicenseProgramId", CurrentLicenseProgramId);
 
@@ -417,13 +420,21 @@ namespace PriemForeignInspector
                 string query = @"SELECT [Application].Id,[Application].CommitId, LicenseProgramName AS 'Направление', ObrazProgramName AS 'Образовательная программа', 
                 ProfileName AS 'Профиль', Semester.Name as 'Семестр',  IsCommited, IsDeleted, Enabled, IsViewed,
                 IsApprovedByComission,
+                
+(select top 1 ('№ '+convert(nvarchar,Vers.Id) + ' от '
++convert(nvarchar, Vers.VersionDate, 4) +' '
++convert(nvarchar, Vers.VersionDate, 8)) as Expr 
+from dbo.ApplicationCommitVersion Vers 
+where Vers.CommitId = [Application].CommitId order by Id desc) as 'Версия',
+
+
                 case when (Application.SecondTypeId =2) 
 				    then (
 					    " + (CountryEduc > 0 ? (CountryEduc == 193 ?
                               @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
                               @"select [AbiturientType].[Description] from AbiturientType where Id = 4") : "'перевод в СПбГУ'") +
                         @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
-                FROM [Application] 
+                FROM dbo.[Application] 
                 INNER JOIN Entry ON Entry.Id = [Application].EntryId 
                 INNER JOIN Semester ON Semester.Id = Entry.SemesterId
                 WHERE PersonId=@Id  and IsCommited = 1 

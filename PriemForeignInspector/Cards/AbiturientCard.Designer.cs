@@ -65,6 +65,7 @@
             this.lblFIO = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnChangeIsViewed = new System.Windows.Forms.Button();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFiles)).BeginInit();
@@ -434,7 +435,7 @@
             this.lblFIO.AutoSize = true;
             this.lblFIO.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblFIO.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblFIO.Location = new System.Drawing.Point(31, 18);
+            this.lblFIO.Location = new System.Drawing.Point(334, 9);
             this.lblFIO.Name = "lblFIO";
             this.lblFIO.Size = new System.Drawing.Size(54, 24);
             this.lblFIO.TabIndex = 31;
@@ -461,6 +462,17 @@
             this.btnChangeIsViewed.UseVisualStyleBackColor = true;
             this.btnChangeIsViewed.Click += new System.EventHandler(this.btnChangeIsViewed_Click);
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblVersion.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblVersion.Location = new System.Drawing.Point(24, 9);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(0, 24);
+            this.lblVersion.TabIndex = 31;
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // AbiturientCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,6 +482,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblFIO);
             this.MaximizeBox = false;
             this.Name = "AbiturientCard";
@@ -524,6 +537,7 @@
         private System.Windows.Forms.ComboBox cbSemester;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnChangeIsViewed;
+        private System.Windows.Forms.Label lblVersion;
 
     }
 }
