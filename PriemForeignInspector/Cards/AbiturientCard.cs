@@ -368,7 +368,7 @@ AND (ApplicationId is NULL OR ApplicationId=@AppId)";
                 return;
 
             Guid id = (Guid)dgvFiles.Rows[e.RowIndex].Cells["Id"].Value;
-            string query = "SELECT FileData FROM extAbitFiles_All WHERE Id=@Id";
+            string query = "SELECT FileData FROM FileStorage WHERE Id=@Id";
             
             string filename = dgvFiles.Rows[e.RowIndex].Cells["Имя файла"].Value.ToString();
 
@@ -482,7 +482,7 @@ St. Petersburg State University Admissions Committee
             }
             int rwIndex = dgvFiles.SelectedCells[0].RowIndex;
             Guid id = (Guid)dgvFiles.Rows[rwIndex].Cells["Id"].Value;
-            string query = "SELECT FileData FROM extAbitFiles_All WHERE Id=@Id";
+            string query = "SELECT FileData FROM FileStorage WHERE Id=@Id";
             string filename = dgvFiles.Rows[rwIndex].Cells["Имя файла"].Value.ToString();
 
             byte[] unicode_bytes = Encoding.Unicode.GetBytes(filename);
