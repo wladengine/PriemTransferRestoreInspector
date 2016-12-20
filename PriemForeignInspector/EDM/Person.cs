@@ -47,6 +47,10 @@ namespace PriemForeignInspector.EDM
         public bool IsCreatedByComission { get; set; }
         public string SNILS { get; set; }
         public bool HasRussianNationality { get; set; }
+        public Nullable<int> CountryOfBirth { get; set; }
+        public string SurnameEng { get; set; }
+        public string NameEng { get; set; }
+        public string SecondNameEng { get; set; }
     
         public virtual ICollection<PriemApplication> Application { get; set; }
         public virtual Country Nationality { get; set; }

@@ -33,6 +33,9 @@ namespace PriemForeignInspector.EDM
         public string FlatReal { get; set; }
         public string ForeignAddressInfo { get; set; }
         public string KladrCode { get; set; }
+        public Nullable<int> CountryRealId { get; set; }
+        public Nullable<int> RegionRealId { get; set; }
+        public string KladrCodeReal { get; set; }
     
         public virtual Country Country { get; set; }
         public virtual Region Region { get; set; }

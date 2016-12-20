@@ -25,6 +25,7 @@ namespace PriemForeignInspector.EDM
         public string Name { get; set; }
         public bool IsIGA { get; set; }
         public int NextSemesterId { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual ICollection<C_Entry> C_Entry { get; set; }
         public virtual ICollection<PersonCurrentEducation> PersonCurrentEducation { get; set; }

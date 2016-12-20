@@ -46,7 +46,6 @@ namespace PriemForeignInspector.EDM
         public DbSet<ApplicationCommitVersonDetails> ApplicationCommitVersonDetails { get; set; }
         public DbSet<Region> Region { get; set; }
         public DbSet<Entry> Entry { get; set; }
-        public DbSet<extAbitFiles_All> extAbitFiles_All { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<PersonHighEducationInfo> PersonHighEducationInfo { get; set; }
         public DbSet<PersonEducationDocument> PersonEducationDocument { get; set; }

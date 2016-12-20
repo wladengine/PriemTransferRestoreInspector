@@ -31,7 +31,7 @@ namespace PriemForeignInspector.EDM
         public System.DateTime DateOfStart { get; set; }
         public bool IsApprovedByComission { get; set; }
         public bool IsImported { get; set; }
-        public Nullable<int> SecondTypeId { get; set; }
+        public int SecondTypeId { get; set; }
         public Nullable<System.DateTime> DateReviewDocs { get; set; }
         public System.Guid CommitId { get; set; }
         public bool IsCommited { get; set; }

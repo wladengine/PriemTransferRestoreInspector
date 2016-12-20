@@ -56,7 +56,7 @@
           <Property Name="DateOfStart" Type="datetime" Nullable="false" />
           <Property Name="IsApprovedByComission" Type="bit" Nullable="false" />
           <Property Name="IsImported" Type="bit" Nullable="false" />
-          <Property Name="SecondTypeId" Type="int" />
+          <Property Name="SecondTypeId" Type="int" Nullable="false" />
           <Property Name="DateReviewDocs" Type="datetime" />
           <Property Name="CommitId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IsCommited" Type="bit" Nullable="false" />
@@ -136,6 +136,7 @@
           <Property Name="Sex" Type="bit" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="BirthPlace" Type="nvarchar" MaxLength="500" />
+          <Property Name="CountryOfBirth" Type="int" />
           <Property Name="PassportTypeId" Type="int" />
           <Property Name="PassportSeries" Type="nvarchar" MaxLength="50" />
           <Property Name="PassportNumber" Type="nvarchar" MaxLength="50" />
@@ -153,6 +154,9 @@
           <Property Name="IsCreatedByComission" Type="bit" Nullable="false" />
           <Property Name="SNILS" Type="nvarchar" MaxLength="50" />
           <Property Name="HasRussianNationality" Type="bit" Nullable="false" />
+          <Property Name="SurnameEng" Type="nvarchar" MaxLength="150" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="150" />
+          <Property Name="SecondNameEng" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="PersonAddInfo">
           <Key>
@@ -204,6 +208,8 @@
           <Property Name="House" Type="nvarchar" MaxLength="20" />
           <Property Name="Korpus" Type="nvarchar" MaxLength="10" />
           <Property Name="Flat" Type="nvarchar" MaxLength="10" />
+          <Property Name="CountryRealId" Type="int" />
+          <Property Name="RegionRealId" Type="int" />
           <Property Name="CodeReal" Type="nvarchar" MaxLength="10" />
           <Property Name="CityReal" Type="nvarchar" MaxLength="250" />
           <Property Name="StreetReal" Type="nvarchar" MaxLength="250" />
@@ -212,6 +218,7 @@
           <Property Name="FlatReal" Type="nvarchar" MaxLength="10" />
           <Property Name="ForeignAddressInfo" Type="nvarchar" MaxLength="1000" />
           <Property Name="KladrCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="KladrCodeReal" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PersonCurrentEducation">
           <Key>
@@ -273,7 +280,7 @@
           <Property Name="EducationDocumentId" Type="int" Nullable="false" />
           <Property Name="EntryYear" Type="int" />
           <Property Name="ExitYear" Type="int" Nullable="false" />
-          <Property Name="DiplomaTheme" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DiplomaTheme" Type="nvarchar" MaxLength="4000" />
           <Property Name="QualificationId" Type="int" Nullable="false" />
           <Property Name="StudyFormId" Type="int" Nullable="false" />
           <Property Name="ProgramName" Type="nvarchar" MaxLength="1000" />
@@ -346,6 +353,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="IsIGA" Type="bit" Nullable="false" />
           <Property Name="NextSemesterId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SP_Faculty">
           <Key>
@@ -547,29 +555,6 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.Entry' does not have a primary
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="extAbitFiles_All">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="PersonId" />
-            <PropertyRef Name="FileName" />
-            <PropertyRef Name="FileSize" />
-            <PropertyRef Name="LoadDate" />
-            <PropertyRef Name="IsReadOnly" />
-          </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="PersonId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ApplicationId" Type="uniqueidentifier" />
-          <Property Name="CommitId" Type="uniqueidentifier" />
-          <Property Name="FileName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="FileSize" Type="int" Nullable="false" />
-          <Property Name="FileExtention" Type="nvarchar" MaxLength="50" />
-          <Property Name="FileData" Type="varbinary(max)" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
-          <Property Name="LoadDate" Type="datetime" Nullable="false" />
-          <Property Name="IsReadOnly" Type="bit" Nullable="false" />
-          <Property Name="MimeType" Type="nvarchar" MaxLength="150" />
-          <Property Name="IsApproved" Type="bit" />
-        </EntityType>
         <Association Name="FK__Entry_Semester">
           <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
           <End Role="_Entry" Type="Self._Entry" Multiplicity="*" />
@@ -595,7 +580,9 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Entry_SP_LicenseProgram">
-          <End Role="SP_LicenseProgram" Type="Self.SP_LicenseProgram" Multiplicity="1" />
+          <End Role="SP_LicenseProgram" Type="Self.SP_LicenseProgram" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="_Entry" Type="Self._Entry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SP_LicenseProgram">
@@ -753,9 +740,7 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PersonChangeStudyFormReason_Application">
-          <End Role="Application" Type="Self.Application" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Application" Type="Self.Application" Multiplicity="0..1" />
           <End Role="PersonChangeStudyFormReason" Type="Self.PersonChangeStudyFormReason" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Application">
@@ -767,9 +752,7 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PersonChangeStudyFormReason_ApplicationCommit">
-          <End Role="ApplicationCommit" Type="Self.ApplicationCommit" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="ApplicationCommit" Type="Self.ApplicationCommit" Multiplicity="0..1" />
           <End Role="PersonChangeStudyFormReason" Type="Self.PersonChangeStudyFormReason" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ApplicationCommit">
@@ -1210,23 +1193,6 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
 [Entry].[IsCrimea] AS [IsCrimea]
 FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="extAbitFiles_All" EntityType="Self.extAbitFiles_All" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[extAbitFiles_All].[Id] AS [Id], 
-[extAbitFiles_All].[PersonId] AS [PersonId], 
-[extAbitFiles_All].[ApplicationId] AS [ApplicationId], 
-[extAbitFiles_All].[CommitId] AS [CommitId], 
-[extAbitFiles_All].[FileName] AS [FileName], 
-[extAbitFiles_All].[FileSize] AS [FileSize], 
-[extAbitFiles_All].[FileExtention] AS [FileExtention], 
-[extAbitFiles_All].[FileData] AS [FileData], 
-[extAbitFiles_All].[Comment] AS [Comment], 
-[extAbitFiles_All].[LoadDate] AS [LoadDate], 
-[extAbitFiles_All].[IsReadOnly] AS [IsReadOnly], 
-[extAbitFiles_All].[MimeType] AS [MimeType], 
-[extAbitFiles_All].[IsApproved] AS [IsApproved]
-FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__Entry_Semester" Association="Self.FK__Entry_Semester">
             <End Role="Semester" EntitySet="Semester" />
             <End Role="_Entry" EntitySet="_Entry" />
@@ -1442,7 +1408,6 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
             <End Role="PersonContacts" EntitySet="PersonContacts" />
           </AssociationSet>
           <EntitySet Name="Entry" EntityType="OnlinePriem2012Model.Entry" />
-          <EntitySet Name="extAbitFiles_All" EntityType="OnlinePriem2012Model.extAbitFiles_All" />
           <AssociationSet Name="FK_PersonChangeStudyFormReason_Application" Association="OnlinePriem2012Model.FK_PersonChangeStudyFormReason_Application">
             <End Role="PriemApplication" EntitySet="Application" />
             <End Role="PersonChangeStudyFormReason" EntitySet="PersonChangeStudyFormReason" />
@@ -1636,7 +1601,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Name="DateOfStart" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="IsApprovedByComission" Type="Boolean" Nullable="false" />
           <Property Name="IsImported" Type="Boolean" Nullable="false" />
-          <Property Name="SecondTypeId" Type="Int32" />
+          <Property Name="SecondTypeId" Type="Int32" Nullable="false" />
           <Property Name="DateReviewDocs" Type="DateTime" Precision="3" />
           <Property Type="Guid" Name="CommitId" Nullable="false" />
           <Property Type="Boolean" Name="IsCommited" Nullable="false" />
@@ -1739,6 +1704,9 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <NavigationProperty Name="Country" Relationship="OnlinePriem2012Model.FK_PersonContacts_Country" FromRole="PersonContacts" ToRole="Country" />
           <NavigationProperty Name="Region" Relationship="OnlinePriem2012Model.FK_PersonContacts_Region" FromRole="PersonContacts" ToRole="Region" />
           <NavigationProperty Name="Person" Relationship="OnlinePriem2012Model.FK_PersonContacts_Person" FromRole="PersonContacts" ToRole="Person" />
+          <Property Name="CountryRealId" Type="Int32" />
+          <Property Name="RegionRealId" Type="Int32" />
+          <Property Name="KladrCodeReal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PersonDisorderInfo">
           <Key>
@@ -1871,6 +1839,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Type="Int32" Name="NextSemesterId" Nullable="false" />
           <NavigationProperty Name="C_Entry" Relationship="OnlinePriem2012Model.FK__Entry_Semester" FromRole="Semester" ToRole="C_Entry" />
           <NavigationProperty Name="PersonCurrentEducation" Relationship="OnlinePriem2012Model.FK_PersonCurrentEducation_Semester" FromRole="Semester" ToRole="PersonCurrentEducation" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="PassportType">
           <Key>
@@ -2014,29 +1983,6 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Name="IsForeign" Type="Boolean" Nullable="false" />
           <Property Name="IsCrimea" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="extAbitFiles_All">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="PersonId" />
-            <PropertyRef Name="FileName" />
-            <PropertyRef Name="FileSize" />
-            <PropertyRef Name="LoadDate" />
-            <PropertyRef Name="IsReadOnly" />
-          </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" />
-          <Property Type="Guid" Name="PersonId" Nullable="false" />
-          <Property Type="Guid" Name="ApplicationId" />
-          <Property Type="Guid" Name="CommitId" />
-          <Property Type="String" Name="FileName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="FileSize" Nullable="false" />
-          <Property Type="String" Name="FileExtention" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="FileData" MaxLength="Max" FixedLength="false" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="LoadDate" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="IsReadOnly" Nullable="false" />
-          <Property Type="String" Name="MimeType" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsApproved" />
-        </EntityType>
         <Association Name="FK_PersonChangeStudyFormReason_Application">
           <End Type="OnlinePriem2012Model.PriemApplication" Role="PriemApplication" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -2133,6 +2079,10 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <NavigationProperty Name="PersonEducationDocument" Relationship="OnlinePriem2012Model.FK_PersonEducationDocument_Person" FromRole="Person" ToRole="PersonEducationDocument" />
           <NavigationProperty Name="PersonCurrentEducation" Relationship="OnlinePriem2012Model.FK_PersonCurrentEducation_Person" FromRole="Person" ToRole="PersonCurrentEducation" />
           <NavigationProperty Name="User" Relationship="OnlinePriem2012Model.FK_Person_User" FromRole="Person" ToRole="User" />
+          <Property Name="CountryOfBirth" Type="Int32" />
+          <Property Name="SurnameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SecondNameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Application_Person">
           <End Type="OnlinePriem2012Model.Person" Role="Person" Multiplicity="1" />
@@ -2289,7 +2239,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <Property Name="EducationDocumentId" Type="Int32" Nullable="false" />
           <Property Name="EntryYear" Type="Int32" />
           <Property Name="ExitYear" Type="Int32" Nullable="false" />
-          <Property Name="DiplomaTheme" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DiplomaTheme" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="QualificationId" Type="Int32" Nullable="false" />
           <Property Name="StudyFormId" Type="Int32" Nullable="false" />
           <Property Name="ProgramName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -2915,6 +2865,9 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <EntitySetMapping Name="PersonContacts">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.PersonContacts">
               <MappingFragment StoreEntitySet="PersonContacts">
+                <ScalarProperty Name="KladrCodeReal" ColumnName="KladrCodeReal" />
+                <ScalarProperty Name="RegionRealId" ColumnName="RegionRealId" />
+                <ScalarProperty Name="CountryRealId" ColumnName="CountryRealId" />
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="RegionId" ColumnName="RegionId" />
@@ -3031,6 +2984,7 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
           <EntitySetMapping Name="Semester">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.Semester">
               <MappingFragment StoreEntitySet="Semester">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NextSemesterId" ColumnName="NextSemesterId" />
                 <ScalarProperty Name="IsIGA" ColumnName="IsIGA" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -3149,28 +3103,13 @@ FROM [dbo].[extAbitFiles_All] AS [extAbitFiles_All]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="extAbitFiles_All">
-            <EntityTypeMapping TypeName="OnlinePriem2012Model.extAbitFiles_All">
-              <MappingFragment StoreEntitySet="extAbitFiles_All">
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
-                <ScalarProperty Name="IsReadOnly" ColumnName="IsReadOnly" />
-                <ScalarProperty Name="LoadDate" ColumnName="LoadDate" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FileData" ColumnName="FileData" />
-                <ScalarProperty Name="FileExtention" ColumnName="FileExtention" />
-                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="CommitId" ColumnName="CommitId" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Person">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="SecondNameEng" ColumnName="SecondNameEng" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="SurnameEng" ColumnName="SurnameEng" />
+                <ScalarProperty Name="CountryOfBirth" ColumnName="CountryOfBirth" />
                 <ScalarProperty Name="HasRussianNationality" ColumnName="HasRussianNationality" />
                 <ScalarProperty Name="SNILS" ColumnName="SNILS" />
                 <ScalarProperty Name="IsCreatedByComission" ColumnName="IsCreatedByComission" />
