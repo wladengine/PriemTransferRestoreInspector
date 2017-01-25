@@ -437,9 +437,9 @@ where Vers.CommitId = [Application].CommitId order by Id desc) as 'Версия'
                 FROM dbo.[Application] 
                 INNER JOIN Entry ON Entry.Id = [Application].EntryId 
                 INNER JOIN Semester ON Semester.Id = Entry.SemesterId
-                WHERE PersonId=@Id  and IsCommited = 1 
+                WHERE PersonId=@Id  and IsCommited = 1 and Entry.CampaignYear = @CampaignYear
                 order by 'Тип', LicenseProgramName";
-                DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId } });
+                DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId }, { "@CampaignYear", Util.CampaignYear } });
                 dgvApps.DataSource = tbl;
                 dgvApps.Columns["Id"].Visible = false;
                 dgvApps.Columns["CommitId"].Visible = false;
