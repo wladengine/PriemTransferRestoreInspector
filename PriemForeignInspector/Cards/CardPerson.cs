@@ -433,11 +433,11 @@ where Vers.CommitId = [Application].CommitId order by Id desc) as 'Версия'
 					    " + (CountryEduc > 0 ? (CountryEduc == 193 ?
                               @"select [AbiturientType].[Description] from AbiturientType where Id = 3" :
                               @"select [AbiturientType].[Description] from AbiturientType where Id = 4") : "'перевод в СПбГУ'") +
-                        @") else  (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
+                        @") else (Select [AbiturientType].[Description] from AbiturientType where AppSecondTypeId = Application.SecondTypeId) end  AS 'Тип' 
                 FROM dbo.[Application] 
                 INNER JOIN Entry ON Entry.Id = [Application].EntryId 
                 INNER JOIN Semester ON Semester.Id = Entry.SemesterId
-                WHERE PersonId=@Id  and IsCommited = 1 and Entry.CampaignYear = @CampaignYear
+                WHERE PersonId=@Id  and IsCommited = 1 and Entry.CampaignYear = @CampaignYear AND Entry.IsUsedForPriem = 1 AND Entry.SemesterId > 1
                 order by 'Тип', LicenseProgramName";
                 DataTable tbl = Util.BDC.GetDataTable(query, new Dictionary<string, object>() { { "@Id", _PersonId }, { "@CampaignYear", Util.CampaignYear } });
                 dgvApps.DataSource = tbl;

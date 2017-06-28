@@ -197,7 +197,7 @@ FROM Entry WHERE FacultyId=@Id AND CampaignYear=@CampaignYear";
                             Nationality AS Гражданство, 
                             ISNULL(IsDisabled, 0) AS DisabledPerson, 
 
-                            (select min(Application.DateOfStart) from Application where PersonId = extPersonAll.Id) as 'Дата подачи',
+                            (select min(Abiturient.DateOfStart) from Abiturient where Abiturient.PersonId = extPersonAll.Id AND Abiturient.CampaignYear=@CampaignYear) as 'Дата подачи',
                             CASE WHEN EXISTS(SELECT Id FROM [Application] AS App WHERE App.IsApprovedByComission=1 AND App.PersonId=extPersonAll.Id) THEN 1 ELSE 0 END AS Appr ,
                             
                             CASE WHEN EXISTS(SELECT Id FROM [extAbitFiles_All] AS Files WHERE Files.IsApproved=0 AND Files.PersonId=extPersonAll.Id) THEN 'да' ELSE 'нет' END AS FileIsApproved,
