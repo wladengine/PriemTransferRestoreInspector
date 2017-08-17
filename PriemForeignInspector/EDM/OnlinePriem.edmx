@@ -29,16 +29,25 @@
           <Property Name="CampaignYear" Type="int" Nullable="false" />
           <Property Name="QualificationId" Type="int" />
           <Property Name="ProgramModeId" Type="int" />
-          <Property Name="DateOfClose" Type="datetime" />
-          <Property Name="DateOfStart" Type="datetime" />
-          <Property Name="DateOfClose_Foreign" Type="datetime" />
-          <Property Name="DateOfStart_Foreign" Type="datetime" />
-          <Property Name="DateOfClose_GosLine" Type="datetime" />
-          <Property Name="DateOfStart_GosLine" Type="datetime" />
+          <Property Name="DateOfClose" Type="smalldatetime" />
+          <Property Name="DateOfStart" Type="smalldatetime" />
+          <Property Name="DateOfClose_Foreign" Type="smalldatetime" />
+          <Property Name="DateOfStart_Foreign" Type="smalldatetime" />
+          <Property Name="DateOfClose_GosLine" Type="smalldatetime" />
+          <Property Name="DateOfStart_GosLine" Type="smalldatetime" />
           <Property Name="IsUsedForPriem" Type="bit" Nullable="false" />
           <Property Name="ComissionId" Type="int" />
           <Property Name="IsForeign" Type="bit" Nullable="false" />
           <Property Name="IsCrimea" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AbiturientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" />
+          <Property Name="Multiplier" Type="int" />
+          <Property Name="AppSecondTypeId" Type="int" />
         </EntityType>
         <EntityType Name="Application">
           <Key>
@@ -183,6 +192,17 @@
           <Property Name="Parent_Email" Type="nvarchar" MaxLength="250" />
           <Property Name="Parent_Work" Type="nvarchar" MaxLength="250" />
           <Property Name="Parent_WorkPosition" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_Surname" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_SecondName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_Phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_Work" Type="nvarchar" MaxLength="250" />
+          <Property Name="Parent2_WorkPosition" Type="nvarchar" MaxLength="250" />
+          <Property Name="NeedSpecialConditions" Type="bit" Nullable="false" />
+          <Property Name="UserAD" Type="nvarchar" MaxLength="50" />
+          <Property Name="PassExamInSpbu" Type="bit" />
+          <Property Name="CategoryId" Type="int" />
         </EntityType>
         <EntityType Name="PersonChangeStudyFormReason">
           <Key>
@@ -205,20 +225,21 @@
           <Property Name="Code" Type="nvarchar" MaxLength="10" />
           <Property Name="City" Type="nvarchar" MaxLength="250" />
           <Property Name="Street" Type="nvarchar" MaxLength="250" />
-          <Property Name="House" Type="nvarchar" MaxLength="20" />
-          <Property Name="Korpus" Type="nvarchar" MaxLength="10" />
-          <Property Name="Flat" Type="nvarchar" MaxLength="10" />
+          <Property Name="House" Type="nvarchar" MaxLength="50" />
+          <Property Name="Korpus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Flat" Type="nvarchar" MaxLength="50" />
           <Property Name="CountryRealId" Type="int" />
           <Property Name="RegionRealId" Type="int" />
           <Property Name="CodeReal" Type="nvarchar" MaxLength="10" />
           <Property Name="CityReal" Type="nvarchar" MaxLength="250" />
           <Property Name="StreetReal" Type="nvarchar" MaxLength="250" />
-          <Property Name="HouseReal" Type="nvarchar" MaxLength="20" />
-          <Property Name="KorpusReal" Type="nvarchar" MaxLength="10" />
-          <Property Name="FlatReal" Type="nvarchar" MaxLength="10" />
+          <Property Name="HouseReal" Type="nvarchar" MaxLength="50" />
+          <Property Name="KorpusReal" Type="nvarchar" MaxLength="50" />
+          <Property Name="FlatReal" Type="nvarchar" MaxLength="50" />
           <Property Name="ForeignAddressInfo" Type="nvarchar" MaxLength="1000" />
           <Property Name="KladrCode" Type="nvarchar" MaxLength="50" />
           <Property Name="KladrCodeReal" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddEmail" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PersonCurrentEducation">
           <Key>
@@ -474,9 +495,11 @@
           <Property Name="UILanguage" Type="nvarchar" MaxLength="20" />
           <Property Name="RegDate" Type="datetime" Nullable="false" />
           <Property Name="CampaignYear" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsAD" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'OnlinePriem2015.dbo.Entry' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "OnlinePriem2015.dbo.Entry" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="Entry">
           <Key>
             <PropertyRef Name="Id" />
@@ -553,8 +576,6 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.Entry' does not have a primary
           <Property Name="IsForeign" Type="bit" Nullable="false" />
           <Property Name="IsCrimea" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK__Entry_Semester">
           <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
           <End Role="_Entry" Type="Self._Entry" Multiplicity="*" />
@@ -590,18 +611,6 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
             </Principal>
             <Dependent Role="_Entry">
               <PropertyRef Name="LicenseProgramId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Entry_SP_ObrazProgram">
-          <End Role="SP_ObrazProgram" Type="Self.SP_ObrazProgram" Multiplicity="1" />
-          <End Role="_Entry" Type="Self._Entry" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SP_ObrazProgram">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="_Entry">
-              <PropertyRef Name="ObrazProgramId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -686,6 +695,18 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
             </Principal>
             <Dependent Role="Country">
               <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_AbiturientType">
+          <End Role="AbiturientType" Type="Self.AbiturientType" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbiturientType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AbiturientTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1109,6 +1130,7 @@ warning 6002: The table/view 'OnlinePriem2015.dbo.extAbitFiles_All' does not hav
         </Association>
         <EntityContainer Name="OnlinePriem2012ModelStoreContainer">
           <EntitySet Name="_Entry" EntityType="Self._Entry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AbiturientType" EntityType="Self.AbiturientType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Application" EntityType="Self.Application" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicationCommit" EntityType="Self.ApplicationCommit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicationCommitVersion" EntityType="Self.ApplicationCommitVersion" Schema="dbo" store:Type="Tables" />
@@ -1205,10 +1227,6 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
             <End Role="SP_LicenseProgram" EntitySet="SP_LicenseProgram" />
             <End Role="_Entry" EntitySet="_Entry" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry_SP_ObrazProgram" Association="Self.FK__Entry_SP_ObrazProgram">
-            <End Role="SP_ObrazProgram" EntitySet="SP_ObrazProgram" />
-            <End Role="_Entry" EntitySet="_Entry" />
-          </AssociationSet>
           <AssociationSet Name="FK__Entry_SP_Profile" Association="Self.FK__Entry_SP_Profile">
             <End Role="SP_Profile" EntitySet="SP_Profile" />
             <End Role="_Entry" EntitySet="_Entry" />
@@ -1236,6 +1254,10 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <AssociationSet Name="FK_Country_Region" Association="Self.FK_Country_Region">
             <End Role="Region" EntitySet="Region" />
             <End Role="Country" EntitySet="Country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_AbiturientType" Association="Self.FK_Person_AbiturientType">
+            <End Role="AbiturientType" EntitySet="AbiturientType" />
+            <End Role="Person" EntitySet="Person" />
           </AssociationSet>
           <AssociationSet Name="FK_Person_Country" Association="Self.FK_Person_Country">
             <End Role="Country" EntitySet="Country" />
@@ -1584,6 +1606,11 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
             <End Role="User" EntitySet="User" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
+          <EntitySet Name="AbiturientType" EntityType="OnlinePriem2012Model.AbiturientType" />
+          <AssociationSet Name="FK_Person_AbiturientType" Association="OnlinePriem2012Model.FK_Person_AbiturientType">
+            <End Role="AbiturientType" EntitySet="AbiturientType" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PriemApplication">
           <Key>
@@ -1665,6 +1692,17 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="Parent_Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Parent_Work" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Parent_WorkPosition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_Surname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_SecondName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_Work" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Parent2_WorkPosition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NeedSpecialConditions" Type="Boolean" Nullable="false" />
+          <Property Name="UserAD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassExamInSpbu" Type="Boolean" />
+          <Property Name="CategoryId" Type="Int32" />
         </EntityType>
         <EntityType Name="PersonChangeStudyFormReason">
           <Key>
@@ -1690,15 +1728,15 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="Code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="City" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="Street" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="House" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
-          <Property Name="Korpus" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
-          <Property Name="Flat" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="House" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Korpus" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Flat" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="CodeReal" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="CityReal" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="StreetReal" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="HouseReal" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
-          <Property Name="KorpusReal" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
-          <Property Name="FlatReal" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="HouseReal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="KorpusReal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="FlatReal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="ForeignAddressInfo" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
           <Property Name="KladrCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Country" Relationship="OnlinePriem2012Model.FK_PersonContacts_Country" FromRole="PersonContacts" ToRole="Country" />
@@ -1707,6 +1745,7 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="CountryRealId" Type="Int32" />
           <Property Name="RegionRealId" Type="Int32" />
           <Property Name="KladrCodeReal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PersonDisorderInfo">
           <Key>
@@ -2083,6 +2122,7 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="SurnameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="NameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="SecondNameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AbiturientType" Relationship="OnlinePriem2012Model.FK_Person_AbiturientType" FromRole="Person" ToRole="AbiturientType" />
         </EntityType>
         <Association Name="FK_Application_Person">
           <End Type="OnlinePriem2012Model.Person" Role="Person" Multiplicity="1" />
@@ -2373,12 +2413,12 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="CampaignYear" Type="Int32" Nullable="false" />
           <Property Name="QualificationId" Type="Int32" />
           <Property Name="ProgramModeId" Type="Int32" />
-          <Property Name="DateOfClose" Type="DateTime" Precision="3" />
-          <Property Name="DateOfStart" Type="DateTime" Precision="3" />
-          <Property Name="DateOfClose_Foreign" Type="DateTime" Precision="3" />
-          <Property Name="DateOfStart_Foreign" Type="DateTime" Precision="3" />
-          <Property Name="DateOfClose_GosLine" Type="DateTime" Precision="3" />
-          <Property Name="DateOfStart_GosLine" Type="DateTime" Precision="3" />
+          <Property Name="DateOfClose" Type="DateTime" Precision="0" />
+          <Property Name="DateOfStart" Type="DateTime" Precision="0" />
+          <Property Name="DateOfClose_Foreign" Type="DateTime" Precision="0" />
+          <Property Name="DateOfStart_Foreign" Type="DateTime" Precision="0" />
+          <Property Name="DateOfClose_GosLine" Type="DateTime" Precision="0" />
+          <Property Name="DateOfStart_GosLine" Type="DateTime" Precision="0" />
           <Property Name="IsUsedForPriem" Type="Boolean" Nullable="false" />
           <Property Name="ComissionId" Type="Int32" />
           <Property Name="IsForeign" Type="Boolean" Nullable="false" />
@@ -2549,6 +2589,8 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CampaignYear" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="OnlinePriem2012Model.FK_Person_User" FromRole="User" ToRole="Person" />
+          <Property Name="Login" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsAD" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="SP_Faculty_">
           <Key>
@@ -2771,6 +2813,28 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AbiturientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Multiplier" Type="Int32" />
+          <Property Name="AppSecondTypeId" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="OnlinePriem2012Model.FK_Person_AbiturientType" FromRole="AbiturientType" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_Person_AbiturientType">
+          <End Type="OnlinePriem2012Model.AbiturientType" Role="AbiturientType" Multiplicity="1" />
+          <End Type="OnlinePriem2012Model.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbiturientType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AbiturientTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2828,6 +2892,17 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <EntitySetMapping Name="PersonAddInfo">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.PersonAddInfo">
               <MappingFragment StoreEntitySet="PersonAddInfo">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="PassExamInSpbu" ColumnName="PassExamInSpbu" />
+                <ScalarProperty Name="UserAD" ColumnName="UserAD" />
+                <ScalarProperty Name="NeedSpecialConditions" ColumnName="NeedSpecialConditions" />
+                <ScalarProperty Name="Parent2_WorkPosition" ColumnName="Parent2_WorkPosition" />
+                <ScalarProperty Name="Parent2_Work" ColumnName="Parent2_Work" />
+                <ScalarProperty Name="Parent2_Email" ColumnName="Parent2_Email" />
+                <ScalarProperty Name="Parent2_Phone" ColumnName="Parent2_Phone" />
+                <ScalarProperty Name="Parent2_SecondName" ColumnName="Parent2_SecondName" />
+                <ScalarProperty Name="Parent2_Name" ColumnName="Parent2_Name" />
+                <ScalarProperty Name="Parent2_Surname" ColumnName="Parent2_Surname" />
                 <ScalarProperty Name="Parent_WorkPosition" ColumnName="Parent_WorkPosition" />
                 <ScalarProperty Name="Parent_Work" ColumnName="Parent_Work" />
                 <ScalarProperty Name="Parent_Email" ColumnName="Parent_Email" />
@@ -2865,6 +2940,7 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <EntitySetMapping Name="PersonContacts">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.PersonContacts">
               <MappingFragment StoreEntitySet="PersonContacts">
+                <ScalarProperty Name="AddEmail" ColumnName="AddEmail" />
                 <ScalarProperty Name="KladrCodeReal" ColumnName="KladrCodeReal" />
                 <ScalarProperty Name="RegionRealId" ColumnName="RegionRealId" />
                 <ScalarProperty Name="CountryRealId" ColumnName="CountryRealId" />
@@ -3237,6 +3313,8 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="OnlinePriem2012Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsAD" ColumnName="IsAD" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="CampaignYear" ColumnName="CampaignYear" />
                 <ScalarProperty Name="RegDate" ColumnName="RegDate" />
                 <ScalarProperty Name="UILanguage" ColumnName="UILanguage" />
@@ -3330,6 +3408,16 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
               <MappingFragment StoreEntitySet="StudyLevelGroup">
                 <ScalarProperty Name="NameRus" ColumnName="NameRus" />
                 <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AbiturientType">
+            <EntityTypeMapping TypeName="OnlinePriem2012Model.AbiturientType">
+              <MappingFragment StoreEntitySet="AbiturientType">
+                <ScalarProperty Name="AppSecondTypeId" ColumnName="AppSecondTypeId" />
+                <ScalarProperty Name="Multiplier" ColumnName="Multiplier" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

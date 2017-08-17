@@ -31,9 +31,11 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.listsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.списокЗзаявленйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDics = new System.Windows.Forms.ToolStripMenuItem();
             this.entryListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.списокЗзаявленйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiProtocols = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiRestoreProtocols = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,10 +43,11 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.listsToolStripMenuItem,
-            this.smiDics});
+            this.smiDics,
+            this.smiProtocols});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(667, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(738, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -64,6 +67,13 @@
             this.mainListToolStripMenuItem.Text = "Список абитуриентов";
             this.mainListToolStripMenuItem.Click += new System.EventHandler(this.mainListToolStripMenuItem_Click);
             // 
+            // списокЗзаявленйToolStripMenuItem
+            // 
+            this.списокЗзаявленйToolStripMenuItem.Name = "списокЗзаявленйToolStripMenuItem";
+            this.списокЗзаявленйToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.списокЗзаявленйToolStripMenuItem.Text = "Список заявлений";
+            this.списокЗзаявленйToolStripMenuItem.Click += new System.EventHandler(this.списокЗзаявленйToolStripMenuItem_Click);
+            // 
             // smiDics
             // 
             this.smiDics.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -79,19 +89,27 @@
             this.entryListToolStripMenuItem.Text = "EntryList";
             this.entryListToolStripMenuItem.Click += new System.EventHandler(this.entryListToolStripMenuItem_Click);
             // 
-            // списокЗзаявленйToolStripMenuItem
+            // smiProtocols
             // 
-            this.списокЗзаявленйToolStripMenuItem.Name = "списокЗзаявленйToolStripMenuItem";
-            this.списокЗзаявленйToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.списокЗзаявленйToolStripMenuItem.Text = "Список заявлений";
-            this.списокЗзаявленйToolStripMenuItem.Click += new System.EventHandler(this.списокЗзаявленйToolStripMenuItem_Click);
+            this.smiProtocols.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiRestoreProtocols});
+            this.smiProtocols.Name = "smiProtocols";
+            this.smiProtocols.Size = new System.Drawing.Size(83, 20);
+            this.smiProtocols.Text = "Протоколы";
+            // 
+            // smiRestoreProtocols
+            // 
+            this.smiRestoreProtocols.Name = "smiRestoreProtocols";
+            this.smiRestoreProtocols.Size = new System.Drawing.Size(241, 22);
+            this.smiRestoreProtocols.Text = "Протоколы о восстановлении";
+            this.smiRestoreProtocols.Click += new System.EventHandler(this.smiRestoreProtocols_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(667, 475);
+            this.ClientSize = new System.Drawing.Size(738, 433);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -114,6 +132,8 @@
         private System.Windows.Forms.ToolStripMenuItem smiDics;
         private System.Windows.Forms.ToolStripMenuItem entryListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗзаявленйToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smiProtocols;
+        private System.Windows.Forms.ToolStripMenuItem smiRestoreProtocols;
     }
 }
 

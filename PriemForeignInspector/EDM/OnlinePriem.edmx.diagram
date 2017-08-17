@@ -72,6 +72,8 @@
         <AssociationConnector Association="OnlinePriem2012Model.FK_SP_ObrazProgram_SP_LicenseProgram" />
         <AssociationConnector Association="OnlinePriem2012Model.FK__Entry_SP_Profile" />
         <AssociationConnector Association="OnlinePriem2012Model.FK_Person_User" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.AbiturientType" Width="1.5" PointX="3.375" PointY="4.875" />
+        <AssociationConnector Association="OnlinePriem2012Model.FK_Person_AbiturientType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

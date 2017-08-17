@@ -15,7 +15,8 @@ namespace PriemForeignInspector
     static class Util
     {
         public static BDClass BDC { get; private set; }
-        public static string TemplateFolder { get; private set; }
+        public static string TempFilesFolder { get; private set; }
+        public static string DirTemplates { get; private set; }
         public static Form MainForm { get; set; }
         public static int CampaignYear { get; private set; }
         public static int CountryRussiaId { get; private set; }
@@ -37,8 +38,8 @@ namespace PriemForeignInspector
             string connStr = "Data Source=SRVPRIEM1;Initial Catalog=OnlinePriem2015;Integrated Security=True;Connect Timeout=300";
             //"Data Source=81.89.183.103;Initial Catalog=OnlinePriem2012;Integrated Security=False;User ID=OnlinePriem2012Inspector;Password=372639BE-888B-4FF4-8D17-0E86B364566C;Connect Timeout=300";
             BDC = new BDClass(connStr);
-            TemplateFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\PriemForeignInspector_TempFiles\";
-
+            TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\PriemForeignInspector_TempFiles\";
+            DirTemplates = Path.Combine(Application.StartupPath, "Data");
             try
             {
                 string sCampaignYear = BDC.GetValue("SELECT [Value] FROM _appsettings WHERE [Key]=@Key", new Dictionary<string, object>() { { "@Key", "PriemYear" } }).ToString();
@@ -59,8 +60,8 @@ namespace PriemForeignInspector
             try
             {
                 // Determine whether the directory exists.
-                if (!Directory.Exists(TemplateFolder))
-                    Directory.CreateDirectory(TemplateFolder);
+                if (!Directory.Exists(TempFilesFolder))
+                    Directory.CreateDirectory(TempFilesFolder);
             }
             catch (Exception e)
             {
@@ -70,7 +71,7 @@ namespace PriemForeignInspector
 
         public static void ClearTempFolder()
         {
-            string[] files = Directory.GetFiles(TemplateFolder);
+            string[] files = Directory.GetFiles(TempFilesFolder);
             foreach (string filename in files)
             {
                 try

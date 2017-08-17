@@ -44,5 +44,9 @@ namespace PriemForeignInspector
             Util.OpenAbitList();
         }
 
+        private void smiRestoreProtocols_Click(object sender, EventArgs e)
+        {
+            new ProtocolList().Show();
+        }
     }
 }

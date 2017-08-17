@@ -12,11 +12,18 @@ namespace PriemForeignInspector.EDM
     using System;
     using System.Collections.Generic;
     
-    public partial class ApplicationCommitVersonDetails
+    public partial class AbiturientType
     {
+        public AbiturientType()
+        {
+            this.Person = new HashSet<Person>();
+        }
+    
         public int Id { get; set; }
-        public int ApplicationCommitVersionId { get; set; }
-        public System.Guid ApplicationId { get; set; }
-        public int Priority { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> Multiplier { get; set; }
+        public Nullable<int> AppSecondTypeId { get; set; }
+    
+        public virtual ICollection<Person> Person { get; set; }
     }
 }

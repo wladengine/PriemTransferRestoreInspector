@@ -382,7 +382,7 @@ AND (ApplicationId is NULL OR ApplicationId=@AppId)";
             if (lastSlashPos > 0)
                 filename = filename.Substring(lastSlashPos);
 
-            filename = Util.TemplateFolder + filename;
+            filename = Util.TempFilesFolder + filename;
 
             byte[] data = (byte[])Util.BDC.GetValue(query, new Dictionary<string, object>() { { "@Id", id } });
             using (FileStream fs = new FileStream(filename, FileMode.Create))
@@ -495,7 +495,7 @@ St. Petersburg State University Admissions Committee
             if (lastSlashPos > 0)
                 filename = filename.Substring(lastSlashPos);
 
-            filename = Util.TemplateFolder + filename;
+            filename = Util.TempFilesFolder + filename;
 
             byte[] data = (byte[])Util.BDC.GetValue(query, new Dictionary<string, object>() { { "@Id", id } });
             using (FileStream fs = new FileStream(filename, FileMode.Create))
@@ -573,7 +573,7 @@ WHERE PersonId=@PersonId AND (IsApproved IS NULL OR IsApproved = 'False') ";
         }
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            string fileName = Util.TemplateFolder + string.Format("Application_{0}.pdf", Guid.NewGuid().ToString("N"));
+            string fileName = Util.TempFilesFolder + string.Format("Application_{0}.pdf", Guid.NewGuid().ToString("N"));
             using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 BinaryWriter bw = new BinaryWriter(fs);
