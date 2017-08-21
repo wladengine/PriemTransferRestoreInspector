@@ -74,6 +74,7 @@
         <AssociationConnector Association="OnlinePriem2012Model.FK_Person_User" />
         <EntityTypeShape EntityType="OnlinePriem2012Model.AbiturientType" Width="1.5" PointX="3.375" PointY="4.875" />
         <AssociationConnector Association="OnlinePriem2012Model.FK_Person_AbiturientType" />
+        <EntityTypeShape EntityType="OnlinePriem2012Model.ApplicationSecondType" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

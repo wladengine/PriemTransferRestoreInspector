@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PriemForeignInspector.EDM;
+using EducServLib;
 
 namespace PriemForeignInspector
 {
@@ -54,10 +55,10 @@ namespace PriemForeignInspector
         {
             using (OnlinePriem2012Entities context = new OnlinePriem2012Entities())
             {
-                var src = context.AbiturientType.Where(x => x.AppSecondTypeId != null && x.AppSecondTypeId > 1)
-                    .Select(x => new { x.AppSecondTypeId, x.Description })
+                var src = context.ApplicationSecondType
+                    .Select(x => new { x.Id, x.DisplayName })
                     .ToList()
-                    .Select(x => new KeyValuePair<string, string>(x.AppSecondTypeId.ToString(), x.Description))
+                    .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.DisplayName))
                     .ToList();
 
                 ComboServ.FillCombo(cbAbiturientType, src, false, false);
@@ -120,11 +121,15 @@ namespace PriemForeignInspector
         {
             if (LicenseProgramId.HasValue)
             {
-                IPrintProtocolProvider prot = new RestorePrintProtocolProvider();
+                IPrintProtocolProvider prot = GetProtocolProvider();
+
                 DataTable tbl = prot.GetProtocolData(LicenseProgramId.Value, StudyFormId, StudyBasisId);
                 dgv.DataSource = tbl;
                 foreach (DataGridViewColumn col in dgv.Columns)
+                {
                     col.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                    col.HeaderText = tbl.Columns[col.Name].Caption;
+                }
 
                 dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             }
@@ -134,9 +139,36 @@ namespace PriemForeignInspector
         {
             if (LicenseProgramId.HasValue)
             {
-                IPrintProtocolProvider prot = new RestorePrintProtocolProvider();
-                prot.PrintProtocol(LicenseProgramId.Value, StudyFormId, StudyBasisId);
+                IPrintProtocolProvider prot = GetProtocolProvider();
+                try
+                {
+                    prot.PrintProtocol(LicenseProgramId.Value, StudyFormId, StudyBasisId);
+                }
+                catch (System.IO.IOException ex)
+                {
+                    WinFormsServ.Error("Ошибка при чтении файла", ex);
+                }
+                catch (Exception ex)
+                {
+                    WinFormsServ.Error(ex);
+                }
             }
+        }
+
+        private IPrintProtocolProvider GetProtocolProvider()
+        {
+            IPrintProtocolProvider prot;
+            switch (AbiturientTypeId)
+            {
+                case 2: { prot = new TransferPrintProtocolProvider(); break; }
+                case 3: { prot = new RestorePrintProtocolProvider(); break; }
+                case 4: { prot = new ChangeStudyFormPrintProtocolProvider(); break; }
+                case 5: { prot = new ChangeStudyBasisPrintProtocolProvider(); break; }
+                case 6: { prot = new ChangeObrazProgramPrintProtocolProvider(); break; }
+                default: { prot = new RestorePrintProtocolProvider(); break; }
+            }
+
+            return prot;
         }
     }
 }

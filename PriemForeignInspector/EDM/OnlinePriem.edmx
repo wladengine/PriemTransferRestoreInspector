@@ -108,6 +108,17 @@
           <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Priority" Type="int" Nullable="false" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "OnlinePriem2015.dbo.ApplicationSecondType" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ApplicationSecondType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="150" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -1162,6 +1173,14 @@
           <EntitySet Name="StudyForm" EntityType="Self.StudyForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevelGroup" EntityType="Self.StudyLevelGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationSecondType" EntityType="Self.ApplicationSecondType" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[ApplicationSecondType].[Id] AS [Id], 
+[ApplicationSecondType].[Name] AS [Name], 
+[ApplicationSecondType].[NameEng] AS [NameEng], 
+[ApplicationSecondType].[DisplayName] AS [DisplayName]
+FROM [dbo].[ApplicationSecondType] AS [ApplicationSecondType]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Entry" EntityType="Self.Entry" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [Entry].[Id] AS [Id], 
@@ -1611,6 +1630,7 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
             <End Role="AbiturientType" EntitySet="AbiturientType" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
+          <EntitySet Name="ApplicationSecondType" EntityType="OnlinePriem2012Model.ApplicationSecondType" />
         </EntityContainer>
         <EntityType Name="PriemApplication">
           <Key>
@@ -2835,6 +2855,15 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ApplicationSecondType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3418,6 +3447,16 @@ FROM [dbo].[Entry] AS [Entry]</DefiningQuery>
                 <ScalarProperty Name="AppSecondTypeId" ColumnName="AppSecondTypeId" />
                 <ScalarProperty Name="Multiplier" ColumnName="Multiplier" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationSecondType">
+            <EntityTypeMapping TypeName="OnlinePriem2012Model.ApplicationSecondType">
+              <MappingFragment StoreEntitySet="ApplicationSecondType">
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

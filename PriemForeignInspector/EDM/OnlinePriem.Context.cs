@@ -59,5 +59,6 @@ namespace PriemForeignInspector.EDM
         public DbSet<SP_StudyLevel> SP_StudyLevel { get; set; }
         public DbSet<StudyLevelGroup> StudyLevelGroup { get; set; }
         public DbSet<AbiturientType> AbiturientType { get; set; }
+        public DbSet<ApplicationSecondType> ApplicationSecondType { get; set; }
     }
 }

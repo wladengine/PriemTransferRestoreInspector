@@ -100,8 +100,8 @@
             // smiRestoreProtocols
             // 
             this.smiRestoreProtocols.Name = "smiRestoreProtocols";
-            this.smiRestoreProtocols.Size = new System.Drawing.Size(241, 22);
-            this.smiRestoreProtocols.Text = "Протоколы о восстановлении";
+            this.smiRestoreProtocols.Size = new System.Drawing.Size(182, 22);
+            this.smiRestoreProtocols.Text = "Печать протоколов";
             this.smiRestoreProtocols.Click += new System.EventHandler(this.smiRestoreProtocols_Click);
             // 
             // MainForm
